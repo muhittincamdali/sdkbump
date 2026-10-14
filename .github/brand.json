@@ -1,0 +1,19 @@
+{
+  "name": "sdkbump",
+  "repository": "muhittincamdali/sdkbump",
+  "tagline": {
+    "en": "Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."
+  },
+  "tags": {
+    "en": ["iOS 27", "UIScene", "Flutter", "React Native"]
+  },
+  "motif": "phone",
+  "buttons": ["start", "docs", "guides", "examples"],
+  "links": {
+    "docs": "https://muhittincamdali.github.io/sdkbump/",
+    "guides": "docs/guides/",
+    "examples": "examples/"
+  },
+  "languages": ["en"],
+  "socialTheme": "dark"
+}
