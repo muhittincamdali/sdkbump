@@ -36,3 +36,6 @@ then `xcodebuild`). On an iPhone 17 simulator with iOS 27.0:
 - **native-swiftui** launches. When another app comes to the front, SpringBoard moves Tally to the
   background, and the adaptor delegate's `applicationDidEnterBackground(_:)` does not run.
 
+
+[Why it compiles and still crashes](../docs/guides/why-it-crashes.md) has the full logs, the
+[launch matrix](../examples/launch-matrix) and how to repeat the runs.
