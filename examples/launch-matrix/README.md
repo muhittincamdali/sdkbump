@@ -2,7 +2,8 @@
 
 Nine minimal apps that differ only in how they declare (or do not declare) a scene, built with
 `swiftc` against the installed iOS simulator SDK and launched on an iOS simulator. They are the
-evidence behind SCN001 and SCN002.
+evidence behind SCN001 and SCN002; see
+[Why it compiles and still crashes](../../docs/guides/why-it-crashes.md).
 
 ```sh
 examples/launch-matrix/run.sh            # uses (and creates once) a simulator named sdkbump-iPhone-17
