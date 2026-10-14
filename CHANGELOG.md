@@ -30,9 +30,9 @@ All notable changes to sdkbump are listed here. The format follows
 - Terminal, Markdown and JSON reports (`schemaVersion` 0), `--output`, `--fail-on` with exit codes
   0, 1 and 2, and colour only in a terminal.
 - Programmatic API: `scan`, `render` and the readers and checks behind them.
-- Nine fixtures (native UIKit before and after migration, SwiftUI, Flutter with a custom
-  AppDelegate, Expo SDK 57, React Native 0.87 with and without the bridge, React Native 0.88 and
-  Expo 58 templates) with expected findings and recorded reports.
+- Ten fixtures (native UIKit before and after migration, SwiftUI, Flutter with a custom
+  AppDelegate, Expo SDK 57 with and without its scene opt-in, React Native 0.87 with and without
+  the bridge, React Native 0.88 and Expo 58 templates) with expected findings and recorded reports.
 - Guides, an API reference site, terminal demos from the CLI, and recordings of the native
   fixtures and a nine-app launch matrix in the iOS 27.0 simulator (Xcode 27.0).
 

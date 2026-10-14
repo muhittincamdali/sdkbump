@@ -37,7 +37,8 @@ the range in package.json allows, and says which it used.
 `ExpoAppSceneDelegate` then creates the window and passes links, user activities and quick actions
 on to your `AppDelegate`, so the template's `application(_:open:options:)` and
 `application(_:continue:restorationHandler:)` overrides keep working; that is why sdkbump does not
-report SCN003 for an app whose scene delegate derives from it.
+report SCN003 for an app whose scene delegate derives from it or whose Info.plist names it
+(SDK 57's opt-in writes `EXExpoAppSceneDelegate` into Info.plist and adds no class of its own).
 
 Expo's announcement warned that a config plugin which edits `AppDelegate` could make prebuild fail
 with the option on; the issue for that ([expo/expo#50210](https://github.com/expo/expo/issues/50210))
