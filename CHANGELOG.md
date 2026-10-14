@@ -15,6 +15,8 @@ All notable changes to sdkbump are listed here. The format follows
   package.json linked to /dev/zero, or a pubspec.yaml that is a FIFO, made the scan wait forever.
   The package.json of an installed package in node_modules only has to be a regular file, since
   pnpm and workspaces link it from outside the app folder.
+- examples/github-actions/sdkbump.yml stops the job after 10 minutes instead of GitHub's default
+  of six hours.
 
 ## [0.1.0] - 2026-10-15
 
