@@ -1,0 +1,109 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render (markdown) > has a table, the details and the footer 1`] = `
+"## sdkbump: App (React Native)
+
+**Fails to launch when built with the iOS 27 SDK.**
+
+- Target \`App\`: app delegate life cycle (\`App/Info.plist\`)
+- \`react-native\` 0.87.1 (declared)
+
+| Rule | Severity | Where | Finding |
+| --- | --- | --- | --- |
+| SCN001 | error | \`App/Info.plist\` | No scene configuration |
+| SCN002 | error | \`App/AppDelegate.swift:12\` | Window created in the app delegate |
+| SCN003 | warning (handled by react-native-uiscene-bridge) | \`App/AppDelegate.swift:30\` | application(_:open:options:) is not called with scenes |
+
+<details><summary>What each finding means and how to fix it</summary>
+
+### SCN001: No scene configuration
+
+\`App/Info.plist\`: Info.plist has no UIApplicationSceneManifest.
+
+**Fix: Adopt a scene delegate** ([guide](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/adopt.md))
+
+1. Step one of Adopt a scene delegate.
+2. Step two, which is long enough to be wrapped onto a second line of the report.
+
+**Or: Temporary: install a bridge** ([guide](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/bridge.md))
+
+1. Step one of Temporary: install a bridge.
+2. Step two, which is long enough to be wrapped onto a second line of the report.
+
+Sources: [Apple: Transitioning](https://developer.apple.com/documentation/uikit)
+
+### SCN002: Window created in the app delegate
+
+\`App/AppDelegate.swift:12\`: AppDelegate creates the window with UIWindow(frame:).
+
+**Fix: Adopt a scene delegate** (steps above)
+
+Sources: [Apple: Transitioning](https://developer.apple.com/documentation/uikit)
+
+### SCN003: application(_:open:options:) is not called with scenes
+
+\`App/AppDelegate.swift:30\`: Info.plist has no UIApplicationSceneManifest.
+
+Handled at run time by \`react-native-uiscene-bridge\` 0.1.0. Adds a scene configuration at run time. Limits: One window.
+
+**Fix: Move it to the scene delegate** ([guide](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/move.md))
+
+1. Step one of Move it to the scene delegate.
+2. Step two, which is long enough to be wrapped onto a second line of the report.
+
+Sources: [Apple: Transitioning](https://developer.apple.com/documentation/uikit)
+
+</details>
+
+2 errors, 0 warnings, 1 handled by a workaround. Guide: [React Native](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md).
+
+<sub>[sdkbump](https://github.com/muhittincamdali/sdkbump) 0.1.0, rules ios27@2026.10.15 (iOS 27.0 SDK). Static checks; they do not build or run the app.</sub>
+"
+`;
+
+exports[`render (tty) > prints the verdict, each finding and each fix once 1`] = `
+"sdkbump 0.1.0 · rules ios27@2026.10.15 · iOS 27.0 SDK
+
+App · React Native · fixtures/app
+react-native 0.87.1 (declared)
+target App: app delegate life cycle (App/Info.plist)
+
+Fails to launch when built with the iOS 27 SDK.
+
+ERROR    SCN001 No scene configuration
+         App/Info.plist
+         Info.plist has no UIApplicationSceneManifest.
+         Fix: [A] Adopt a scene delegate; or [B] Temporary: install a bridge
+
+ERROR    SCN002 Window created in the app delegate
+         App/AppDelegate.swift:12
+         AppDelegate creates the window with UIWindow(frame:).
+         Fix: [A] Adopt a scene delegate
+
+HANDLED  SCN003 application(_:open:options:) is not called with scenes
+         App/AppDelegate.swift:30
+         Info.plist has no UIApplicationSceneManifest.
+         Handled at run time by react-native-uiscene-bridge 0.1.0. Limits: One window.
+         Fix: [C] Move it to the scene delegate
+
+How to fix
+
+[A]      Adopt a scene delegate
+         1. Step one of Adopt a scene delegate.
+         2. Step two, which is long enough to be wrapped onto a second line of the report.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/adopt.md
+
+[B]      Temporary: install a bridge
+         1. Step one of Temporary: install a bridge.
+         2. Step two, which is long enough to be wrapped onto a second line of the report.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/bridge.md
+
+[C]      Move it to the scene delegate
+         1. Step one of Move it to the scene delegate.
+         2. Step two, which is long enough to be wrapped onto a second line of the report.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/move.md
+
+2 errors, 0 warnings, 1 handled by a workaround
+Guide: https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md
+"
+`;
