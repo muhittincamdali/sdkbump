@@ -1,0 +1,449 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "ruleSet": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+$"
+    },
+    "dataVersion": {
+      "type": "string",
+      "pattern": "^\\d{4}\\.\\d{2}\\.\\d{2}$"
+    },
+    "sdk": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rules": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "SCN001",
+              "SCN002",
+              "SCN003",
+              "SCN004"
+            ]
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sources": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "title",
+                "url"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "severity",
+          "title",
+          "summary",
+          "sources"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "hooks": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z-]+$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "method",
+              "launch-option"
+            ]
+          },
+          "swift": {
+            "type": "string",
+            "minLength": 1
+          },
+          "objc": {
+            "type": "string",
+            "minLength": 1
+          },
+          "replacement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "swiftUI": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sources": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "title",
+                "url"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "swift",
+          "objc",
+          "replacement",
+          "swiftUI",
+          "sources"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "windowLookups": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z-]+$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "api": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sources": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "title",
+                "url"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "api",
+          "message",
+          "sources"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "fixes": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "ecosystems": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "native",
+                "flutter",
+                "react-native",
+                "expo"
+              ]
+            }
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "steps": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "guide": {
+            "type": "string",
+            "pattern": "^docs\\/guides\\/[a-z0-9-]+\\.md$"
+          },
+          "sources": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "title",
+                "url"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "ecosystems",
+          "title",
+          "steps",
+          "guide",
+          "sources"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "workarounds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "package": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ecosystems": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "native",
+                "flutter",
+                "react-native",
+                "expo"
+              ]
+            }
+          },
+          "mitigates": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "SCN001",
+                "SCN002",
+                "SCN003",
+                "SCN004"
+              ]
+            }
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limits": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "sources": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "title",
+                "url"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "package",
+          "ecosystems",
+          "mitigates",
+          "summary",
+          "limits",
+          "sources"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "milestones": {
+      "type": "object",
+      "properties": {
+        "reactNativeScenes": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "expoSceneSupport": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "expoBuildProperties": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "expoScenesByDefault": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "flutterAutoMigration": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "required": [
+        "reactNativeScenes",
+        "expoSceneSupport",
+        "expoBuildProperties",
+        "expoScenesByDefault",
+        "flutterAutoMigration"
+      ],
+      "additionalProperties": false
+    },
+    "sceneForwarders": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "flutterTemplates": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "swift": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "objcHeader": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "objcImplementation": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "source",
+        "swift",
+        "objcHeader",
+        "objcImplementation"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "ruleSet",
+    "dataVersion",
+    "sdk",
+    "rules",
+    "hooks",
+    "windowLookups",
+    "fixes",
+    "workarounds",
+    "milestones",
+    "sceneForwarders",
+    "flutterTemplates"
+  ],
+  "additionalProperties": false
+}
