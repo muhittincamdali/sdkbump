@@ -1,5 +1,5 @@
 // Regular expressions behind the rules, run over source text whose comments and strings are
-// blanked (see collect/sources.ts). The names they look for come from rules/ios27.json; the tests
+// blanked (see collect/blank.ts). The names they look for come from rules/ios27.json; the tests
 // check that every hook and window lookup in the data has a pattern here and the other way round.
 import type { Language } from '../collect/sources.js';
 import type { HookDefinition } from './data.js';
