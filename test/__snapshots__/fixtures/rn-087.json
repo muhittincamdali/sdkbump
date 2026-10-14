@@ -26,7 +26,8 @@
         "lifecycle": "app-delegate",
         "infoPlists": [
           "ios/RN087App/Info.plist"
-        ]
+        ],
+        "infoPlistSource": "file"
       }
     ]
   },

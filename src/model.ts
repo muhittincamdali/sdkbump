@@ -42,17 +42,31 @@ export interface Finding {
   sources: RuleSource[];
 }
 
-export type Lifecycle = 'app-delegate' | 'scenes' | 'swiftui';
+/** `unknown`: sdkbump could not read the target's Info.plist, so it cannot tell. */
+export type Lifecycle = 'app-delegate' | 'scenes' | 'swiftui' | 'unknown';
+
+/**
+ * Where a target's Info.plist came from: `file` (read from INFOPLIST_FILE), `generated` (Xcode
+ * writes it from build settings) or `not-read` (named but not readable, or not named in the
+ * project file at all, as when an .xcconfig file sets it).
+ */
+export type InfoPlistSource = 'file' | 'generated' | 'not-read';
 
 export interface TargetSummary {
   name: string;
   lifecycle: Lifecycle;
-  /** Info.plist paths relative to the checked folder; empty when Xcode generates it. */
+  /** Info.plist paths relative to the checked folder; empty unless infoPlistSource is `file`. */
   infoPlists: string[];
+  infoPlistSource: InfoPlistSource;
 }
 
 export type VerdictCode =
-  'fails-to-launch' | 'launches-through-workaround' | 'black-screen' | 'review' | 'no-findings';
+  | 'fails-to-launch'
+  | 'launches-through-workaround'
+  | 'unknown'
+  | 'black-screen'
+  | 'review'
+  | 'no-findings';
 
 export interface Verdict {
   code: VerdictCode;

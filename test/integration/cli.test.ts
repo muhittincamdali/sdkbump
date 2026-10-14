@@ -69,6 +69,25 @@ describe('sdkbump (in process)', () => {
     expect((await sdkbump(['--fail-on', 'none'], failing())).code).toBe(EXIT.ok);
   });
 
+  it('exits 0 and says the launch is not determined when the Info.plist was not read', async () => {
+    const root = tree({
+      'App.xcodeproj/project.pbxproj': minimalPbxproj('App', '$(CUSTOM_DIR)/Info.plist'),
+      'App/Info.plist': infoPlist(sceneManifest()),
+      'App/AppDelegate.swift': 'class AppDelegate: UIResponder, UIApplicationDelegate {}',
+    });
+    const result = await sdkbump([], root);
+    expect(result.code).toBe(EXIT.ok);
+    expect(result.stdout).toContain('target App: life cycle not determined (Info.plist not read)');
+    expect(result.stdout).toContain(
+      'Launch not determined: sdkbump could not read the Info.plist of App.',
+    );
+    expect(result.stdout).toContain('INFO     SCN001 Scene configuration not checked');
+    expect(result.stdout).not.toContain('Xcode generates');
+    expect((await sdkbump(['--fail-on', 'info'], root)).code).toBe(EXIT.findings);
+    const markdown = (await sdkbump(['-f', 'markdown'], root)).stdout;
+    expect(markdown).toContain('- Target `App`: life cycle not determined (Info.plist not read)');
+  });
+
   it('writes JSON and Markdown', async () => {
     const json = JSON.parse((await sdkbump(['--format', 'json'], failing())).stdout);
     expect(json.findings[0].rule).toBe('SCN001');

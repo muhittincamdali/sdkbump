@@ -1,7 +1,7 @@
 // The four v0.1 rules (SCN001 to SCN004) over a collected app. Each finding carries the fix that
 // applies to this kind of project (rules/fixes.ts) and, for React Native and Expo, an installed
 // workaround that handles it at run time.
-import type { AppModel } from '../collect/app.js';
+import type { AppModel, AppTarget } from '../collect/app.js';
 import { sceneDelegateClassNames, sceneManifest } from '../collect/app.js';
 import { atLeast, majorOf } from '../core/versions.js';
 import type { FixAdvice, Finding } from '../model.js';
@@ -140,12 +140,33 @@ function scn001Expo(context: Context): RawFinding[] {
   ];
 }
 
+/**
+ * The target's Info.plist could not be read, so whether it declares a scene is not known. An
+ * error here would be a guess: the file may well have a scene manifest.
+ */
+function scn001NotRead(context: Context, target: AppTarget): RawFinding {
+  const { app } = context;
+  return finding(context, 'SCN001', {
+    severity: 'info',
+    title: 'Scene configuration not checked',
+    message: `sdkbump could not read the Info.plist of ${target.name} (see the notes), so it cannot tell whether the app declares a scene. ${appDelegateName(app)} does not implement application(_:configurationForConnecting:options:), so built with the iOS 27 SDK the app launches only if that Info.plist has a UIApplicationSceneManifest with a scene configuration.`,
+    path: `${target.xcodeProject}/project.pbxproj`,
+    line: null,
+    target: target.name,
+    fix: null,
+  });
+}
+
 function scn001(context: Context): RawFinding[] {
   const { app } = context;
   if (app.project.ecosystem === 'expo' && !app.project.iosDir) return scn001Expo(context);
   const results: RawFinding[] = [];
   for (const target of app.targets) {
     if (adoptsScenes(app, target)) continue;
+    if (target.infoPlistSource === 'not-read') {
+      results.push(scn001NotRead(context, target));
+      continue;
+    }
     const plist = target.infoPlists[0];
     const manifest = plist ? sceneManifest(plist) : { present: false, configured: false };
     const where = plist ? 'Info.plist' : 'The Info.plist Xcode generates';

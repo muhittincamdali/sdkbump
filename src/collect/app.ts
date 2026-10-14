@@ -3,7 +3,15 @@
 import { join } from 'node:path';
 import { NOT_READ, readProjectFile } from '../core/files.js';
 import type { Project } from '../detect/project.js';
-import { generatesInfoPlist, infoPlistFiles, iosAppTargets, readXcodeProject } from './pbxproj.js';
+import type { InfoPlistSource } from '../model.js';
+import {
+  generatesInfoPlist,
+  infoPlistFiles,
+  iosAppTargets,
+  readXcodeProject,
+  type XcodeProject,
+  type XcodeTarget,
+} from './pbxproj.js';
 import { isDict, type PlistDict, parsePlist } from './plist.js';
 import { indexSources, type SourceIndex } from './sources.js';
 
@@ -20,6 +28,12 @@ export interface AppTarget {
   infoPlists: InfoPlistFile[];
   /** Xcode generates (part of) the Info.plist: GENERATE_INFOPLIST_FILE = YES. */
   generatesInfoPlist: boolean;
+  /**
+   * Where the rules get the Info.plist from: a file sdkbump read, the one Xcode generates from
+   * build settings, or none (not-read) when the file could not be read or the project file does
+   * not say which one it is.
+   */
+  infoPlistSource: InfoPlistSource;
 }
 
 export interface AppModel {
@@ -55,12 +69,52 @@ async function readInfoPlist(
   }
 }
 
+/**
+ * Reads one app target's Info.plist. A target that names no INFOPLIST_FILE and does not have
+ * Xcode generate one most likely sets it in an .xcconfig file, which sdkbump does not read.
+ */
+async function readTarget(
+  xcode: XcodeProject,
+  target: XcodeTarget,
+  projectRoot: string,
+  notes: string[],
+): Promise<AppTarget> {
+  const { files, unresolved } = infoPlistFiles(xcode, target);
+  for (const raw of unresolved) {
+    notes.push(
+      `${target.name}: INFOPLIST_FILE ${raw} uses a build setting sdkbump does not expand.`,
+    );
+  }
+  const infoPlists: InfoPlistFile[] = [];
+  for (const file of files) {
+    const plist = await readInfoPlist(file, projectRoot, notes);
+    if (plist) infoPlists.push(plist);
+  }
+  const generates = generatesInfoPlist(target);
+  const named = files.length + unresolved.length > 0;
+  if (!named && !generates) {
+    notes.push(
+      `${target.name}: the Xcode project sets neither INFOPLIST_FILE nor GENERATE_INFOPLIST_FILE = YES; they may be set in an .xcconfig file, which sdkbump does not read.`,
+    );
+  }
+  let infoPlistSource: InfoPlistSource = 'not-read';
+  if (infoPlists.length > 0) infoPlistSource = 'file';
+  else if (!named && generates) infoPlistSource = 'generated';
+  return {
+    name: target.name,
+    xcodeProject: xcode.path,
+    infoPlists,
+    generatesInfoPlist: generates,
+    infoPlistSource,
+  };
+}
+
 /** Reads the app targets and sources of a detected project. */
 export async function collectApp(project: Project): Promise<AppModel> {
   const notes: string[] = [];
   const targets: AppTarget[] = [];
   for (const path of project.xcodeProjects) {
-    let xcode: Awaited<ReturnType<typeof readXcodeProject>>;
+    let xcode: XcodeProject;
     try {
       xcode = await readXcodeProject(path, project.root);
     } catch (error) {
@@ -68,23 +122,7 @@ export async function collectApp(project: Project): Promise<AppModel> {
       continue;
     }
     for (const target of iosAppTargets(xcode)) {
-      const { files, unresolved } = infoPlistFiles(xcode, target);
-      for (const raw of unresolved) {
-        notes.push(
-          `${target.name}: INFOPLIST_FILE ${raw} uses a build setting sdkbump does not expand.`,
-        );
-      }
-      const infoPlists: InfoPlistFile[] = [];
-      for (const file of files) {
-        const plist = await readInfoPlist(file, project.root, notes);
-        if (plist) infoPlists.push(plist);
-      }
-      targets.push({
-        name: target.name,
-        xcodeProject: path,
-        infoPlists,
-        generatesInfoPlist: generatesInfoPlist(target),
-      });
+      targets.push(await readTarget(xcode, target, project.root, notes));
     }
   }
   if (project.iosDir && project.xcodeProjects.length > 0 && targets.length === 0) {

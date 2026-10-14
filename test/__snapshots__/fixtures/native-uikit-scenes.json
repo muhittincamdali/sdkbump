@@ -20,7 +20,8 @@
         "lifecycle": "scenes",
         "infoPlists": [
           "Shelf/Info.plist"
-        ]
+        ],
+        "infoPlistSource": "file"
       }
     ]
   },

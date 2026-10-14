@@ -20,7 +20,8 @@
         "lifecycle": "swiftui",
         "infoPlists": [
           "Tally/Info.plist"
-        ]
+        ],
+        "infoPlistSource": "file"
       }
     ]
   },

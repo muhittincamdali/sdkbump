@@ -66,7 +66,12 @@ describe('SCN001 and the verdict', () => {
     expect(report.findings[0]?.message).toContain('has no UIApplicationSceneManifest');
     expect(report.verdict.code).toBe('fails-to-launch');
     expect(report.project.targets).toEqual([
-      { name: 'App', lifecycle: 'app-delegate', infoPlists: ['App/Info.plist'] },
+      {
+        name: 'App',
+        lifecycle: 'app-delegate',
+        infoPlists: ['App/Info.plist'],
+        infoPlistSource: 'file',
+      },
     ]);
     expect(report.summary).toEqual({ errors: 2, warnings: 1, info: 0, mitigated: 0 });
   });
@@ -134,6 +139,89 @@ describe('SCN001 and the verdict', () => {
     ]);
   });
 
+  describe('does not guess when the Info.plist was not read', () => {
+    const delegate = 'class AppDelegate: UIResponder, UIApplicationDelegate {}';
+
+    it('INFOPLIST_FILE and GENERATE_INFOPLIST_FILE set in an .xcconfig file', async () => {
+      const root = tree({
+        'App.xcodeproj/project.pbxproj': minimalPbxproj().replace(
+          'INFOPLIST_FILE = "App/Info.plist";',
+          '',
+        ),
+        'App.xcconfig': 'INFOPLIST_FILE = App/Info.plist\nGENERATE_INFOPLIST_FILE = NO\n',
+        'App/Info.plist': infoPlist(sceneManifest()),
+        'App/AppDelegate.swift': delegate,
+      });
+      const report = await scan(root);
+      expect(rules(report)).toEqual(['SCN001']);
+      expect(report.findings[0]).toMatchObject({
+        severity: 'info',
+        title: 'Scene configuration not checked',
+        file: 'App.xcodeproj/project.pbxproj',
+        target: 'App',
+        fix: null,
+      });
+      expect(report.findings[0]?.message).toContain('could not read the Info.plist of App');
+      expect(report.verdict).toEqual({
+        code: 'unknown',
+        text: 'Launch not determined: sdkbump could not read the Info.plist of App.',
+      });
+      expect(report.project.targets).toEqual([
+        { name: 'App', lifecycle: 'unknown', infoPlists: [], infoPlistSource: 'not-read' },
+      ]);
+      expect(report.notes).toEqual([
+        'App: the Xcode project sets neither INFOPLIST_FILE nor GENERATE_INFOPLIST_FILE = YES; they may be set in an .xcconfig file, which sdkbump does not read.',
+      ]);
+      expect(report.summary).toEqual({ errors: 0, warnings: 0, info: 1, mitigated: 0 });
+    });
+
+    it('INFOPLIST_FILE with a build setting sdkbump does not expand', async () => {
+      const root = tree({
+        'App.xcodeproj/project.pbxproj': minimalPbxproj('App', '$(CUSTOM_DIR)/Info.plist'),
+        'App/Info.plist': infoPlist(sceneManifest()),
+        'App/AppDelegate.swift': delegate,
+      });
+      const report = await scan(root);
+      expect(report.findings[0]).toMatchObject({ rule: 'SCN001', severity: 'info' });
+      expect(report.verdict.code).toBe('unknown');
+      expect(report.notes).toEqual([
+        'App: INFOPLIST_FILE $(CUSTOM_DIR)/Info.plist uses a build setting sdkbump does not expand.',
+      ]);
+    });
+
+    it('INFOPLIST_FILE that does not exist', async () => {
+      const root = tree({
+        'App.xcodeproj/project.pbxproj': minimalPbxproj('App', 'Missing/Info.plist'),
+        'App/AppDelegate.swift': delegate,
+      });
+      expect((await scan(root)).verdict.code).toBe('unknown');
+    });
+
+    it('still reports a window the app delegate creates', async () => {
+      const root = tree({
+        'App.xcodeproj/project.pbxproj': minimalPbxproj('App', '$(CUSTOM_DIR)/Info.plist'),
+        'App/AppDelegate.swift': UIKIT_DELEGATE,
+      });
+      const report = await scan(root);
+      expect(rules(report)).toEqual(['SCN001', 'SCN002', 'SCN003']);
+      expect(report.verdict.code).toBe('unknown');
+    });
+
+    it('still accepts configurationForConnecting in the app delegate', async () => {
+      const root = tree({
+        'App.xcodeproj/project.pbxproj': minimalPbxproj('App', '$(CUSTOM_DIR)/Info.plist'),
+        'App/AppDelegate.swift': `class AppDelegate: UIResponder, UIApplicationDelegate {
+  func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+    UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
+  }
+}`,
+      });
+      const report = await scan(root);
+      expect(report.findings).toEqual([]);
+      expect(report.project.targets[0]?.lifecycle).toBe('scenes');
+    });
+  });
+
   describe('does not read an INFOPLIST_FILE outside the project', () => {
     const outside = tree({ 'Info.plist': infoPlist(sceneManifest()) });
     const appNaming = (infoPlistPath: string, extra: Record<string, string> = {}) =>
@@ -150,8 +238,9 @@ describe('SCN001 and the verdict', () => {
       const report = await scan(appNaming(path));
       expect(report.notes).toHaveLength(1);
       expect(report.notes[0]).toMatch(/is outside the project; it was not read\.$/);
-      // The scene manifest in the outside file was not used.
-      expect(rules(report)).toContain('SCN001');
+      // The scene manifest in the outside file was not used, and the verdict says so.
+      expect(report.findings[0]).toMatchObject({ rule: 'SCN001', severity: 'info' });
+      expect(report.verdict.code).toBe('unknown');
     });
 
     it('a symbolic link that leads out of the project', async () => {
@@ -161,6 +250,22 @@ describe('SCN001 and the verdict', () => {
       expect(report.notes).toEqual([
         'App/Info.plist is named in INFOPLIST_FILE but is outside the project; it was not read.',
       ]);
+      expect(report.findings[0]?.message).not.toContain('Xcode generates');
+    });
+
+    it('a symbolic link out of the project while Xcode also generates the Info.plist', async () => {
+      const root = tree({
+        'App.xcodeproj/project.pbxproj': minimalPbxproj().replace(
+          'INFOPLIST_FILE = "App/Info.plist";',
+          'INFOPLIST_FILE = "App/Info.plist"; GENERATE_INFOPLIST_FILE = YES;',
+        ),
+        'App/AppDelegate.swift': 'class AppDelegate: UIResponder, UIApplicationDelegate {}',
+      });
+      symlinkSync(join(outside, 'Info.plist'), join(root, 'App/Info.plist'));
+      const report = await scan(root);
+      expect(report.project.targets[0]?.infoPlistSource).toBe('not-read');
+      expect(report.findings[0]).toMatchObject({ rule: 'SCN001', severity: 'info' });
+      expect(report.findings[0]?.message).not.toContain('Xcode generates');
     });
 
     it('a device file such as /dev/zero', { timeout: 2000 }, async () => {

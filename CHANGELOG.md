@@ -7,6 +7,21 @@ All notable changes to sdkbump are listed here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- An app target whose Info.plist sdkbump could not read was reported as "Fails to launch" with an
+  SCN001 error that described "the Info.plist Xcode generates", even with
+  GENERATE_INFOPLIST_FILE = NO and a scene manifest in the real file. This happened when
+  INFOPLIST_FILE is set in an .xcconfig file, uses a build setting sdkbump does not expand
+  (`$(CUSTOM_DIR)/Info.plist`), names a missing file, or is a link to a file outside the project.
+  Such a target now gets an SCN001 **info** finding, "Scene configuration not checked", and the
+  verdict `unknown` ("Launch not determined"), which does not fail the run unless
+  `--fail-on info`. A target that names no INFOPLIST_FILE and does not have Xcode generate one
+  gets a note that the settings may come from an .xcconfig file.
+- The reports name the Info.plist of each target: the files read, "Info.plist written by Xcode",
+  or "Info.plist not read". The JSON report has `infoPlistSource` (`file`, `generated` or
+  `not-read`) on each target, and `lifecycle` is `unknown` when the Info.plist was not read.
+
 ## [0.1.1] - 2026-10-15
 
 ### Fixed
@@ -47,6 +62,7 @@ All notable changes to sdkbump are listed here. The format follows
   [examples/launch-matrix](examples/launch-matrix/README.md)). SCN002 became the window created in
   the app delegate, the black screen in rows E, G and H, and SCN003 the app delegate methods and
   launch option keys.
+
 - A fix for each finding by ecosystem and version: native and SwiftUI, Flutter (automatic
   migration only when Flutter's own conditions hold), React Native 0.88 or a hand-written scene
   delegate, Expo SDK 57's opt-in or SDK 58, with alternatives and guides.

@@ -22,6 +22,13 @@ export const LIFECYCLE_LABELS = {
   'app-delegate': 'app delegate life cycle',
   scenes: 'scene life cycle',
   swiftui: 'SwiftUI App (scenes)',
+  unknown: 'life cycle not determined',
+} as const;
+
+/** How the reports describe a target's Info.plist when it is not a file sdkbump read. */
+export const INFO_PLIST_LABELS = {
+  generated: 'Info.plist written by Xcode',
+  'not-read': 'Info.plist not read',
 } as const;
 
 /**

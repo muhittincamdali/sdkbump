@@ -20,7 +20,8 @@
         "lifecycle": "app-delegate",
         "infoPlists": [
           "Shelf/Info.plist"
-        ]
+        ],
+        "infoPlistSource": "file"
       }
     ]
   },

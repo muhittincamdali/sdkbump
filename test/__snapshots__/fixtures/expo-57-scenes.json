@@ -36,7 +36,8 @@
         "lifecycle": "scenes",
         "infoPlists": [
           "ios/expo57/Info.plist"
-        ]
+        ],
+        "infoPlistSource": "file"
       }
     ]
   },
