@@ -5,7 +5,7 @@ import type { AppModel } from '../collect/app.js';
 import { sceneManifest } from '../collect/app.js';
 import { atLeast, majorOf } from '../core/versions.js';
 import type { FixAdvice, Finding } from '../model.js';
-import type { RuleData, RuleId, Severity } from './data.js';
+import type { RuleData, RuleId, RuleSource, Severity } from './data.js';
 import {
   adoptScenesFix,
   bridgeAlternative,
@@ -49,6 +49,8 @@ function finding(
     alternatives?: FixAdvice[];
     severity?: Severity;
     title?: string;
+    /** Sources more specific than the rule's own. */
+    sources?: RuleSource[];
   },
 ): RawFinding {
   const definition = ruleOf(context.data, rule);
@@ -64,7 +66,7 @@ function finding(
     fix: values.fix,
     alternatives: values.alternatives ?? [],
     mitigation: installedWorkaround(context, rule),
-    sources: definition.sources,
+    sources: values.sources ?? definition.sources,
   };
 }
 
@@ -214,20 +216,24 @@ function scn003(context: Context): RawFinding[] {
     for (const match of matches(app.sources.files, (file) => hookPattern(hook, file.language))) {
       if (!inAppDelegate(app, match)) continue;
       const name = match.file.language === 'swift' ? hook.swift : hook.objc;
-      const what = hook.kind === 'method' ? name : `The launch option ${name}`;
+      const what =
+        hook.kind === 'method'
+          ? 'UIKit does not call this method'
+          : 'UIKit does not put this key in the launch options';
       const message = swiftUI
-        ? `A SwiftUI App runs on scenes, so UIKit does not ${hook.kind === 'method' ? `call ${name} on the adaptor delegate` : `put ${name} in the launch options`}. Use ${hook.swiftUI ?? hook.replacement} instead.`
-        : `${what} ${hook.kind === 'method' ? 'is not called' : 'is not set'} once the app uses scenes. Use ${hook.replacement}.`;
+        ? `A SwiftUI App runs on scenes, so ${what}${hook.kind === 'method' ? ' on the adaptor delegate' : ''}. Use ${hook.swiftUI ?? hook.replacement} instead.`
+        : `${what} once the app uses scenes. Use ${hook.replacement}.`;
       results.push(
         finding(context, 'SCN003', {
           title:
             hook.kind === 'method'
-              ? `${hook.swift} is not called with scenes`
-              : `${hook.swift} is empty with scenes`,
+              ? `${name} is not called with scenes`
+              : `${name} is empty with scenes`,
           message,
           path: match.file.path,
           line: match.file.lineAt(match.offset),
           fix: hookFix(context, hook, swiftUI),
+          sources: hook.sources,
         }),
       );
     }
@@ -252,6 +258,7 @@ function scn004(context: Context): RawFinding[] {
           path: match.file.path,
           line: match.file.lineAt(match.offset),
           fix: fixById(data, flutterChannel ? 'flutter-engine-bridge' : 'window-from-scene'),
+          sources: lookup.sources,
         }),
       );
     }
