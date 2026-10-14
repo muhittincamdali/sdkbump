@@ -71,6 +71,10 @@ describe('examples/github-actions/sdkbump.yml', () => {
     return { status: result.status, summary: readFileSync(summary, 'utf8') };
   };
 
+  it('limits how long the job may run', () => {
+    expect(workflow).toMatch(/^ {4}timeout-minutes: 10$/m);
+  });
+
   it('replaces only the tarball command', () => {
     expect(script).toContain('|| status=$?');
     expect(script).toContain('exit "$status"');
