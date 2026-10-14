@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "sdkbump",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "ios27",
+    "dataVersion": "2026.10.15",
+    "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)"
+  },
+  "project": {
+    "path": "fixtures/rn-087",
+    "name": "RN087App",
+    "ecosystem": "react-native",
+    "versions": [
+      {
+        "name": "react-native",
+        "version": "0.87.1",
+        "source": "declared"
+      }
+    ],
+    "targets": [
+      {
+        "name": "RN087App",
+        "lifecycle": "app-delegate",
+        "infoPlists": [
+          "ios/RN087App/Info.plist"
+        ]
+      }
+    ]
+  },
+  "verdict": {
+    "code": "fails-to-launch",
+    "text": "Fails to launch when built with the iOS 27 SDK."
+  },
+  "findings": [
+    {
+      "rule": "SCN001",
+      "severity": "error",
+      "title": "No scene configuration",
+      "message": "Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, the app stops at launch: \"UIScene life cycle is required for apps built with this SDK\".",
+      "line": null,
+      "target": "RN087App",
+      "owner": "app",
+      "fix": {
+        "id": "rn-upgrade-088",
+        "title": "Upgrade to React Native 0.88",
+        "steps": [
+          "React Native 0.88 moves the window and React Native start-up to a SceneDelegate and adds the scene manifest. On 15 October 2026 it is a release candidate (0.88.0-rc.6 on npm's next tag); 0.87.1 and earlier have no scene support.",
+          "Compare ios/ with the 0.88 template (AppDelegate.swift, SceneDelegate.swift, Info.plist) when you upgrade."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
+        "sources": [
+          {
+            "title": "react/react-native#58545: 0.87 and below crash upon launch on iOS 27",
+            "url": "https://github.com/react/react-native/issues/58545"
+          },
+          {
+            "title": "reactwg/react-native-releases#1439: pick SceneDelegate support into 0.87",
+            "url": "https://github.com/reactwg/react-native-releases/issues/1439"
+          }
+        ]
+      },
+      "alternatives": [
+        {
+          "id": "rn-manual-scene-delegate",
+          "title": "Add a SceneDelegate by hand",
+          "steps": [
+            "Port the 0.88 template's SceneDelegate and Info.plist manifest to your version: create the window from the UIWindowScene and start React Native into it there.",
+            "Before 0.88, startReactNative takes launch options, not connection options, so convert the connection options of a link that launches the app."
+          ],
+          "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
+          "sources": [
+            {
+              "title": "react/react-native#58545 (workarounds in the comments)",
+              "url": "https://github.com/react/react-native/issues/58545"
+            }
+          ]
+        },
+        {
+          "id": "workaround-react-native-uiscene-bridge",
+          "title": "Temporary: install react-native-uiscene-bridge",
+          "steps": [
+            "Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.",
+            "Limit: Tested in the simulator only, not on a device (its README).",
+            "Limit: One window: iPad multiwindow needs real scene support.",
+            "Limit: Universal links, Handoff and quick actions were not tested (its README).",
+            "Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported."
+          ],
+          "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
+          "sources": [
+            {
+              "title": "react-native-uiscene-bridge README",
+              "url": "https://github.com/Atomics-hub/react-native-uiscene-bridge"
+            }
+          ]
+        }
+      ],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        },
+        {
+          "title": "Apple: application(_:configurationForConnecting:options:)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:configurationforconnecting:options:)"
+        }
+      ],
+      "file": "ios/RN087App/Info.plist"
+    },
+    {
+      "rule": "SCN002",
+      "severity": "error",
+      "title": "Window created in the app delegate",
+      "message": "AppDelegate creates the window with UIWindow(frame:). With a scene, UIKit does not show a window that belongs to no scene, and the app opens to a black screen.",
+      "line": 24,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "rn-upgrade-088",
+        "title": "Upgrade to React Native 0.88",
+        "steps": [
+          "React Native 0.88 moves the window and React Native start-up to a SceneDelegate and adds the scene manifest. On 15 October 2026 it is a release candidate (0.88.0-rc.6 on npm's next tag); 0.87.1 and earlier have no scene support.",
+          "Compare ios/ with the 0.88 template (AppDelegate.swift, SceneDelegate.swift, Info.plist) when you upgrade."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
+        "sources": [
+          {
+            "title": "react/react-native#58545: 0.87 and below crash upon launch on iOS 27",
+            "url": "https://github.com/react/react-native/issues/58545"
+          },
+          {
+            "title": "reactwg/react-native-releases#1439: pick SceneDelegate support into 0.87",
+            "url": "https://github.com/reactwg/react-native-releases/issues/1439"
+          }
+        ]
+      },
+      "alternatives": [
+        {
+          "id": "rn-manual-scene-delegate",
+          "title": "Add a SceneDelegate by hand",
+          "steps": [
+            "Port the 0.88 template's SceneDelegate and Info.plist manifest to your version: create the window from the UIWindowScene and start React Native into it there.",
+            "Before 0.88, startReactNative takes launch options, not connection options, so convert the connection options of a link that launches the app."
+          ],
+          "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
+          "sources": [
+            {
+              "title": "react/react-native#58545 (workarounds in the comments)",
+              "url": "https://github.com/react/react-native/issues/58545"
+            }
+          ]
+        },
+        {
+          "id": "workaround-react-native-uiscene-bridge",
+          "title": "Temporary: install react-native-uiscene-bridge",
+          "steps": [
+            "Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.",
+            "Limit: Tested in the simulator only, not on a device (its README).",
+            "Limit: One window: iPad multiwindow needs real scene support.",
+            "Limit: Universal links, Handoff and quick actions were not tested (its README).",
+            "Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported."
+          ],
+          "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
+          "sources": [
+            {
+              "title": "react-native-uiscene-bridge README",
+              "url": "https://github.com/Atomics-hub/react-native-uiscene-bridge"
+            }
+          ]
+        }
+      ],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle (Configure your window scene)",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        }
+      ],
+      "file": "ios/RN087App/AppDelegate.swift"
+    }
+  ],
+  "notes": [],
+  "summary": {
+    "errors": 2,
+    "warnings": 0,
+    "info": 0,
+    "mitigated": 0
+  }
+}

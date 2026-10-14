@@ -1,0 +1,10 @@
+sdkbump 0.1.0 · rules ios27@2026.10.15 · iOS 27.0 SDK (Xcode 27.0, 27A266a)
+
+Shelf · native iOS · fixtures/native-uikit-scenes
+target Shelf: scene life cycle (Shelf/Info.plist)
+
+No findings for the checks in ios27@2026.10.15.
+
+0 errors, 0 warnings
+Guide: https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md
+What is checked: https://github.com/muhittincamdali/sdkbump#what-sdkbump-checks

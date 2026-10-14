@@ -1,0 +1,61 @@
+sdkbump 0.1.0 · rules ios27@2026.10.15 · iOS 27.0 SDK (Xcode 27.0, 27A266a)
+
+expo-57 · Expo · fixtures/expo-57
+react-native 0.86.3 (declared)
+expo 57.0.29 (declared)
+target expo57: app delegate life cycle (ios/expo57/Info.plist)
+
+Fails to launch when built with the iOS 27 SDK.
+
+ERROR    SCN001 No scene configuration
+         ios/expo57/Info.plist
+         Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement
+         application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, the app
+         stops at launch: "UIScene life cycle is required for apps built with this SDK".
+         Fix: [A] Turn on scene support (Expo SDK 57); or [B] Temporary: install
+         react-native-uiscene-bridge
+
+ERROR    SCN002 Window created in the app delegate
+         ios/expo57/AppDelegate.swift:24
+         AppDelegate creates the window with UIWindow(frame:). With a scene, UIKit does not show a
+         window that belongs to no scene, and the app opens to a black screen.
+         Fix: [A] Turn on scene support (Expo SDK 57); or [B] Temporary: install
+         react-native-uiscene-bridge
+
+WARNING  SCN003 application(_:open:options:) is not called with scenes
+         ios/expo57/AppDelegate.swift:35
+         UIKit does not call this method once the app uses scenes. Use scene(_:openURLContexts:),
+         and connectionOptions.urlContexts in scene(_:willConnectTo:options:) for a link that
+         launches the app.
+         Fix: [A] Turn on scene support (Expo SDK 57)
+
+WARNING  SCN003 application(_:continue:restorationHandler:) is not called with scenes
+         ios/expo57/AppDelegate.swift:44
+         UIKit does not call this method once the app uses scenes. Use scene(_:continue:), and
+         connectionOptions.userActivities in scene(_:willConnectTo:options:).
+         Fix: [A] Turn on scene support (Expo SDK 57)
+
+How to fix
+
+[A]      Turn on scene support (Expo SDK 57)
+         1. Use expo 57.0.23 or later and expo-build-properties 57.0.20 or later (npx expo install
+            expo-build-properties).
+         2. In app.json, add ["expo-build-properties", { "ios": { "enableSceneSupport": true } }] to
+            plugins.
+         3. Regenerate the native project: npx expo prebuild --clean -p ios. ExpoAppSceneDelegate
+            then creates the window and passes links, user activities and quick actions on to
+            AppDelegate.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md
+
+[B]      Temporary: install react-native-uiscene-bridge
+         1. Adds a scene configuration at run time, moves the app delegate's window into the scene
+            and passes links, user activities, quick actions and foreground and background events
+            back to the app delegate.
+         2. Limit: Tested in the simulator only, not on a device (its README).
+         3. Limit: One window: iPad multiwindow needs real scene support.
+         4. Limit: Universal links, Handoff and quick actions were not tested (its README).
+         5. Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md
+
+2 errors, 2 warnings
+Guide: https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md

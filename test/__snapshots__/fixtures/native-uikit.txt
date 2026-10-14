@@ -1,0 +1,104 @@
+sdkbump 0.1.0 · rules ios27@2026.10.15 · iOS 27.0 SDK (Xcode 27.0, 27A266a)
+
+Shelf · native iOS · fixtures/native-uikit
+target Shelf: app delegate life cycle (Shelf/Info.plist)
+
+Fails to launch when built with the iOS 27 SDK.
+
+ERROR    SCN001 No scene configuration
+         Shelf/Info.plist
+         Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement
+         application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, the app
+         stops at launch: "UIScene life cycle is required for apps built with this SDK".
+         Fix: [A] Adopt a scene delegate
+
+ERROR    SCN002 Window created in the app delegate
+         Shelf/AppDelegate.swift:12
+         AppDelegate creates the window with UIWindow(frame:). With a scene, UIKit does not show a
+         window that belongs to no scene, and the app opens to a black screen.
+         Fix: [B] Create the window in the scene delegate
+
+WARNING  SCN003 launchOptions[.url] is empty with scenes
+         Shelf/AppDelegate.swift:18
+         UIKit does not put this key in the launch options once the app uses scenes. Use
+         connectionOptions.urlContexts in scene(_:willConnectTo:options:).
+         Fix: [C] Move it to the scene delegate
+
+WARNING  SCN003 launchOptions[.shortcutItem] is empty with scenes
+         Shelf/AppDelegate.swift:21
+         UIKit does not put this key in the launch options once the app uses scenes. Use
+         connectionOptions.shortcutItem in scene(_:willConnectTo:options:).
+         Fix: [C] Move it to the scene delegate
+
+WARNING  SCN003 application(_:open:options:) is not called with scenes
+         Shelf/AppDelegate.swift:29
+         UIKit does not call this method once the app uses scenes. Use scene(_:openURLContexts:),
+         and connectionOptions.urlContexts in scene(_:willConnectTo:options:) for a link that
+         launches the app.
+         Fix: [C] Move it to the scene delegate
+
+WARNING  SCN003 application(_:continue:restorationHandler:) is not called with scenes
+         Shelf/AppDelegate.swift:38
+         UIKit does not call this method once the app uses scenes. Use scene(_:continue:), and
+         connectionOptions.userActivities in scene(_:willConnectTo:options:).
+         Fix: [C] Move it to the scene delegate
+
+WARNING  SCN003 application(_:performActionFor:completionHandler:) is not called with scenes
+         Shelf/AppDelegate.swift:48
+         UIKit does not call this method once the app uses scenes. Use
+         windowScene(_:performActionFor:completionHandler:), and connectionOptions.shortcutItem in
+         scene(_:willConnectTo:options:).
+         Fix: [C] Move it to the scene delegate
+
+WARNING  SCN003 applicationDidBecomeActive(_:) is not called with scenes
+         Shelf/AppDelegate.swift:56
+         UIKit does not call this method once the app uses scenes. Use sceneDidBecomeActive(_:), or
+         UIApplication.didBecomeActiveNotification for the whole app.
+         Fix: [C] Move it to the scene delegate
+
+WARNING  SCN003 applicationDidEnterBackground(_:) is not called with scenes
+         Shelf/AppDelegate.swift:60
+         UIKit does not call this method once the app uses scenes. Use sceneDidEnterBackground(_:),
+         or UIApplication.didEnterBackgroundNotification for the whole app.
+         Fix: [C] Move it to the scene delegate
+
+WARNING  SCN004 Window looked up through keyWindow
+         Shelf/Router.swift:35
+         keyWindow returns a key window across all connected scenes (deprecated in iOS 13).
+         Fix: [D] Find the window through the scene
+
+WARNING  SCN004 Window looked up through UIApplication.windows
+         Shelf/Router.swift:36
+         windows lists the windows of every scene (deprecated in iOS 15); use the windows of the
+         relevant UIWindowScene.
+         Fix: [D] Find the window through the scene
+
+How to fix
+
+[A]      Adopt a scene delegate
+         1. Add a SceneDelegate class (UIResponder, UIWindowSceneDelegate) that creates the window
+            in scene(_:willConnectTo:options:).
+         2. Add UIApplicationSceneManifest to Info.plist with a UIWindowSceneSessionRoleApplication
+            configuration whose UISceneDelegateClassName is $(PRODUCT_MODULE_NAME).SceneDelegate, or
+            implement application(_:configurationForConnecting:options:).
+         3. Move the app delegate methods sdkbump lists under SCN003 to the scene delegate.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md
+
+[B]      Create the window in the scene delegate
+         1. In scene(_:willConnectTo:options:), create the window with UIWindow(windowScene:), set
+            its root view controller and call makeKeyAndVisible().
+         2. Remove the window creation from application(_:didFinishLaunchingWithOptions:).
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md
+
+[C]      Move it to the scene delegate
+         1. Implement the scene delegate method named in the finding and move the code there.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md
+
+[D]      Find the window through the scene
+         1. From a view or view controller, use view.window or view.window?.windowScene.
+         2. Elsewhere, pick the foreground UIWindowScene from UIApplication.shared.connectedScenes
+            and use its keyWindow or windows.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md
+
+2 errors, 9 warnings
+Guide: https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "sdkbump",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "ios27",
+    "dataVersion": "2026.10.15",
+    "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)"
+  },
+  "project": {
+    "path": "fixtures/expo-58",
+    "name": "expo-template-bare-minimum",
+    "ecosystem": "expo",
+    "versions": [
+      {
+        "name": "react-native",
+        "version": "0.88.0-rc.4",
+        "source": "declared"
+      },
+      {
+        "name": "expo",
+        "version": "58.0.9",
+        "source": "declared"
+      }
+    ],
+    "targets": [
+      {
+        "name": "HelloWorld",
+        "lifecycle": "scenes",
+        "infoPlists": [
+          "ios/HelloWorld/Info.plist"
+        ]
+      }
+    ]
+  },
+  "verdict": {
+    "code": "no-findings",
+    "text": "No findings for the checks in ios27@2026.10.15."
+  },
+  "findings": [],
+  "notes": [],
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "mitigated": 0
+  }
+}

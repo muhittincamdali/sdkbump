@@ -1,0 +1,401 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "sdkbump",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "ios27",
+    "dataVersion": "2026.10.15",
+    "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)"
+  },
+  "project": {
+    "path": "fixtures/native-uikit",
+    "name": "Shelf",
+    "ecosystem": "native",
+    "versions": [],
+    "targets": [
+      {
+        "name": "Shelf",
+        "lifecycle": "app-delegate",
+        "infoPlists": [
+          "Shelf/Info.plist"
+        ]
+      }
+    ]
+  },
+  "verdict": {
+    "code": "fails-to-launch",
+    "text": "Fails to launch when built with the iOS 27 SDK."
+  },
+  "findings": [
+    {
+      "rule": "SCN001",
+      "severity": "error",
+      "title": "No scene configuration",
+      "message": "Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, the app stops at launch: \"UIScene life cycle is required for apps built with this SDK\".",
+      "line": null,
+      "target": "Shelf",
+      "owner": "app",
+      "fix": {
+        "id": "native-adopt-scenes",
+        "title": "Adopt a scene delegate",
+        "steps": [
+          "Add a SceneDelegate class (UIResponder, UIWindowSceneDelegate) that creates the window in scene(_:willConnectTo:options:).",
+          "Add UIApplicationSceneManifest to Info.plist with a UIWindowSceneSessionRoleApplication configuration whose UISceneDelegateClassName is $(PRODUCT_MODULE_NAME).SceneDelegate, or implement application(_:configurationForConnecting:options:).",
+          "Move the app delegate methods sdkbump lists under SCN003 to the scene delegate."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: Transitioning to the UIKit scene-based life cycle",
+            "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        },
+        {
+          "title": "Apple: application(_:configurationForConnecting:options:)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:configurationforconnecting:options:)"
+        }
+      ],
+      "file": "Shelf/Info.plist"
+    },
+    {
+      "rule": "SCN002",
+      "severity": "error",
+      "title": "Window created in the app delegate",
+      "message": "AppDelegate creates the window with UIWindow(frame:). With a scene, UIKit does not show a window that belongs to no scene, and the app opens to a black screen.",
+      "line": 12,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "native-window-in-scene",
+        "title": "Create the window in the scene delegate",
+        "steps": [
+          "In scene(_:willConnectTo:options:), create the window with UIWindow(windowScene:), set its root view controller and call makeKeyAndVisible().",
+          "Remove the window creation from application(_:didFinishLaunchingWithOptions:)."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: Transitioning to the UIKit scene-based life cycle (Configure your window scene)",
+            "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle (Configure your window scene)",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        }
+      ],
+      "file": "Shelf/AppDelegate.swift"
+    },
+    {
+      "rule": "SCN003",
+      "severity": "warning",
+      "title": "launchOptions[.url] is empty with scenes",
+      "message": "UIKit does not put this key in the launch options once the app uses scenes. Use connectionOptions.urlContexts in scene(_:willConnectTo:options:).",
+      "line": 18,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "native-move-hook",
+        "title": "Move it to the scene delegate",
+        "steps": [
+          "Implement the scene delegate method named in the finding and move the code there."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: Transitioning to the UIKit scene-based life cycle (Migrate app life-cycle logic)",
+            "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: UIApplication.LaunchOptionsKey.url (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/launchoptionskey/url"
+        }
+      ],
+      "file": "Shelf/AppDelegate.swift"
+    },
+    {
+      "rule": "SCN003",
+      "severity": "warning",
+      "title": "launchOptions[.shortcutItem] is empty with scenes",
+      "message": "UIKit does not put this key in the launch options once the app uses scenes. Use connectionOptions.shortcutItem in scene(_:willConnectTo:options:).",
+      "line": 21,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "native-move-hook",
+        "title": "Move it to the scene delegate",
+        "steps": [
+          "Implement the scene delegate method named in the finding and move the code there."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: Transitioning to the UIKit scene-based life cycle (Migrate app life-cycle logic)",
+            "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: UIApplication.LaunchOptionsKey.shortcutItem (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/launchoptionskey/shortcutitem"
+        }
+      ],
+      "file": "Shelf/AppDelegate.swift"
+    },
+    {
+      "rule": "SCN003",
+      "severity": "warning",
+      "title": "application(_:open:options:) is not called with scenes",
+      "message": "UIKit does not call this method once the app uses scenes. Use scene(_:openURLContexts:), and connectionOptions.urlContexts in scene(_:willConnectTo:options:) for a link that launches the app.",
+      "line": 29,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "native-move-hook",
+        "title": "Move it to the scene delegate",
+        "steps": [
+          "Implement the scene delegate method named in the finding and move the code there."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: Transitioning to the UIKit scene-based life cycle (Migrate app life-cycle logic)",
+            "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: application(_:open:options:) (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:open:options:)"
+        }
+      ],
+      "file": "Shelf/AppDelegate.swift"
+    },
+    {
+      "rule": "SCN003",
+      "severity": "warning",
+      "title": "application(_:continue:restorationHandler:) is not called with scenes",
+      "message": "UIKit does not call this method once the app uses scenes. Use scene(_:continue:), and connectionOptions.userActivities in scene(_:willConnectTo:options:).",
+      "line": 38,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "native-move-hook",
+        "title": "Move it to the scene delegate",
+        "steps": [
+          "Implement the scene delegate method named in the finding and move the code there."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: Transitioning to the UIKit scene-based life cycle (Migrate app life-cycle logic)",
+            "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: application(_:continue:restorationHandler:) (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:continue:restorationhandler:)"
+        }
+      ],
+      "file": "Shelf/AppDelegate.swift"
+    },
+    {
+      "rule": "SCN003",
+      "severity": "warning",
+      "title": "application(_:performActionFor:completionHandler:) is not called with scenes",
+      "message": "UIKit does not call this method once the app uses scenes. Use windowScene(_:performActionFor:completionHandler:), and connectionOptions.shortcutItem in scene(_:willConnectTo:options:).",
+      "line": 48,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "native-move-hook",
+        "title": "Move it to the scene delegate",
+        "steps": [
+          "Implement the scene delegate method named in the finding and move the code there."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: Transitioning to the UIKit scene-based life cycle (Migrate app life-cycle logic)",
+            "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: application(_:performActionFor:completionHandler:) (not called for scene-based apps)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:performactionfor:completionhandler:)"
+        }
+      ],
+      "file": "Shelf/AppDelegate.swift"
+    },
+    {
+      "rule": "SCN003",
+      "severity": "warning",
+      "title": "applicationDidBecomeActive(_:) is not called with scenes",
+      "message": "UIKit does not call this method once the app uses scenes. Use sceneDidBecomeActive(_:), or UIApplication.didBecomeActiveNotification for the whole app.",
+      "line": 56,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "native-move-hook",
+        "title": "Move it to the scene delegate",
+        "steps": [
+          "Implement the scene delegate method named in the finding and move the code there."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: Transitioning to the UIKit scene-based life cycle (Migrate app life-cycle logic)",
+            "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: applicationDidBecomeActive(_:)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/applicationdidbecomeactive(_:)"
+        }
+      ],
+      "file": "Shelf/AppDelegate.swift"
+    },
+    {
+      "rule": "SCN003",
+      "severity": "warning",
+      "title": "applicationDidEnterBackground(_:) is not called with scenes",
+      "message": "UIKit does not call this method once the app uses scenes. Use sceneDidEnterBackground(_:), or UIApplication.didEnterBackgroundNotification for the whole app.",
+      "line": 60,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "native-move-hook",
+        "title": "Move it to the scene delegate",
+        "steps": [
+          "Implement the scene delegate method named in the finding and move the code there."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: Transitioning to the UIKit scene-based life cycle (Migrate app life-cycle logic)",
+            "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: applicationDidEnterBackground(_:)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/applicationdidenterbackground(_:)"
+        }
+      ],
+      "file": "Shelf/AppDelegate.swift"
+    },
+    {
+      "rule": "SCN004",
+      "severity": "warning",
+      "title": "Window looked up through keyWindow",
+      "message": "keyWindow returns a key window across all connected scenes (deprecated in iOS 13).",
+      "line": 35,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "window-from-scene",
+        "title": "Find the window through the scene",
+        "steps": [
+          "From a view or view controller, use view.window or view.window?.windowScene.",
+          "Elsewhere, pick the foreground UIWindowScene from UIApplication.shared.connectedScenes and use its keyWindow or windows."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: UIApplication.windows",
+            "url": "https://developer.apple.com/documentation/uikit/uiapplication/windows"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: UIApplication.keyWindow",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/keywindow"
+        }
+      ],
+      "file": "Shelf/Router.swift"
+    },
+    {
+      "rule": "SCN004",
+      "severity": "warning",
+      "title": "Window looked up through UIApplication.windows",
+      "message": "windows lists the windows of every scene (deprecated in iOS 15); use the windows of the relevant UIWindowScene.",
+      "line": 36,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "window-from-scene",
+        "title": "Find the window through the scene",
+        "steps": [
+          "From a view or view controller, use view.window or view.window?.windowScene.",
+          "Elsewhere, pick the foreground UIWindowScene from UIApplication.shared.connectedScenes and use its keyWindow or windows."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: UIApplication.windows",
+            "url": "https://developer.apple.com/documentation/uikit/uiapplication/windows"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: UIApplication.windows",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/windows"
+        }
+      ],
+      "file": "Shelf/Router.swift"
+    }
+  ],
+  "notes": [],
+  "summary": {
+    "errors": 2,
+    "warnings": 9,
+    "info": 0,
+    "mitigated": 0
+  }
+}

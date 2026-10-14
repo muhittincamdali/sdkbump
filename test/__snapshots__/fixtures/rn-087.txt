@@ -1,0 +1,52 @@
+sdkbump 0.1.0 · rules ios27@2026.10.15 · iOS 27.0 SDK (Xcode 27.0, 27A266a)
+
+RN087App · React Native · fixtures/rn-087
+react-native 0.87.1 (declared)
+target RN087App: app delegate life cycle (ios/RN087App/Info.plist)
+
+Fails to launch when built with the iOS 27 SDK.
+
+ERROR    SCN001 No scene configuration
+         ios/RN087App/Info.plist
+         Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement
+         application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, the app
+         stops at launch: "UIScene life cycle is required for apps built with this SDK".
+         Fix: [A] Upgrade to React Native 0.88; or [B] Add a SceneDelegate by hand; or [C]
+         Temporary: install react-native-uiscene-bridge
+
+ERROR    SCN002 Window created in the app delegate
+         ios/RN087App/AppDelegate.swift:24
+         AppDelegate creates the window with UIWindow(frame:). With a scene, UIKit does not show a
+         window that belongs to no scene, and the app opens to a black screen.
+         Fix: [A] Upgrade to React Native 0.88; or [B] Add a SceneDelegate by hand; or [C]
+         Temporary: install react-native-uiscene-bridge
+
+How to fix
+
+[A]      Upgrade to React Native 0.88
+         1. React Native 0.88 moves the window and React Native start-up to a SceneDelegate and adds
+            the scene manifest. On 15 October 2026 it is a release candidate (0.88.0-rc.6 on npm's
+            next tag); 0.87.1 and earlier have no scene support.
+         2. Compare ios/ with the 0.88 template (AppDelegate.swift, SceneDelegate.swift, Info.plist)
+            when you upgrade.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md
+
+[B]      Add a SceneDelegate by hand
+         1. Port the 0.88 template's SceneDelegate and Info.plist manifest to your version: create
+            the window from the UIWindowScene and start React Native into it there.
+         2. Before 0.88, startReactNative takes launch options, not connection options, so convert
+            the connection options of a link that launches the app.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md
+
+[C]      Temporary: install react-native-uiscene-bridge
+         1. Adds a scene configuration at run time, moves the app delegate's window into the scene
+            and passes links, user activities, quick actions and foreground and background events
+            back to the app delegate.
+         2. Limit: Tested in the simulator only, not on a device (its README).
+         3. Limit: One window: iPad multiwindow needs real scene support.
+         4. Limit: Universal links, Handoff and quick actions were not tested (its README).
+         5. Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md
+
+2 errors, 0 warnings
+Guide: https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md
