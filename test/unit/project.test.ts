@@ -1,3 +1,5 @@
+import { execFileSync } from 'node:child_process';
+import { mkdirSync, symlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { detectProject, ProjectError } from '../../src/detect/project.js';
@@ -145,5 +147,74 @@ describe('detectProject', () => {
     const root = tree({ 'README.md': '# x' });
     await expect(detectProject(join(root, 'missing'))).rejects.toThrow(/does not exist/);
     await expect(detectProject(join(root, 'README.md'))).rejects.toThrow(/not a folder/);
+  });
+});
+
+describe('detectProject with project files it does not read', () => {
+  const nativeWith = (link: string, to: string) => {
+    const root = tree({ 'App.xcodeproj/project.pbxproj': pbxproj });
+    symlinkSync(to, join(root, link));
+    return root;
+  };
+
+  it.each(['package.json', 'pubspec.yaml'])(
+    'skips %s when it is /dev/zero',
+    { timeout: 2000 },
+    async (name) => {
+      const project = await detectProject(nativeWith(name, '/dev/zero'));
+      expect(project.ecosystem).toBe('native');
+    },
+  );
+
+  it('skips a pubspec.yaml that is a FIFO', { timeout: 2000 }, async () => {
+    const root = tree({ 'App.xcodeproj/project.pbxproj': pbxproj });
+    execFileSync('mkfifo', [join(root, 'pubspec.yaml')]);
+    expect((await detectProject(root)).ecosystem).toBe('native');
+  });
+
+  it('skips a package.json linked from outside the project', async () => {
+    const outside = tree({
+      'package.json': JSON.stringify({ dependencies: { 'react-native': '0.87.1' } }),
+    });
+    const root = nativeWith('package.json', join(outside, 'package.json'));
+    expect((await detectProject(root)).ecosystem).toBe('native');
+  });
+
+  it('skips an app.json that is /dev/zero', { timeout: 2000 }, async () => {
+    const root = tree({ 'package.json': JSON.stringify({ dependencies: { expo: '~57.0.29' } }) });
+    symlinkSync('/dev/zero', join(root, 'app.json'));
+    const project = await detectProject(root);
+    expect(project.ecosystem).toBe('expo');
+    expect(project.expoConfig).toBeNull();
+  });
+
+  it('reads an installed package that node_modules links from outside the app folder', async () => {
+    // pnpm and workspaces keep the package elsewhere and link it into the app's node_modules.
+    const store = tree({ 'react-native/package.json': '{ "version": "0.87.1" }' });
+    const root = tree({
+      'package.json': JSON.stringify({ dependencies: { 'react-native': '^0.87.0' } }),
+      'ios/RNApp.xcodeproj/project.pbxproj': pbxproj,
+    });
+    mkdirSync(join(root, 'node_modules'));
+    symlinkSync(join(store, 'react-native'), join(root, 'node_modules', 'react-native'));
+    const project = await detectProject(root);
+    expect(project.packages.get('react-native')).toMatchObject({
+      version: '0.87.1',
+      source: 'installed',
+    });
+  });
+
+  it('skips an installed package.json that is /dev/zero', { timeout: 2000 }, async () => {
+    const root = tree({
+      'package.json': JSON.stringify({ dependencies: { 'react-native': '^0.87.0' } }),
+      'ios/RNApp.xcodeproj/project.pbxproj': pbxproj,
+      'node_modules/react-native/README.md': '',
+    });
+    symlinkSync('/dev/zero', join(root, 'node_modules/react-native/package.json'));
+    const project = await detectProject(root);
+    expect(project.packages.get('react-native')).toMatchObject({
+      version: '0.87.0',
+      source: 'declared',
+    });
   });
 });

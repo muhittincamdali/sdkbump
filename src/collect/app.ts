@@ -62,7 +62,7 @@ export async function collectApp(project: Project): Promise<AppModel> {
   for (const path of project.xcodeProjects) {
     let xcode: Awaited<ReturnType<typeof readXcodeProject>>;
     try {
-      xcode = await readXcodeProject(path);
+      xcode = await readXcodeProject(path, project.root);
     } catch (error) {
       notes.push(`${path}: ${(error as Error).message}`);
       continue;

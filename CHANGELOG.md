@@ -7,6 +7,15 @@ All notable changes to sdkbump are listed here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- package.json, package-lock.json, app.json, pubspec.yaml, .fvmrc, .fvm/fvm_config.json,
+  project.pbxproj and the Flutter Runner's AppDelegate files are read only when they are regular
+  files inside the project folder, as the Info.plist named in INFOPLIST_FILE already was. A
+  package.json linked to /dev/zero, or a pubspec.yaml that is a FIFO, made the scan wait forever.
+  The package.json of an installed package in node_modules only has to be a regular file, since
+  pnpm and workspaces link it from outside the app folder.
+
 ## [0.1.0] - 2026-10-15
 
 ### Added

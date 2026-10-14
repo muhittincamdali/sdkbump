@@ -1,4 +1,4 @@
-import { readFileSync, symlinkSync } from 'node:fs';
+import { readFileSync, symlinkSync, unlinkSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { Report } from '../../src/model.js';
@@ -298,6 +298,14 @@ describe('Flutter', () => {
       flutter(FLUTTER_TEMPLATE, 'flutter:\n  config:\n    enable-uiscene-migration: false\n'),
     );
     expect(report.findings[0]?.message).toContain('enable-uiscene-migration: false');
+  });
+
+  it('does not read an AppDelegate.swift that is /dev/zero', { timeout: 2000 }, async () => {
+    const root = flutter(FLUTTER_TEMPLATE);
+    unlinkSync(join(root, 'ios/Runner/AppDelegate.swift'));
+    symlinkSync('/dev/zero', join(root, 'ios/Runner/AppDelegate.swift'));
+    const report = await scan(root);
+    expect(report.findings[0]?.fix?.id).toBe('flutter-manual-migration');
   });
 });
 
