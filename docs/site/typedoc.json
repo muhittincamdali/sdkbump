@@ -1,0 +1,45 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "sdkbump",
+  "entryPoints": [
+    "../../src/index.ts"
+  ],
+  "tsconfig": "./tsconfig.json",
+  "out": "../../site",
+  "readme": "./index.md",
+  "projectDocuments": [
+    "../guides/why-it-crashes.md",
+    "../guides/native-ios.md",
+    "../guides/flutter.md",
+    "../guides/react-native-expo.md",
+    "../guides/native-module-authors.md"
+  ],
+  "customCss": "./theme.css",
+  "navigationLinks": {
+    "GitHub": "https://github.com/muhittincamdali/sdkbump"
+  },
+  "sourceLinkTemplate": "https://github.com/muhittincamdali/sdkbump/blob/{gitRevision}/{path}#L{line}",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "validation": {
+    "notExported": true,
+    "invalidLink": true,
+    "notDocumented": false
+  },
+  "treatWarningsAsErrors": true,
+  "alwaysCreateEntryPointModule": false,
+  "highlightLanguages": [
+    "bash",
+    "sh",
+    "json",
+    "swift",
+    "text",
+    "ts",
+    "typescript",
+    "xml",
+    "yaml",
+    "objc",
+    "js",
+    "javascript"
+  ]
+}
