@@ -1,0 +1,51 @@
+# Copy to .github/workflows/sdkbump.yml in an app repository. On every pull request that changes
+# the iOS app, the sdkbump report is added to the job summary and kept as an artifact, and the job
+# fails when sdkbump finds something that stops the app at launch or blanks its screen (errors).
+# Add `--fail-on warning` to fail on warnings too, or `--fail-on none` to report only.
+#
+# sdkbump is not on npm yet; until it is, the job runs the 0.1.0 release tarball from GitHub.
+# Afterwards, `npx --yes sdkbump@0.1` does the same.
+name: sdkbump
+
+on:
+  pull_request:
+    paths:
+      - 'ios/**'
+      - '*.xcodeproj/**'
+      - '**/Info.plist'
+      - '**/*.swift'
+      - '**/*.m'
+      - 'package.json'
+      - 'app.json'
+      - 'pubspec.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+
+      - name: Check for the iOS 27 SDK changes
+        run: |
+          status=0
+          npx --yes https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz \
+            --format markdown --output sdkbump.md || status=$?
+          cat sdkbump.md >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: sdkbump-report
+          path: sdkbump.md
+          if-no-files-found: ignore
