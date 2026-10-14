@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@cc0f3450854de00de41b3dba9897f5895f953fda status=reviewed -->
+<!-- i18n-source: README.md@f2adb6fc5c1f0fbde9297e7b23a7bb6c4c25ca55 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -263,7 +263,7 @@ olduğuna bağlıdır:
 | Node.js      | 22.12          |
 
 sdkbump'ın Xcode'a ihtiyacı yoktur: dosyaları okur, bu yüzden Linux'ta da çalışır. CI testleri
-Node.js 22 ve 24'te (Linux) çalıştırır; yerelde 239 testin tamamı bir Mac'te (Apple silicon)
+Node.js 22 ve 24'te (Linux) çalıştırır; yerelde 262 testin tamamı bir Mac'te (Apple silicon)
 Node.js 22.23, 24.22 ve 26.11 ile geçer. Simülatör kayıtları Xcode 27 yüklü bir Mac gerektirir ve
 CI'ın parçası değildir.
 

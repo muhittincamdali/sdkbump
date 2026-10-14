@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@cc0f3450854de00de41b3dba9897f5895f953fda status=reviewed -->
+<!-- i18n-source: README.md@f2adb6fc5c1f0fbde9297e7b23a7bb6c4c25ca55 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -201,7 +201,7 @@ API 参考与指南：[muhittincamdali.github.io/sdkbump](https://muhittincamdal
 | ------- | -------- |
 | Node.js | 22.12    |
 
-sdkbump 不需要 Xcode：它只读取文件，因此也可以在 Linux 上运行。CI 在 Node.js 22 和 24（Linux）上运行测试；在本地的 Mac（Apple silicon）上，全部 239 个测试在 Node.js 22.23、24.22 和 26.11 上均通过。模拟器录像需要安装了 Xcode 27 的 Mac，不属于 CI 的一部分。
+sdkbump 不需要 Xcode：它只读取文件，因此也可以在 Linux 上运行。CI 在 Node.js 22 和 24（Linux）上运行测试；在本地的 Mac（Apple silicon）上，全部 262 个测试在 Node.js 22.23、24.22 和 26.11 上均通过。模拟器录像需要安装了 Xcode 27 的 Mac，不属于 CI 的一部分。
 
 ## 架构
 
