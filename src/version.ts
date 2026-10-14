@@ -6,5 +6,5 @@ const manifest = JSON.parse(readFileSync(new URL('../package.json', import.meta.
   version: string;
 };
 
-/** Version of the installed podexit package, read from its package.json. */
+/** Version of the installed sdkbump package, read from its package.json. */
 export const VERSION: string = manifest.version;
