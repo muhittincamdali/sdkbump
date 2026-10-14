@@ -1,7 +1,7 @@
 // Everything the rules look at for one project: its iOS app targets with their Info.plist, and
 // the index of the app's own Swift and Objective-C sources.
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { readFile, realpath, stat } from 'node:fs/promises';
+import { isAbsolute, join, relative, sep } from 'node:path';
 import type { Project } from '../detect/project.js';
 import { generatesInfoPlist, infoPlistFiles, iosAppTargets, readXcodeProject } from './pbxproj.js';
 import { isDict, type PlistDict, parsePlist } from './plist.js';
@@ -30,10 +30,34 @@ export interface AppModel {
   notes: string[];
 }
 
-async function readInfoPlist(path: string, notes: string[]): Promise<InfoPlistFile | null> {
+/** Whether `path` is `folder` or inside it (both already resolved with realpath). */
+function isInside(path: string, folder: string): boolean {
+  const rest = relative(folder, path);
+  return rest !== '..' && !rest.startsWith(`..${sep}`) && !isAbsolute(rest);
+}
+
+/**
+ * Reads the Info.plist a target names. INFOPLIST_FILE comes from the checked project, so a path
+ * that leads (through `..`, an absolute path or a symbolic link) outside the project folder is
+ * not read, and neither is anything but a regular file: /dev/zero would never end.
+ */
+async function readInfoPlist(
+  path: string,
+  projectRoot: string,
+  notes: string[],
+): Promise<InfoPlistFile | null> {
   let bytes: Uint8Array;
   try {
-    bytes = await readFile(path);
+    const real = await realpath(path);
+    if (!isInside(real, projectRoot)) {
+      notes.push(`${path} is named in INFOPLIST_FILE but is outside the project; it was not read.`);
+      return null;
+    }
+    if (!(await stat(real)).isFile()) {
+      notes.push(`${path} is named in INFOPLIST_FILE but is not a file; it was not read.`);
+      return null;
+    }
+    bytes = await readFile(real);
   } catch {
     notes.push(`${path} is named in INFOPLIST_FILE but does not exist.`);
     return null;
@@ -52,6 +76,7 @@ async function readInfoPlist(path: string, notes: string[]): Promise<InfoPlistFi
 export async function collectApp(project: Project): Promise<AppModel> {
   const notes: string[] = [];
   const targets: AppTarget[] = [];
+  const projectRoot = await realpath(project.root);
   for (const path of project.xcodeProjects) {
     let xcode: Awaited<ReturnType<typeof readXcodeProject>>;
     try {
@@ -69,7 +94,7 @@ export async function collectApp(project: Project): Promise<AppModel> {
       }
       const infoPlists: InfoPlistFile[] = [];
       for (const file of files) {
-        const plist = await readInfoPlist(file, notes);
+        const plist = await readInfoPlist(file, projectRoot, notes);
         if (plist) infoPlists.push(plist);
       }
       targets.push({
