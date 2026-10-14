@@ -1,0 +1,65 @@
+{
+  "name": "sdkbump",
+  "version": "0.1.0",
+  "description": "Checks a native iOS, Flutter or React Native/Expo project for what the iOS 27 SDK changes, starting with the UIScene life cycle, and says which fix applies to each finding.",
+  "keywords": [
+    "ios27",
+    "xcode27",
+    "uiscene",
+    "scenedelegate",
+    "flutter",
+    "react-native",
+    "expo",
+    "ios",
+    "migration",
+    "cli"
+  ],
+  "homepage": "https://github.com/muhittincamdali/sdkbump#readme",
+  "bugs": "https://github.com/muhittincamdali/sdkbump/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muhittincamdali/sdkbump.git"
+  },
+  "license": "MIT",
+  "author": "Muhittin Camdali",
+  "type": "module",
+  "bin": {
+    "sdkbump": "dist/cli/main.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "rules/*.json",
+    "!dist/**/*.map"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "lint": "biome lint --error-on-warnings . && prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "commander": "15.0.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@types/node": "24.19.2",
+    "@vitest/coverage-v8": "5.0.4",
+    "prettier": "3.9.10",
+    "typescript": "7.0.2",
+    "vitest": "5.0.4"
+  }
+}

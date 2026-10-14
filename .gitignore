@@ -1,0 +1,24 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+*.tgz
+
+# Documentation site build
+/site/
+docs/site/node_modules/
+
+# lychee link checker cache (local runs of the links job)
+.lycheecache
+
+# Local scratch space
+_work/
+
+# Xcode and CocoaPods output, in case a fixture is built locally
+xcuserdata/
+DerivedData/
+build/
+Pods/
+
+# macOS
+.DS_Store
