@@ -14,6 +14,6 @@
     "guides": "docs/guides/",
     "examples": "examples/"
   },
-  "languages": ["en"],
+  "languages": ["en", "tr", "zh-CN", "ja", "ko", "es", "de", "fr", "pt-BR", "ru"],
   "socialTheme": "dark"
 }
