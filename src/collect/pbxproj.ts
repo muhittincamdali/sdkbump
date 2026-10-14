@@ -1,8 +1,8 @@
 // Reads the app targets of an Xcode project from project.pbxproj (an old-style "OpenStep"
 // property list): their names, product types and the build settings that decide which Info.plist
 // they use and which platform they build for.
-import { readFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
+import { NOT_READ, readProjectFile } from '../core/files.js';
 
 export type OpenStepValue = string | OpenStepValue[] | OpenStepDict;
 export interface OpenStepDict {
@@ -199,15 +199,15 @@ export function readTargets(pbxproj: OpenStepValue): XcodeTarget[] {
   return targets;
 }
 
-/** Reads `<path>.xcodeproj/project.pbxproj`. */
-export async function readXcodeProject(path: string): Promise<XcodeProject> {
+/**
+ * Reads `<path>.xcodeproj/project.pbxproj` when it is a regular file inside `root` (by default
+ * the .xcodeproj folder itself).
+ */
+export async function readXcodeProject(path: string, root = path): Promise<XcodeProject> {
   const file = join(path, 'project.pbxproj');
-  let text: string;
-  try {
-    text = await readFile(file, 'utf8');
-  } catch {
-    throw new XcodeProjectError(`${file} cannot be read.`);
-  }
+  const read = await readProjectFile(file, root);
+  if (!read.found) throw new XcodeProjectError(`${file} ${NOT_READ[read.reason]}`);
+  const text = read.bytes.toString('utf8');
   return { path, sourceRoot: dirname(resolve(path)), targets: readTargets(parseOpenStep(text)) };
 }
 

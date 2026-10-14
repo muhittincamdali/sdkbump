@@ -1,8 +1,8 @@
 // Which fix applies to a finding: by ecosystem, version and (for Flutter) whether the Flutter tool
 // can migrate the app by itself; and which installed workaround handles it at run time.
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
 import { type AppModel, flutterAppDelegatePaths } from '../collect/app.js';
+import { readProjectText } from '../core/files.js';
 import { atLeast, majorOf } from '../core/versions.js';
 import type { FixAdvice, Mitigation } from '../model.js';
 import type {
@@ -88,7 +88,7 @@ export async function flutterMigration(app: AppModel, data: RuleData): Promise<F
     reasons.push('Info.plist does not set UIMainStoryboardFile to Main.');
   }
   const paths = flutterAppDelegatePaths(project.iosDir ?? project.root);
-  const read = (path: string) => readFile(path, 'utf8').catch(() => null);
+  const read = (path: string) => readProjectText(path, project.root);
   const swift = await read(paths.swift);
   if (swift !== null) {
     if (!data.flutterTemplates.swift.includes(sha256(swift))) {

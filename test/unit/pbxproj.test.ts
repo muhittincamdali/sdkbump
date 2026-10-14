@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -101,6 +101,12 @@ describe('readTargets', () => {
   it('reports an .xcodeproj without project.pbxproj', async () => {
     const folder = mkdtempSync(join(tmpdir(), 'sdkbump-empty-'));
     await expect(readXcodeProject(folder)).rejects.toThrow(XcodeProjectError);
+  });
+
+  it('does not read a project.pbxproj that is /dev/zero', { timeout: 2000 }, async () => {
+    const folder = mkdtempSync(join(tmpdir(), 'sdkbump-zero-'));
+    symlinkSync('/dev/zero', join(folder, 'project.pbxproj'));
+    await expect(readXcodeProject(folder)).rejects.toThrow(/is outside the project/);
   });
 });
 

@@ -1,7 +1,8 @@
 // Recognises what kind of project a folder holds (native iOS, Flutter, React Native or Expo),
 // where its iOS app project is, and the versions that decide which fix applies.
-import { readdir, readFile, stat } from 'node:fs/promises';
+import { readdir, stat } from 'node:fs/promises';
 import { basename, dirname, join, resolve } from 'node:path';
+import { readProjectText } from '../core/files.js';
 import { lowestAllowed } from '../core/versions.js';
 
 export type Ecosystem = 'native' | 'flutter' | 'react-native' | 'expo';
@@ -78,9 +79,12 @@ async function exists(path: string): Promise<boolean> {
   }
 }
 
-async function readJson(path: string): Promise<unknown> {
+/** Parses `path` read with readProjectText; undefined when it is not read or is not JSON. */
+async function readJson(path: string, root: string | null): Promise<unknown> {
+  const text = await readProjectText(path, root);
+  if (text === null) return undefined;
   try {
-    return JSON.parse(await readFile(path, 'utf8')) as unknown;
+    return JSON.parse(text) as unknown;
   } catch {
     return undefined;
   }
@@ -124,12 +128,15 @@ async function packageVersions(
     ...record(manifest.devDependencies),
     ...record(manifest.dependencies),
   };
-  const lock = record(record(await readJson(join(root, 'package-lock.json'))).packages);
+  const lock = record(record(await readJson(join(root, 'package-lock.json'), root)).packages);
   const result = new Map<string, PackageVersion>();
   for (const name of WATCHED_PACKAGES) {
     const range = declared[name];
     if (typeof range !== 'string') continue;
-    const installed = record(await readJson(join(root, 'node_modules', name, 'package.json')));
+    // pnpm and workspaces link installed packages from outside the app folder.
+    const installed = record(
+      await readJson(join(root, 'node_modules', name, 'package.json'), null),
+    );
     const locked = record(lock[`node_modules/${name}`]);
     if (typeof installed.version === 'string') {
       result.set(name, {
@@ -169,7 +176,7 @@ async function expoConfig(root: string): Promise<ExpoConfig | null> {
   for (const file of ['app.config.ts', 'app.config.js', 'app.config.mjs', 'app.config.cjs']) {
     if (await exists(join(root, file))) return { file, enableSceneSupport: null };
   }
-  const json = await readJson(join(root, 'app.json'));
+  const json = await readJson(join(root, 'app.json'), root);
   if (json === undefined) return null;
   const config = record(json);
   const expo = 'expo' in config ? record(config.expo) : config;
@@ -177,8 +184,8 @@ async function expoConfig(root: string): Promise<ExpoConfig | null> {
 }
 
 async function flutterInfo(root: string, pubspec: string): Promise<FlutterInfo> {
-  const fvmrc = record(await readJson(join(root, '.fvmrc')));
-  const fvmConfig = record(await readJson(join(root, '.fvm', 'fvm_config.json')));
+  const fvmrc = record(await readJson(join(root, '.fvmrc'), root));
+  const fvmConfig = record(await readJson(join(root, '.fvm', 'fvm_config.json'), root));
   const pinned = fvmrc.flutter ?? fvmConfig.flutterSdkVersion;
   return {
     version: typeof pinned === 'string' ? pinned : null,
@@ -200,7 +207,7 @@ export async function detectProject(path: string): Promise<Project> {
   }
   if (!info.isDirectory()) throw new ProjectError(`${path} is not a folder.`);
 
-  const pubspec = await readFile(join(target, 'pubspec.yaml'), 'utf8').catch(() => null);
+  const pubspec = await readProjectText(join(target, 'pubspec.yaml'), target);
   if (pubspec !== null && /^\s+sdk:\s*flutter\b|^flutter:/m.test(pubspec)) {
     const flutter = await flutterInfo(target, pubspec);
     const iosDir = join(target, flutter.plugin ? join('example', 'ios') : 'ios');
@@ -221,7 +228,7 @@ export async function detectProject(path: string): Promise<Project> {
     };
   }
 
-  const manifest = record(await readJson(join(target, 'package.json')));
+  const manifest = record(await readJson(join(target, 'package.json'), target));
   const packages = await packageVersions(target, manifest);
   if (packages.has('expo') || packages.has('react-native')) {
     const ecosystem = packages.has('expo') ? 'expo' : 'react-native';
