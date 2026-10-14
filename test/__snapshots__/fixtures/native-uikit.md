@@ -124,4 +124,4 @@ Sources: [Apple: UIApplication.windows](https://developer.apple.com/documentatio
 
 2 errors, 9 warnings. Guide: [native iOS](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md).
 
-<sub>[sdkbump](https://github.com/muhittincamdali/sdkbump) 0.1.0, rules ios27@2026.10.15 (iOS 27.0 SDK \(Xcode 27.0, 27A266a\)). Static checks; they do not build or run the app.</sub>
+<sub>[sdkbump](https://github.com/muhittincamdali/sdkbump) 0.1.1, rules ios27@2026.10.15 (iOS 27.0 SDK \(Xcode 27.0, 27A266a\)). Static checks; they do not build or run the app.</sub>

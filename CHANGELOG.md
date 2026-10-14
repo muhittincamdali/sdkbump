@@ -7,6 +7,8 @@ All notable changes to sdkbump are listed here. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-15
+
 ### Fixed
 
 - package.json, package-lock.json, app.json, pubspec.yaml, .fvmrc, .fvm/fvm_config.json,
@@ -65,5 +67,6 @@ All notable changes to sdkbump are listed here. The format follows
 - Guides, an API reference site, terminal demos from the CLI, and recordings of the native
   fixtures and a nine-app launch matrix in the iOS 27.0 simulator (Xcode 27.0).
 
-[Unreleased]: https://github.com/muhittincamdali/sdkbump/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/muhittincamdali/sdkbump/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.1
 [0.1.0]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.0

@@ -1,4 +1,4 @@
-sdkbump 0.1.0 · rules ios27@2026.10.15 · iOS 27.0 SDK (Xcode 27.0, 27A266a)
+sdkbump 0.1.1 · rules ios27@2026.10.15 · iOS 27.0 SDK (Xcode 27.0, 27A266a)
 
 expo-template-bare-minimum · Expo · fixtures/expo-58
 react-native 0.88.0-rc.4 (declared)

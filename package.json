@@ -1,6 +1,6 @@
 {
   "name": "sdkbump",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Checks a native iOS, Flutter or React Native/Expo project for what the iOS 27 SDK changes, starting with the UIScene life cycle, and says which fix applies to each finding.",
   "keywords": [
     "ios27",
