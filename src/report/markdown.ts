@@ -9,13 +9,26 @@ import {
   REPOSITORY_URL,
 } from './text.js';
 
-/** Text that is safe inside a table cell or a paragraph: no control characters, pipes or HTML. */
+// Every character that can start Markdown or HTML markup inline: links and images ([ ] ( ) !),
+// emphasis (* _ ~), code (`), headings (#), HTML and autolinks (< >), entities (&), table cells
+// (|) and the backslash itself. A backslash in front makes each one plain text.
+const MARKUP = /[\\`*_[\]()#!<>|~&]/g;
+// GitHub turns bare URLs, www. addresses, e-mail addresses and @names into links or mentions
+// without any markup. A word joiner (U+2060, invisible) after the scheme, the www or the @ stops
+// that and leaves the text as it reads.
+const BARE_LINKS = /\b(https?|ftp|www)(?=:\/\/|\.)|@/gi;
+const WORD_JOINER = '\u2060';
+
+/**
+ * Text from the checked project (names, versions, paths, plist values) as plain text in a
+ * paragraph, heading or table cell: no control characters, line breaks, markup or bare links.
+ */
 const md = (text: string) =>
   clean(text)
-    .replace(/\\/g, '\\\\')
-    .replace(/\|/g, '\\|')
-    .replace(/</g, '&lt;')
-    .replace(/\n/g, ' ');
+    .replace(/\s*\n\s*/g, ' ')
+    .replace(MARKUP, '\\$&')
+    .replace(BARE_LINKS, `$&${WORD_JOINER}`);
+
 /** Inline code that cannot be closed early by a backtick in the value. */
 const code = (text: string) => {
   const value = clean(text).replace(/\n/g, ' ');

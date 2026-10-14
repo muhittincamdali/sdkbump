@@ -10,59 +10,59 @@
 | --- | --- | --- | --- |
 | SCN001 | error | `ios/expo57/Info.plist` | No scene configuration |
 | SCN002 | error | `ios/expo57/AppDelegate.swift:24` | Window created in the app delegate |
-| SCN003 | warning | `ios/expo57/AppDelegate.swift:35` | application(_:open:options:) is not called with scenes |
-| SCN003 | warning | `ios/expo57/AppDelegate.swift:44` | application(_:continue:restorationHandler:) is not called with scenes |
+| SCN003 | warning | `ios/expo57/AppDelegate.swift:35` | application\(\_:open:options:\) is not called with scenes |
+| SCN003 | warning | `ios/expo57/AppDelegate.swift:44` | application\(\_:continue:restorationHandler:\) is not called with scenes |
 
 <details><summary>What each finding means and how to fix it</summary>
 
 ### SCN001: No scene configuration
 
-`ios/expo57/Info.plist`: Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, the app stops at launch: "UIScene life cycle is required for apps built with this SDK".
+`ios/expo57/Info.plist`: Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement application\(\_:configurationForConnecting:options:\). Built with the iOS 27 SDK, the app stops at launch: "UIScene life cycle is required for apps built with this SDK".
 
-**Fix: Turn on scene support (Expo SDK 57)** ([guide](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md))
+**Fix: Turn on scene support \(Expo SDK 57\)** ([guide](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md))
 
-1. Use expo 57.0.23 or later and expo-build-properties 57.0.20 or later (npx expo install expo-build-properties).
-2. In app.json, add ["expo-build-properties", { "ios": { "enableSceneSupport": true } }] to plugins.
+1. Use expo 57.0.23 or later and expo-build-properties 57.0.20 or later \(npx expo install expo-build-properties\).
+2. In app.json, add \["expo-build-properties", { "ios": { "enableSceneSupport": true } }\] to plugins.
 3. Regenerate the native project: npx expo prebuild --clean -p ios. ExpoAppSceneDelegate then creates the window and passes links, user activities and quick actions on to AppDelegate.
 
 **Or: Temporary: install react-native-uiscene-bridge** ([guide](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md))
 
 1. Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.
-2. Limit: Tested in the simulator only, not on a device (its README).
+2. Limit: Tested in the simulator only, not on a device \(its README\).
 3. Limit: One window: iPad multiwindow needs real scene support.
-4. Limit: Universal links, Handoff and quick actions were not tested (its README).
+4. Limit: Universal links, Handoff and quick actions were not tested \(its README\).
 5. Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported.
 
-Sources: [Apple: Transitioning to the UIKit scene-based life cycle](https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle), [Apple: application(_:configurationForConnecting:options:)](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:configurationforconnecting:options:))
+Sources: [Apple: Transitioning to the UIKit scene-based life cycle](https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle), [Apple: application\(\_:configurationForConnecting:options:\)](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:configurationforconnecting:options:))
 
 ### SCN002: Window created in the app delegate
 
-`ios/expo57/AppDelegate.swift:24`: AppDelegate creates the window with UIWindow(frame:). With a scene, UIKit does not show a window that belongs to no scene, and the app opens to a black screen.
+`ios/expo57/AppDelegate.swift:24`: AppDelegate creates the window with UIWindow\(frame:\). With a scene, UIKit does not show a window that belongs to no scene, and the app opens to a black screen.
 
-**Fix: Turn on scene support (Expo SDK 57)** (steps above)
+**Fix: Turn on scene support \(Expo SDK 57\)** (steps above)
 
 **Or: Temporary: install react-native-uiscene-bridge** (steps above)
 
-Sources: [Apple: Transitioning to the UIKit scene-based life cycle (Configure your window scene)](https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle)
+Sources: [Apple: Transitioning to the UIKit scene-based life cycle \(Configure your window scene\)](https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle)
 
-### SCN003: application(_:open:options:) is not called with scenes
+### SCN003: application\(\_:open:options:\) is not called with scenes
 
-`ios/expo57/AppDelegate.swift:35`: UIKit does not call this method once the app uses scenes. Use scene(_:openURLContexts:), and connectionOptions.urlContexts in scene(_:willConnectTo:options:) for a link that launches the app.
+`ios/expo57/AppDelegate.swift:35`: UIKit does not call this method once the app uses scenes. Use scene\(\_:openURLContexts:\), and connectionOptions.urlContexts in scene\(\_:willConnectTo:options:\) for a link that launches the app.
 
-**Fix: Turn on scene support (Expo SDK 57)** (steps above)
+**Fix: Turn on scene support \(Expo SDK 57\)** (steps above)
 
-Sources: [Apple: application(_:open:options:) (deprecated in iOS 26)](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:open:options:))
+Sources: [Apple: application\(\_:open:options:\) \(deprecated in iOS 26\)](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:open:options:))
 
-### SCN003: application(_:continue:restorationHandler:) is not called with scenes
+### SCN003: application\(\_:continue:restorationHandler:\) is not called with scenes
 
-`ios/expo57/AppDelegate.swift:44`: UIKit does not call this method once the app uses scenes. Use scene(_:continue:), and connectionOptions.userActivities in scene(_:willConnectTo:options:).
+`ios/expo57/AppDelegate.swift:44`: UIKit does not call this method once the app uses scenes. Use scene\(\_:continue:\), and connectionOptions.userActivities in scene\(\_:willConnectTo:options:\).
 
-**Fix: Turn on scene support (Expo SDK 57)** (steps above)
+**Fix: Turn on scene support \(Expo SDK 57\)** (steps above)
 
-Sources: [Apple: application(_:continue:restorationHandler:) (deprecated in iOS 26)](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:continue:restorationhandler:))
+Sources: [Apple: application\(\_:continue:restorationHandler:\) \(deprecated in iOS 26\)](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:continue:restorationhandler:))
 
 </details>
 
 2 errors, 2 warnings. Guide: [Expo](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md).
 
-<sub>[sdkbump](https://github.com/muhittincamdali/sdkbump) 0.1.0, rules ios27@2026.10.15 (iOS 27.0 SDK (Xcode 27.0, 27A266a)). Static checks; they do not build or run the app.</sub>
+<sub>[sdkbump](https://github.com/muhittincamdali/sdkbump) 0.1.0, rules ios27@2026.10.15 (iOS 27.0 SDK \(Xcode 27.0, 27A266a\)). Static checks; they do not build or run the app.</sub>

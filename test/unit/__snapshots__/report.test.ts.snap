@@ -12,7 +12,7 @@ exports[`render (markdown) > has a table, the details and the footer 1`] = `
 | --- | --- | --- | --- |
 | SCN001 | error | \`App/Info.plist\` | No scene configuration |
 | SCN002 | error | \`App/AppDelegate.swift:12\` | Window created in the app delegate |
-| SCN003 | warning (handled by react-native-uiscene-bridge) | \`App/AppDelegate.swift:30\` | application(_:open:options:) is not called with scenes |
+| SCN003 | warning (handled by react-native-uiscene-bridge) | \`App/AppDelegate.swift:30\` | application\\(\\_:open:options:\\) is not called with scenes |
 
 <details><summary>What each finding means and how to fix it</summary>
 
@@ -34,13 +34,13 @@ Sources: [Apple: Transitioning](https://developer.apple.com/documentation/uikit)
 
 ### SCN002: Window created in the app delegate
 
-\`App/AppDelegate.swift:12\`: AppDelegate creates the window with UIWindow(frame:).
+\`App/AppDelegate.swift:12\`: AppDelegate creates the window with UIWindow\\(frame:\\).
 
 **Fix: Adopt a scene delegate** (steps above)
 
 Sources: [Apple: Transitioning](https://developer.apple.com/documentation/uikit)
 
-### SCN003: application(_:open:options:) is not called with scenes
+### SCN003: application\\(\\_:open:options:\\) is not called with scenes
 
 \`App/AppDelegate.swift:30\`: Info.plist has no UIApplicationSceneManifest.
 
