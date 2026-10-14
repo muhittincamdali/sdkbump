@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "sdkbump",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "ios27",
+    "dataVersion": "2026.10.15",
+    "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)"
+  },
+  "project": {
+    "path": "fixtures/rn-088-rc",
+    "name": "HelloWorld",
+    "ecosystem": "react-native",
+    "versions": [
+      {
+        "name": "react-native",
+        "version": "0.88.0-rc.6",
+        "source": "declared"
+      }
+    ],
+    "targets": [
+      {
+        "name": "HelloWorld",
+        "lifecycle": "scenes",
+        "infoPlists": [
+          "ios/HelloWorld/Info.plist"
+        ]
+      }
+    ]
+  },
+  "verdict": {
+    "code": "no-findings",
+    "text": "No findings for the checks in ios27@2026.10.15."
+  },
+  "findings": [],
+  "notes": [],
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "mitigated": 0
+  }
+}

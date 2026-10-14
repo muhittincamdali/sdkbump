@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "sdkbump",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "ios27",
+    "dataVersion": "2026.10.15",
+    "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)"
+  },
+  "project": {
+    "path": "fixtures/native-swiftui",
+    "name": "Tally",
+    "ecosystem": "native",
+    "versions": [],
+    "targets": [
+      {
+        "name": "Tally",
+        "lifecycle": "swiftui",
+        "infoPlists": [
+          "Tally/Info.plist"
+        ]
+      }
+    ]
+  },
+  "verdict": {
+    "code": "review",
+    "text": "Launches; 3 findings to review."
+  },
+  "findings": [
+    {
+      "rule": "SCN003",
+      "severity": "warning",
+      "title": "application(_:open:options:) is not called with scenes",
+      "message": "A SwiftUI App runs on scenes, so UIKit does not call this method on the adaptor delegate. Use .onOpenURL instead.",
+      "line": 26,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "swiftui-modifier",
+        "title": "Use the SwiftUI scene API",
+        "steps": [
+          "A SwiftUI App always runs on scenes, so UIKit never calls this app delegate method. Use the SwiftUI replacement named in the finding on a view in your WindowGroup."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: onOpenURL(perform:)",
+            "url": "https://developer.apple.com/documentation/swiftui/view/onopenurl(perform:)"
+          },
+          {
+            "title": "Apple: ScenePhase",
+            "url": "https://developer.apple.com/documentation/swiftui/scenephase"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: application(_:open:options:) (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:open:options:)"
+        }
+      ],
+      "file": "Tally/TallyApp.swift"
+    },
+    {
+      "rule": "SCN003",
+      "severity": "warning",
+      "title": "applicationDidEnterBackground(_:) is not called with scenes",
+      "message": "A SwiftUI App runs on scenes, so UIKit does not call this method on the adaptor delegate. Use scenePhase instead.",
+      "line": 35,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "swiftui-modifier",
+        "title": "Use the SwiftUI scene API",
+        "steps": [
+          "A SwiftUI App always runs on scenes, so UIKit never calls this app delegate method. Use the SwiftUI replacement named in the finding on a view in your WindowGroup."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: onOpenURL(perform:)",
+            "url": "https://developer.apple.com/documentation/swiftui/view/onopenurl(perform:)"
+          },
+          {
+            "title": "Apple: ScenePhase",
+            "url": "https://developer.apple.com/documentation/swiftui/scenephase"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: applicationDidEnterBackground(_:)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/applicationdidenterbackground(_:)"
+        }
+      ],
+      "file": "Tally/TallyApp.swift"
+    },
+    {
+      "rule": "SCN004",
+      "severity": "warning",
+      "title": "Window looked up through UIApplication.windows",
+      "message": "windows lists the windows of every scene (deprecated in iOS 15); use the windows of the relevant UIWindowScene.",
+      "line": 38,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "window-from-scene",
+        "title": "Find the window through the scene",
+        "steps": [
+          "From a view or view controller, use view.window or view.window?.windowScene.",
+          "Elsewhere, pick the foreground UIWindowScene from UIApplication.shared.connectedScenes and use its keyWindow or windows."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md",
+        "sources": [
+          {
+            "title": "Apple: UIApplication.windows",
+            "url": "https://developer.apple.com/documentation/uikit/uiapplication/windows"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: UIApplication.windows",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/windows"
+        }
+      ],
+      "file": "Tally/ContentView.swift"
+    }
+  ],
+  "notes": [],
+  "summary": {
+    "errors": 0,
+    "warnings": 3,
+    "info": 0,
+    "mitigated": 0
+  }
+}

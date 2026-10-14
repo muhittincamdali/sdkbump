@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "sdkbump",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "ios27",
+    "dataVersion": "2026.10.15",
+    "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)"
+  },
+  "project": {
+    "path": "fixtures/expo-57",
+    "name": "expo-57",
+    "ecosystem": "expo",
+    "versions": [
+      {
+        "name": "react-native",
+        "version": "0.86.3",
+        "source": "declared"
+      },
+      {
+        "name": "expo",
+        "version": "57.0.29",
+        "source": "declared"
+      }
+    ],
+    "targets": [
+      {
+        "name": "expo57",
+        "lifecycle": "app-delegate",
+        "infoPlists": [
+          "ios/expo57/Info.plist"
+        ]
+      }
+    ]
+  },
+  "verdict": {
+    "code": "fails-to-launch",
+    "text": "Fails to launch when built with the iOS 27 SDK."
+  },
+  "findings": [
+    {
+      "rule": "SCN001",
+      "severity": "error",
+      "title": "No scene configuration",
+      "message": "Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, the app stops at launch: \"UIScene life cycle is required for apps built with this SDK\".",
+      "line": null,
+      "target": "expo57",
+      "owner": "app",
+      "fix": {
+        "id": "expo-57-scene-support",
+        "title": "Turn on scene support (Expo SDK 57)",
+        "steps": [
+          "Use expo 57.0.23 or later and expo-build-properties 57.0.20 or later (npx expo install expo-build-properties).",
+          "In app.json, add [\"expo-build-properties\", { \"ios\": { \"enableSceneSupport\": true } }] to plugins.",
+          "Regenerate the native project: npx expo prebuild --clean -p ios. ExpoAppSceneDelegate then creates the window and passes links, user activities and quick actions on to AppDelegate."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
+        "sources": [
+          {
+            "title": "expo/expo#46664: Xcode 27 support for Expo SDK 57",
+            "url": "https://github.com/expo/expo/issues/46664#issuecomment-5683396867"
+          },
+          {
+            "title": "Expo SDK 57: BuildProperties",
+            "url": "https://docs.expo.dev/versions/v57.0.0/sdk/build-properties/"
+          },
+          {
+            "title": "expo/expo#50191: backport UIKit scene lifecycle runtime",
+            "url": "https://github.com/expo/expo/pull/50191"
+          }
+        ]
+      },
+      "alternatives": [
+        {
+          "id": "workaround-react-native-uiscene-bridge",
+          "title": "Temporary: install react-native-uiscene-bridge",
+          "steps": [
+            "Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.",
+            "Limit: Tested in the simulator only, not on a device (its README).",
+            "Limit: One window: iPad multiwindow needs real scene support.",
+            "Limit: Universal links, Handoff and quick actions were not tested (its README).",
+            "Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported."
+          ],
+          "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
+          "sources": [
+            {
+              "title": "react-native-uiscene-bridge README",
+              "url": "https://github.com/Atomics-hub/react-native-uiscene-bridge"
+            }
+          ]
+        }
+      ],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        },
+        {
+          "title": "Apple: application(_:configurationForConnecting:options:)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:configurationforconnecting:options:)"
+        }
+      ],
+      "file": "ios/expo57/Info.plist"
+    },
+    {
+      "rule": "SCN002",
+      "severity": "error",
+      "title": "Window created in the app delegate",
+      "message": "AppDelegate creates the window with UIWindow(frame:). With a scene, UIKit does not show a window that belongs to no scene, and the app opens to a black screen.",
+      "line": 24,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "expo-57-scene-support",
+        "title": "Turn on scene support (Expo SDK 57)",
+        "steps": [
+          "Use expo 57.0.23 or later and expo-build-properties 57.0.20 or later (npx expo install expo-build-properties).",
+          "In app.json, add [\"expo-build-properties\", { \"ios\": { \"enableSceneSupport\": true } }] to plugins.",
+          "Regenerate the native project: npx expo prebuild --clean -p ios. ExpoAppSceneDelegate then creates the window and passes links, user activities and quick actions on to AppDelegate."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
+        "sources": [
+          {
+            "title": "expo/expo#46664: Xcode 27 support for Expo SDK 57",
+            "url": "https://github.com/expo/expo/issues/46664#issuecomment-5683396867"
+          },
+          {
+            "title": "Expo SDK 57: BuildProperties",
+            "url": "https://docs.expo.dev/versions/v57.0.0/sdk/build-properties/"
+          },
+          {
+            "title": "expo/expo#50191: backport UIKit scene lifecycle runtime",
+            "url": "https://github.com/expo/expo/pull/50191"
+          }
+        ]
+      },
+      "alternatives": [
+        {
+          "id": "workaround-react-native-uiscene-bridge",
+          "title": "Temporary: install react-native-uiscene-bridge",
+          "steps": [
+            "Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.",
+            "Limit: Tested in the simulator only, not on a device (its README).",
+            "Limit: One window: iPad multiwindow needs real scene support.",
+            "Limit: Universal links, Handoff and quick actions were not tested (its README).",
+            "Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported."
+          ],
+          "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
+          "sources": [
+            {
+              "title": "react-native-uiscene-bridge README",
+              "url": "https://github.com/Atomics-hub/react-native-uiscene-bridge"
+            }
+          ]
+        }
+      ],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle (Configure your window scene)",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        }
+      ],
+      "file": "ios/expo57/AppDelegate.swift"
+    },
+    {
+      "rule": "SCN003",
+      "severity": "warning",
+      "title": "application(_:open:options:) is not called with scenes",
+      "message": "UIKit does not call this method once the app uses scenes. Use scene(_:openURLContexts:), and connectionOptions.urlContexts in scene(_:willConnectTo:options:) for a link that launches the app.",
+      "line": 35,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "expo-57-scene-support",
+        "title": "Turn on scene support (Expo SDK 57)",
+        "steps": [
+          "Use expo 57.0.23 or later and expo-build-properties 57.0.20 or later (npx expo install expo-build-properties).",
+          "In app.json, add [\"expo-build-properties\", { \"ios\": { \"enableSceneSupport\": true } }] to plugins.",
+          "Regenerate the native project: npx expo prebuild --clean -p ios. ExpoAppSceneDelegate then creates the window and passes links, user activities and quick actions on to AppDelegate."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
+        "sources": [
+          {
+            "title": "expo/expo#46664: Xcode 27 support for Expo SDK 57",
+            "url": "https://github.com/expo/expo/issues/46664#issuecomment-5683396867"
+          },
+          {
+            "title": "Expo SDK 57: BuildProperties",
+            "url": "https://docs.expo.dev/versions/v57.0.0/sdk/build-properties/"
+          },
+          {
+            "title": "expo/expo#50191: backport UIKit scene lifecycle runtime",
+            "url": "https://github.com/expo/expo/pull/50191"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: application(_:open:options:) (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:open:options:)"
+        }
+      ],
+      "file": "ios/expo57/AppDelegate.swift"
+    },
+    {
+      "rule": "SCN003",
+      "severity": "warning",
+      "title": "application(_:continue:restorationHandler:) is not called with scenes",
+      "message": "UIKit does not call this method once the app uses scenes. Use scene(_:continue:), and connectionOptions.userActivities in scene(_:willConnectTo:options:).",
+      "line": 44,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "expo-57-scene-support",
+        "title": "Turn on scene support (Expo SDK 57)",
+        "steps": [
+          "Use expo 57.0.23 or later and expo-build-properties 57.0.20 or later (npx expo install expo-build-properties).",
+          "In app.json, add [\"expo-build-properties\", { \"ios\": { \"enableSceneSupport\": true } }] to plugins.",
+          "Regenerate the native project: npx expo prebuild --clean -p ios. ExpoAppSceneDelegate then creates the window and passes links, user activities and quick actions on to AppDelegate."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
+        "sources": [
+          {
+            "title": "expo/expo#46664: Xcode 27 support for Expo SDK 57",
+            "url": "https://github.com/expo/expo/issues/46664#issuecomment-5683396867"
+          },
+          {
+            "title": "Expo SDK 57: BuildProperties",
+            "url": "https://docs.expo.dev/versions/v57.0.0/sdk/build-properties/"
+          },
+          {
+            "title": "expo/expo#50191: backport UIKit scene lifecycle runtime",
+            "url": "https://github.com/expo/expo/pull/50191"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: application(_:continue:restorationHandler:) (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:continue:restorationhandler:)"
+        }
+      ],
+      "file": "ios/expo57/AppDelegate.swift"
+    }
+  ],
+  "notes": [],
+  "summary": {
+    "errors": 2,
+    "warnings": 2,
+    "info": 0,
+    "mitigated": 0
+  }
+}

@@ -1,0 +1,11 @@
+sdkbump 0.1.0 · rules ios27@2026.10.15 · iOS 27.0 SDK (Xcode 27.0, 27A266a)
+
+HelloWorld · React Native · fixtures/rn-088-rc
+react-native 0.88.0-rc.6 (declared)
+target HelloWorld: scene life cycle (ios/HelloWorld/Info.plist)
+
+No findings for the checks in ios27@2026.10.15.
+
+0 errors, 0 warnings
+Guide: https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md
+What is checked: https://github.com/muhittincamdali/sdkbump#what-sdkbump-checks

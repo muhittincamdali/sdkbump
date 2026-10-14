@@ -1,0 +1,40 @@
+sdkbump 0.1.0 · rules ios27@2026.10.15 · iOS 27.0 SDK (Xcode 27.0, 27A266a)
+
+Tally · native iOS · fixtures/native-swiftui
+target Tally: SwiftUI App (scenes) (Tally/Info.plist)
+
+Launches; 3 findings to review.
+
+WARNING  SCN003 application(_:open:options:) is not called with scenes
+         Tally/TallyApp.swift:26
+         A SwiftUI App runs on scenes, so UIKit does not call this method on the adaptor delegate.
+         Use .onOpenURL instead.
+         Fix: [A] Use the SwiftUI scene API
+
+WARNING  SCN003 applicationDidEnterBackground(_:) is not called with scenes
+         Tally/TallyApp.swift:35
+         A SwiftUI App runs on scenes, so UIKit does not call this method on the adaptor delegate.
+         Use scenePhase instead.
+         Fix: [A] Use the SwiftUI scene API
+
+WARNING  SCN004 Window looked up through UIApplication.windows
+         Tally/ContentView.swift:38
+         windows lists the windows of every scene (deprecated in iOS 15); use the windows of the
+         relevant UIWindowScene.
+         Fix: [B] Find the window through the scene
+
+How to fix
+
+[A]      Use the SwiftUI scene API
+         1. A SwiftUI App always runs on scenes, so UIKit never calls this app delegate method. Use
+            the SwiftUI replacement named in the finding on a view in your WindowGroup.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md
+
+[B]      Find the window through the scene
+         1. From a view or view controller, use view.window or view.window?.windowScene.
+         2. Elsewhere, pick the foreground UIWindowScene from UIApplication.shared.connectedScenes
+            and use its keyWindow or windows.
+         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md
+
+0 errors, 3 warnings
+Guide: https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/native-ios.md

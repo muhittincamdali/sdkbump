@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "sdkbump",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "ios27",
+    "dataVersion": "2026.10.15",
+    "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)"
+  },
+  "project": {
+    "path": "fixtures/flutter-custom-appdelegate",
+    "name": "flutter_custom",
+    "ecosystem": "flutter",
+    "versions": [
+      {
+        "name": "flutter",
+        "version": null,
+        "source": "not pinned"
+      }
+    ],
+    "targets": [
+      {
+        "name": "Runner",
+        "lifecycle": "app-delegate",
+        "infoPlists": [
+          "ios/Runner/Info.plist"
+        ]
+      }
+    ]
+  },
+  "verdict": {
+    "code": "fails-to-launch",
+    "text": "Fails to launch when built with the iOS 27 SDK."
+  },
+  "findings": [
+    {
+      "rule": "SCN001",
+      "severity": "error",
+      "title": "No scene configuration",
+      "message": "Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, the app stops at launch: \"UIScene life cycle is required for apps built with this SDK\". Flutter will not migrate it automatically: ios/Runner/AppDelegate.swift differs from the templates Flutter migrates.",
+      "line": null,
+      "target": "Runner",
+      "owner": "app",
+      "fix": {
+        "id": "flutter-manual-migration",
+        "title": "Migrate the Flutter app by hand",
+        "steps": [
+          "Conform AppDelegate to FlutterImplicitEngineDelegate and move GeneratedPluginRegistrant.register, method channels and platform views into didInitializeImplicitFlutterEngine(_:).",
+          "Add UIApplicationSceneManifest to ios/Runner/Info.plist with a configuration whose UISceneDelegateClassName is FlutterSceneDelegate and UISceneStoryboardFile is Main."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md",
+        "sources": [
+          {
+            "title": "Flutter: UIScene adoption (Migrate AppDelegate, Migrate Info.plist)",
+            "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        },
+        {
+          "title": "Apple: application(_:configurationForConnecting:options:)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:configurationforconnecting:options:)"
+        }
+      ],
+      "file": "ios/Runner/Info.plist"
+    },
+    {
+      "rule": "SCN003",
+      "severity": "warning",
+      "title": "application(_:open:options:) is not called with scenes",
+      "message": "UIKit does not call this method once the app uses scenes. Use scene(_:openURLContexts:), and connectionOptions.urlContexts in scene(_:willConnectTo:options:) for a link that launches the app.",
+      "line": 28,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "flutter-scene-delegate-hooks",
+        "title": "Handle it in a FlutterSceneDelegate subclass",
+        "steps": [
+          "Create SceneDelegate: FlutterSceneDelegate, name it in UISceneDelegateClassName, and override the scene delegate method named in the finding, calling super so plugins still receive the event."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md",
+        "sources": [
+          {
+            "title": "Flutter: UIScene adoption (Create a SceneDelegate)",
+            "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Apple: application(_:open:options:) (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:open:options:)"
+        }
+      ],
+      "file": "ios/Runner/AppDelegate.swift"
+    },
+    {
+      "rule": "SCN004",
+      "severity": "warning",
+      "title": "Root view controller read from the app delegate's window",
+      "message": "UIKit does not set the app delegate's window once a scene owns the window, and application(_:didFinishLaunchingWithOptions:) runs before any scene connects; reading its root view controller finds nil, and a forced cast of it crashes.",
+      "line": 10,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "flutter-engine-bridge",
+        "title": "Create channels from the engine bridge",
+        "steps": [
+          "Create method channels in didInitializeImplicitFlutterEngine(_:) with engineBridge.applicationRegistrar.messenger() instead of reading window?.rootViewController."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md",
+        "sources": [
+          {
+            "title": "Flutter: UIScene adoption (Migrate AppDelegate)",
+            "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Flutter: UIScene adoption (Bespoke FlutterViewController usage)",
+          "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate"
+        }
+      ],
+      "file": "ios/Runner/AppDelegate.swift"
+    },
+    {
+      "rule": "SCN004",
+      "severity": "warning",
+      "title": "Root view controller read from the app delegate's window",
+      "message": "UIKit does not set the app delegate's window once a scene owns the window, and application(_:didFinishLaunchingWithOptions:) runs before any scene connects; reading its root view controller finds nil, and a forced cast of it crashes.",
+      "line": 34,
+      "target": null,
+      "owner": "app",
+      "fix": {
+        "id": "flutter-engine-bridge",
+        "title": "Create channels from the engine bridge",
+        "steps": [
+          "Create method channels in didInitializeImplicitFlutterEngine(_:) with engineBridge.applicationRegistrar.messenger() instead of reading window?.rootViewController."
+        ],
+        "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md",
+        "sources": [
+          {
+            "title": "Flutter: UIScene adoption (Migrate AppDelegate)",
+            "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate"
+          }
+        ]
+      },
+      "alternatives": [],
+      "mitigation": null,
+      "sources": [
+        {
+          "title": "Flutter: UIScene adoption (Bespoke FlutterViewController usage)",
+          "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate"
+        }
+      ],
+      "file": "ios/Runner/AppDelegate.swift"
+    }
+  ],
+  "notes": [],
+  "summary": {
+    "errors": 1,
+    "warnings": 3,
+    "info": 0,
+    "mitigated": 0
+  }
+}
