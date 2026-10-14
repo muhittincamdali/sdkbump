@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@f2adb6fc5c1f0fbde9297e7b23a7bb6c4c25ca55 status=reviewed -->
+<!-- i18n-source: README.md@a27fd9e08503079d2f77990dc0d71a2896261644 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -9,7 +9,7 @@
 
 <p align="center">
 <a href="https://github.com/muhittincamdali/sdkbump/actions/workflows/ci.yml"><img src="https://github.com/muhittincamdali/sdkbump/actions/workflows/ci.yml/badge.svg" alt="Статус CI"></a>
-<a href="https://github.com/muhittincamdali/sdkbump/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg" alt="Последняя версия: v0.1.0"></picture></a>
+<a href="https://github.com/muhittincamdali/sdkbump/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg" alt="Последняя версия: v0.1.1"></picture></a>
 <a href="https://github.com/muhittincamdali/sdkbump/blob/main/package.json"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-light.svg" alt="Версия языка: Node.js 22.12+"></picture></a>
 <a href="https://github.com/muhittincamdali/sdkbump/blob/main/LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-light.svg" alt="Лицензия: MIT"></picture></a>
 </p>
@@ -54,10 +54,10 @@ cd path/to/YourApp
 **2. Запустите sdkbump:**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz
+npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
 ```
 
-sdkbump пока нет в npm (публикация там запланирована), поэтому `npx sdkbump` сейчас не работает. Команда выше запускает релиз 0.1.0 с GitHub; используйте её везде, где в этом README написано `npx sdkbump`.
+sdkbump пока нет в npm (публикация там запланирована), поэтому `npx sdkbump` сейчас не работает. Команда выше запускает релиз 0.1.1 с GitHub; используйте её везде, где в этом README написано `npx sdkbump`.
 
 **3. Прочитайте первую строку под названием вашего проекта.** «Fails to launch when built with the iOS 27 SDK» (не запускается, если собрано с SDK iOS 27) означает, что приложение будет останавливаться при запуске, пока вы не исправите находки уровня **ERROR**; в каждой сказано, какое исправление из списка «How to fix» подходит. Находки уровня **WARNING** не мешают запуску, но перестают работать, когда у приложения появляется сцена.
 
@@ -86,10 +86,10 @@ sdkbump пока нет в npm (публикация там запланиров
 
 ## Установка
 
-sdkbump пока нет в npm; публикация там запланирована. До тех пор запускайте релиз 0.1.0 с GitHub, как показано выше, или добавьте его в проект:
+sdkbump пока нет в npm; публикация там запланирована. До тех пор запускайте релиз 0.1.1 с GitHub, как показано выше, или добавьте его в проект:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz
+npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
 npx sdkbump
 ```
 
