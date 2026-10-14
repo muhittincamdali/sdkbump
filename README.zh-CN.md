@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@2d0daa00b0d43671262489b4d8a54d8294a29e7d status=reviewed -->
+<!-- i18n-source: README.md@cc0f3450854de00de41b3dba9897f5895f953fda status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -157,7 +157,7 @@ console.log(render(report, 'markdown'));
 
 <p align="center"><img src="docs/media/simulator/launched.png" width="480" alt="native-uikit-scenes 和 native-swiftui fixture 运行在安装了 iOS 27.0 的 iPhone 17 模拟器上，使用 Xcode 27.0 构建"></p>
 
-2026 年 10 月 15 日在一台 Mac（Apple silicon，M5 Max）上使用 Node.js 26.11 测得：在一个 fixture 上运行一次（包含 Node.js 启动时间）需要 0.18 到 0.25 秒。
+2026 年 10 月 15 日在一台 Mac（Apple silicon，M5 Max）上使用 Node.js 26.11 测得，测量时机器上还在运行其他任务：在十个 fixture 上运行 `node dist/cli/main.js`，每组 100 次，共三组（包含 Node.js 启动时间）。三组的中位数分别为 0.11、0.12 和 0.19 秒，最慢的一次为 0.33 秒。机器负载越高，耗时越长。
 
 ## 状态
 

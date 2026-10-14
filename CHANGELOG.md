@@ -20,6 +20,14 @@ All notable changes to sdkbump are listed here. The format follows
   - SCN003 (warning): 13 app delegate methods and launch option keys UIKit no longer uses with
     scenes, unless the scene delegate already handles them;
   - SCN004 (warning): window lookups through `keyWindow`, `windows` or the app delegate's window.
+
+  The rule IDs differ from the first plan for this release, where SCN002 stood for "no
+  `application(_:configurationForConnecting:options:)`". That case is part of SCN001: a scene
+  configuration in the Info.plist or from that method is enough to launch, and the app stops only
+  when both are missing (rows A and C of
+  [examples/launch-matrix](examples/launch-matrix/README.md)). SCN002 became the window created in
+  the app delegate, the black screen in rows E, G and H, and SCN003 the app delegate methods and
+  launch option keys.
 - A fix for each finding by ecosystem and version: native and SwiftUI, Flutter (automatic
   migration only when Flutter's own conditions hold), React Native 0.88 or a hand-written scene
   delegate, Expo SDK 57's opt-in or SDK 58, with alternatives and guides.
@@ -28,7 +36,11 @@ All notable changes to sdkbump are listed here. The format follows
 - Rule data `ios27@2026.10.15` in `rules/ios27.json` with a source for every rule, hook, window
   lookup, fix and workaround, validated with zod, and its JSON schema.
 - Terminal, Markdown and JSON reports (`schemaVersion` 0), `--output`, `--fail-on` with exit codes
-  0, 1 and 2, and colour only in a terminal.
+  0, 1 and 2, and colour only in a terminal. Text from the checked project is printed as text:
+  control characters are replaced in the terminal, and in Markdown it cannot add links, images,
+  HTML, headings or table cells, or close a code span early.
+- An Info.plist named in INFOPLIST_FILE is read only when it is a regular file inside the project
+  folder; a path or symbolic link that leads out of it gets a note instead.
 - Programmatic API: `scan`, `render` and the readers and checks behind them.
 - Ten fixtures (native UIKit before and after migration, SwiftUI, Flutter with a custom
   AppDelegate, Expo SDK 57 with and without its scene opt-in, React Native 0.87 with and without
