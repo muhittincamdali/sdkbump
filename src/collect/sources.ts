@@ -27,7 +27,7 @@ export interface TypeRegion {
   start: number;
   end: number;
   line: number;
-  /** Swift: the declaration carries @main or @UIApplicationMain. */
+  /** Swift: the declaration carries `@main` or `@UIApplicationMain`. */
   main: boolean;
 }
 

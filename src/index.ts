@@ -20,9 +20,12 @@ export {
   sceneManifest,
 } from './collect/app.js';
 export {
+  type BuildSettings,
   generatesInfoPlist,
   infoPlistFiles,
   iosAppTargets,
+  type OpenStepDict,
+  type OpenStepValue,
   parseOpenStep,
   readXcodeProject,
   type XcodeProject,
@@ -40,6 +43,7 @@ export {
 export {
   blankCommentsAndStrings,
   indexSources,
+  type Language,
   type SourceFile,
   type SourceIndex,
   type TypeRegion,
@@ -73,7 +77,10 @@ export {
   parseRuleData,
   type RuleData,
   RuleDataError,
+  RuleDataSchema,
+  RULE_IDS,
   type RuleId,
+  SEVERITIES,
   type Severity,
 } from './rules/data.js';
 export { type ScanOptions, scan, verdictOf } from './scan.js';

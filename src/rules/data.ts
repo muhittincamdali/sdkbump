@@ -12,15 +12,22 @@ const Source = z
   .strict();
 
 const Ecosystem = z.enum(['native', 'flutter', 'react-native', 'expo']);
-const RuleId = z.enum(['SCN001', 'SCN002', 'SCN003', 'SCN004']);
-const Severity = z.enum(['error', 'warning', 'info']);
+/** The rules of this rule set. */
+export const RULE_IDS = ['SCN001', 'SCN002', 'SCN003', 'SCN004'] as const;
+export type RuleId = (typeof RULE_IDS)[number];
+/** Severities, highest first. */
+export const SEVERITIES = ['error', 'warning', 'info'] as const;
+export type Severity = (typeof SEVERITIES)[number];
+
+const RuleIdSchema = z.enum(RULE_IDS);
+const SeveritySchema = z.enum(SEVERITIES);
 /** Every rule, hook, lookup, fix and workaround cites at least one source. */
 const Sources = z.array(Source).min(1);
 
 const Rule = z
   .object({
-    id: RuleId,
-    severity: Severity,
+    id: RuleIdSchema,
+    severity: SeveritySchema,
     title: z.string().min(1),
     summary: z.string().min(1),
     sources: Sources,
@@ -64,7 +71,7 @@ const Workaround = z
   .object({
     package: z.string().min(1),
     ecosystems: z.array(Ecosystem).min(1),
-    mitigates: z.array(RuleId).min(1),
+    mitigates: z.array(RuleIdSchema).min(1),
     summary: z.string().min(1),
     limits: z.array(z.string().min(1)),
     sources: Sources,
@@ -136,8 +143,6 @@ export const RuleDataSchema = z
   });
 
 export type RuleData = z.infer<typeof RuleDataSchema>;
-export type RuleId = z.infer<typeof RuleId>;
-export type Severity = z.infer<typeof Severity>;
 export type Ecosystem = z.infer<typeof Ecosystem>;
 export type RuleSource = z.infer<typeof Source>;
 export type RuleDefinition = z.infer<typeof Rule>;
