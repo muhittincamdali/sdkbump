@@ -36,7 +36,11 @@ All notable changes to sdkbump are listed here. The format follows
 - Rule data `ios27@2026.10.15` in `rules/ios27.json` with a source for every rule, hook, window
   lookup, fix and workaround, validated with zod, and its JSON schema.
 - Terminal, Markdown and JSON reports (`schemaVersion` 0), `--output`, `--fail-on` with exit codes
-  0, 1 and 2, and colour only in a terminal.
+  0, 1 and 2, and colour only in a terminal. Text from the checked project is printed as text:
+  control characters are replaced in the terminal, and in Markdown it cannot add links, images,
+  HTML, headings or table cells, or close a code span early.
+- An Info.plist named in INFOPLIST_FILE is read only when it is a regular file inside the project
+  folder; a path or symbolic link that leads out of it gets a note instead.
 - Programmatic API: `scan`, `render` and the readers and checks behind them.
 - Ten fixtures (native UIKit before and after migration, SwiftUI, Flutter with a custom
   AppDelegate, Expo SDK 57 with and without its scene opt-in, React Native 0.87 with and without
