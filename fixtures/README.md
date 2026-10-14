@@ -1,6 +1,6 @@
 # Fixtures
 
-Nine projects, one per situation sdkbump has to tell apart. The tests run sdkbump on each one and
+Ten projects, one per situation sdkbump has to tell apart. The tests run sdkbump on each one and
 compare the findings with the expected list in
 [test/integration/fixtures.test.ts](../test/integration/fixtures.test.ts) and the full reports
 with [test/\_\_snapshots\_\_/fixtures](../test/__snapshots__/fixtures).
@@ -12,6 +12,7 @@ with [test/\_\_snapshots\_\_/fixtures](../test/__snapshots__/fixtures).
 | [native-swiftui](native-swiftui)                         | A SwiftUI app (XcodeGen) with an adaptor app delegate that still has a link handler and a background handler, and a share sheet presented through `UIApplication.shared.windows`                               | 2 × SCN003, SCN004; launches                            |
 | [flutter-custom-appdelegate](flutter-custom-appdelegate) | `flutter create` with Flutter 3.24.0 (a template from before scenes), then the AppDelegate customised with the battery method channel from Flutter's docs and a sign-in link handler                           | SCN001 (manual migration), SCN003, 2 × SCN004           |
 | [expo-57](expo-57)                                       | `create-expo-app --template blank-typescript@sdk-57` (expo 57.0.29, React Native 0.86.3), then `expo prebuild -p ios`                                                                                          | SCN001 (scene support opt-in), SCN002, 2 × SCN003       |
+| [expo-57-scenes](expo-57-scenes) | The same app after `expo install expo-build-properties` (57.0.22), `ios.enableSceneSupport` in app.json and `expo prebuild --clean -p ios`: the manifest names `EXExpoAppSceneDelegate` and there is no scene delegate in the app | no findings |
 | [rn-087](rn-087)                                         | `@react-native-community/cli init --version 0.87.1`                                                                                                                                                            | SCN001, SCN002; fails to launch                         |
 | [rn-087-bridge](rn-087-bridge)                           | The same app with `react-native-uiscene-bridge` added to package.json                                                                                                                                          | SCN001, SCN002, both handled by the bridge              |
 | [rn-088-rc](rn-088-rc)                                   | The `ios/` folder and package.json of `@react-native-community/template` 0.88.0-rc.6 from npm                                                                                                                  | no findings                                             |

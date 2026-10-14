@@ -75,6 +75,7 @@ const EXPECTED: Record<string, Expected> = {
       'SCN003 ios/expo57/AppDelegate.swift:44 expo-57-scene-support',
     ],
   },
+  'expo-57-scenes': { verdict: 'no-findings', exitCode: 0, findings: [] },
   'rn-087': {
     verdict: 'fails-to-launch',
     exitCode: 1,
@@ -126,7 +127,7 @@ describe.each(Object.entries(EXPECTED))('fixtures/%s', (name, expected) => {
   );
 });
 
-it('covers the six projects of the v0.1 acceptance list, plus three that adopt scenes', () => {
+it('covers the six projects of the v0.1 acceptance list, plus four that adopt scenes', () => {
   const required = [
     'native-uikit',
     'native-swiftui',
@@ -136,5 +137,5 @@ it('covers the six projects of the v0.1 acceptance list, plus three that adopt s
     'rn-087-bridge',
   ];
   for (const name of required) expect(Object.keys(EXPECTED)).toContain(name);
-  expect(Object.values(EXPECTED).filter((item) => item.findings.length === 0)).toHaveLength(3);
+  expect(Object.values(EXPECTED).filter((item) => item.findings.length === 0)).toHaveLength(4);
 });
