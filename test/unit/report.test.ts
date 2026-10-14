@@ -173,6 +173,19 @@ describe('render (markdown)', () => {
     expect(text).toContain('| \\*bold\\* \\_it\\_ \\~\\~gone\\~\\~ \\`x\\` |');
     expect(text).not.toMatch(/^#{1,2} (Owned|Again)/m);
   });
+
+  it('makes the code fence longer than any backtick run in a file name', () => {
+    const text = withName('App', { file: 'a``b`c.plist' });
+    expect(text).toContain('| ```a``b`c.plist``` |');
+    expect(withName('App', { file: '`x' })).toContain('`` `x ``');
+    expect(withName('App', { file: 'Info.plist' })).toContain('| `Info.plist` |');
+  });
+
+  it('escapes a pipe in a file name inside the table only', () => {
+    const text = withName('App', { file: 'a|b.plist' });
+    expect(text).toContain('| `a\\|b.plist` |');
+    expect(text).toContain('`a|b.plist`: Info.plist');
+  });
 });
 
 describe('render (json)', () => {

@@ -18,6 +18,7 @@ const MARKUP = /[\\`*_[\]()#!<>|~&]/g;
 // that and leaves the text as it reads.
 const BARE_LINKS = /\b(https?|ftp|www)(?=:\/\/|\.)|@/gi;
 const WORD_JOINER = '\u2060';
+const BACKTICK_RUNS = /`+/g;
 
 /**
  * Text from the checked project (names, versions, paths, plist values) as plain text in a
@@ -29,12 +30,21 @@ const md = (text: string) =>
     .replace(MARKUP, '\\$&')
     .replace(BARE_LINKS, `$&${WORD_JOINER}`);
 
-/** Inline code that cannot be closed early by a backtick in the value. */
+/**
+ * Inline code that the value cannot close early: the fence is one backtick longer than the
+ * longest run of backticks in it, and a space pads a value that starts or ends with a backtick or
+ * a space (Markdown strips one space from each side).
+ */
 const code = (text: string) => {
   const value = clean(text).replace(/\n/g, ' ');
-  const fence = value.includes('`') ? '``' : '`';
-  return `${fence}${fence.length > 1 ? ' ' : ''}${value}${fence.length > 1 ? ' ' : ''}${fence}`;
+  if (!value) return '';
+  const longestRun = Math.max(0, ...(value.match(BACKTICK_RUNS) ?? []).map((run) => run.length));
+  const fence = '`'.repeat(longestRun + 1);
+  const padding = /^[ `]|[ `]$/.test(value) && value.trim() !== '' ? ' ' : '';
+  return `${fence}${padding}${value}${padding}${fence}`;
 };
+/** GitHub splits a table row on every `|` that has no backslash, inside code spans too. */
+const cell = (text: string) => text.replace(/\|/g, '\\|');
 const where = (item: Finding) => code(`${item.file}${item.line ? `:${item.line}` : ''}`);
 
 function fixLines(fix: FixAdvice, heading: string): string[] {
@@ -72,7 +82,7 @@ export function renderMarkdown(report: Report): string {
       const severity = item.mitigation
         ? `${item.severity} (handled by ${md(item.mitigation.package)})`
         : item.severity;
-      out.push(`| ${item.rule} | ${severity} | ${where(item)} | ${md(item.title)} |`);
+      out.push(`| ${item.rule} | ${severity} | ${cell(where(item))} | ${md(item.title)} |`);
     }
     out.push('', '<details><summary>What each finding means and how to fix it</summary>', '');
     const printed = new Set<string>();
