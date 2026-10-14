@@ -13,5 +13,5 @@ _work/
 docs/media/
 package-lock.json
 CHANGELOG.md
-README*.md
+/README*.md
 rules/schema.json

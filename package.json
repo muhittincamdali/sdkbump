@@ -50,7 +50,8 @@
     "build": "tsc -p tsconfig.build.json",
     "prepack": "npm run build",
     "demo": "npm run build && node scripts/demo.ts",
-    "docs": "npm --prefix docs/site run build"
+    "docs": "npm --prefix docs/site run build",
+    "smoke": "node scripts/smoke-pack.ts"
   },
   "dependencies": {
     "commander": "15.0.0",
