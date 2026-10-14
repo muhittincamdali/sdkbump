@@ -1,4 +1,7 @@
 import { execFileSync, spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
@@ -42,5 +45,46 @@ describe.skipIf(!hasJq)('examples/shell/launch-blockers.sh', () => {
       },
     );
     expect(output).toBe('');
+  });
+});
+
+describe('examples/github-actions/sdkbump.yml', () => {
+  // The shell of the "Check for the iOS 27 SDK changes" step, with the release tarball replaced by
+  // the local build and the checked folder passed as $CHECK. GitHub runs it with `bash -e`.
+  const workflow = readFileSync(join(ROOT, 'examples/github-actions/sdkbump.yml'), 'utf8');
+  const block = workflow.split('- name: Check for the iOS 27 SDK changes')[1]?.split('\n\n')[0];
+  const script = (block ?? '')
+    .split('\n')
+    .slice(2)
+    .map((line) => line.replace(/^ {10}/, ''))
+    .join('\n')
+    .replace(/npx --yes \S+/, `node ${JSON.stringify(join(ROOT, 'dist/cli/main.js'))} "$CHECK"`);
+
+  const runStep = (check: string) => {
+    const cwd = mkdtempSync(join(tmpdir(), 'sdkbump-action-'));
+    const summary = join(cwd, 'summary.md');
+    const result = spawnSync('bash', ['-e', '-c', script], {
+      cwd,
+      encoding: 'utf8',
+      env: { ...process.env, CHECK: check, GITHUB_STEP_SUMMARY: summary },
+    });
+    return { status: result.status, summary: readFileSync(summary, 'utf8') };
+  };
+
+  it('replaces only the tarball command', () => {
+    expect(script).toContain('|| status=$?');
+    expect(script).toContain('exit "$status"');
+  });
+
+  it('adds the report to the summary and fails the job on errors', () => {
+    const { status, summary } = runStep(join(ROOT, 'fixtures/native-uikit'));
+    expect(status).toBe(1);
+    expect(summary).toMatch(/^## sdkbump: Shelf \(native iOS\)/);
+  });
+
+  it('keeps exit code 2 when sdkbump writes no report', () => {
+    const { status, summary } = runStep(mkdtempSync(join(tmpdir(), 'sdkbump-empty-')));
+    expect(status).toBe(2);
+    expect(summary).toBe('sdkbump exited with 2 and wrote no report; see the step log.\n');
   });
 });

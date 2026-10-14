@@ -40,7 +40,12 @@ jobs:
           status=0
           npx --yes https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz \
             --format markdown --output sdkbump.md || status=$?
-          cat sdkbump.md >> "$GITHUB_STEP_SUMMARY"
+          # Exit code 2 (the project could not be read) can come without a report.
+          if [ -f sdkbump.md ]; then
+            cat sdkbump.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "sdkbump exited with $status and wrote no report; see the step log." >> "$GITHUB_STEP_SUMMARY"
+          fi
           exit "$status"
 
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
