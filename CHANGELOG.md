@@ -14,6 +14,11 @@ All notable changes to sdkbump are listed here. The format follows
   .xcconfig files, four expanded variables), there is no suppression file, and nothing is built or
   launched. The quick start explains the "Launch not determined" verdict.
 
+### Changed
+
+- collect/plist.ts and collect/sources.ts are split into smaller modules (plist-value, plist-xml,
+  plist-binary, blank, regions, core/lines). The public API is the same.
+
 ### Fixed
 
 - An app target whose Info.plist sdkbump could not read was reported as "Fails to launch" with an
