@@ -33,6 +33,9 @@ interface Options {
   color: boolean;
 }
 
+/** The tarball the GitHub release of this version carries; npx runs it while sdkbump is not on npm. */
+export const RELEASE_TARBALL_URL = `${REPOSITORY_URL}/releases/download/v${VERSION}/sdkbump-${VERSION}.tgz`;
+
 const HELP_AFTER = `
 Exit codes:
   0  no findings at or above --fail-on (findings a workaround handles do not count)
@@ -40,10 +43,13 @@ Exit codes:
   2  bad arguments, no iOS project found, or an unexpected error
 
 Examples:
-  npx sdkbump                          checks the project in the current folder
-  npx sdkbump path/to/app --format markdown --output sdkbump.md
-  npx sdkbump --format json > sdkbump.json
-  npx sdkbump --fail-on warning        also fails on warnings, e.g. in CI
+  sdkbump                              checks the project in the current folder
+  sdkbump path/to/app --format markdown --output sdkbump.md
+  sdkbump --format json > sdkbump.json
+  sdkbump --fail-on warning            also fails on warnings, e.g. in CI
+
+sdkbump is not on npm yet, so \`npx sdkbump\` does not find it. Run this release from GitHub:
+  npx ${RELEASE_TARBALL_URL}
 
 Docs: ${REPOSITORY_URL}#readme`;
 
