@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@2d0daa00b0d43671262489b4d8a54d8294a29e7d status=reviewed -->
+<!-- i18n-source: README.md@cc0f3450854de00de41b3dba9897f5895f953fda status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -209,8 +209,10 @@ aynı uygulama bir sahne delegesine taşındığında açılır:
 
 <p align="center"><img src="docs/media/simulator/launched.png" width="480" alt="native-uikit-scenes ve native-swiftui fixture'ları, Xcode 27.0 ile derlenmiş, iOS 27.0 yüklü bir iPhone 17 simülatöründe çalışıyor"></p>
 
-15 Ekim 2026'da, Node.js 26.11 yüklü bir Mac'te (Apple silicon, M5 Max) ölçüldü: bir fixture
-üzerindeki çalıştırma, Node.js'in açılışı dahil, 0,18 ile 0,25 saniye sürer.
+15 Ekim 2026'da, Node.js 26.11 yüklü bir Mac'te (Apple silicon, M5 Max), makinede başka işler
+çalışırken ölçüldü: on fixture üzerinde `node dist/cli/main.js` 100'er çalıştırmalık üç seri,
+Node.js'in açılışı dahil. Serilerin medyanları 0,11, 0,12 ve 0,19 saniye; en yavaş çalıştırma 0,33
+saniye sürdü. Makine daha yüklüyken süreler uzar.
 
 ## Durum
 

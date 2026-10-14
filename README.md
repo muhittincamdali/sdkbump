@@ -200,8 +200,10 @@ launch and the same app moved to a scene delegate launches:
 
 <p align="center"><img src="docs/media/simulator/launched.png" width="480" alt="The native-uikit-scenes and native-swiftui fixtures running on an iPhone 17 simulator with iOS 27.0, built with Xcode 27.0"></p>
 
-Measured on a Mac (Apple silicon, M5 Max) with Node.js 26.11 on 15 October 2026: a run on a fixture,
-Node.js start-up included, takes 0.18 to 0.25 seconds.
+Measured on 15 October 2026 on a Mac (Apple silicon, M5 Max) with Node.js 26.11 while other jobs
+were running on it: three sets of 100 runs of `node dist/cli/main.js` on the ten fixtures, Node.js
+start-up included. The medians of the three sets were 0.11, 0.12 and 0.19 seconds; the slowest
+run took 0.33 seconds. A busier machine gives longer times.
 
 ## Status
 

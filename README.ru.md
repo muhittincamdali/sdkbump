@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@2d0daa00b0d43671262489b4d8a54d8294a29e7d status=reviewed -->
+<!-- i18n-source: README.md@cc0f3450854de00de41b3dba9897f5895f953fda status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -159,7 +159,7 @@ console.log(render(report, 'markdown'));
 
 <p align="center"><img src="docs/media/simulator/launched.png" width="480" alt="Фикстуры native-uikit-scenes и native-swiftui работают в симуляторе iPhone 17 с iOS 27.0, сборка в Xcode 27.0"></p>
 
-Измерено на Mac (Apple silicon, M5 Max) с Node.js 26.11 15 октября 2026 года: запуск на одной фикстуре, включая старт Node.js, занимает от 0,18 до 0,25 секунды.
+Измерено 15 октября 2026 года на Mac (Apple silicon, M5 Max) с Node.js 26.11, когда на нём шли другие задачи: три серии по 100 запусков `node dist/cli/main.js` на десяти фикстурах, включая старт Node.js. Медианы трёх серий — 0,11, 0,12 и 0,19 секунды; самый медленный запуск занял 0,33 секунды. На более загруженной машине время больше.
 
 ## Статус
 

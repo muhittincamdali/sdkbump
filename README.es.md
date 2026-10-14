@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@2d0daa00b0d43671262489b4d8a54d8294a29e7d status=reviewed -->
+<!-- i18n-source: README.md@cc0f3450854de00de41b3dba9897f5895f953fda status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -159,7 +159,7 @@ En el simulador de iOS 27.0 (iPhone 17, compilado con Xcode 27.0), el fixture na
 
 <p align="center"><img src="docs/media/simulator/launched.png" width="480" alt="Los fixtures native-uikit-scenes y native-swiftui ejecutándose en un simulador de iPhone 17 con iOS 27.0, compilados con Xcode 27.0"></p>
 
-Medido en un Mac (Apple silicon, M5 Max) con Node.js 26.11 el 15 de octubre de 2026: una ejecución sobre un fixture, incluido el arranque de Node.js, tarda de 0,18 a 0,25 segundos.
+Medido el 15 de octubre de 2026 en un Mac (Apple silicon, M5 Max) con Node.js 26.11 mientras ejecutaba otros trabajos: tres series de 100 ejecuciones de `node dist/cli/main.js` sobre los diez fixtures, incluido el arranque de Node.js. Las medianas de las tres series fueron 0,11, 0,12 y 0,19 segundos; la ejecución más lenta tardó 0,33 segundos. Con más carga en la máquina, los tiempos son mayores.
 
 ## Estado
 
