@@ -20,6 +20,9 @@ All notable changes to sdkbump are listed here. The format follows
 - The examples in `--help` used `npx sdkbump`, which npm cannot find while sdkbump is not
   published there. They now call `sdkbump`, and the help says so and prints the `npx` command for
   the GitHub release of the running version.
+- The README and its translations said 239 tests pass locally. The suite had 252 tests at 0.1.0
+  and has 262 with this release, passing on Node.js 22.23, 24.22 and 26.11 in a fresh clone on a
+  Mac (Apple silicon). The README inside the 0.1.0 tarball keeps the old number.
 
 ## [0.1.0] - 2026-10-15
 
