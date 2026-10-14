@@ -31,7 +31,8 @@
         "lifecycle": "scenes",
         "infoPlists": [
           "ios/HelloWorld/Info.plist"
-        ]
+        ],
+        "infoPlistSource": "file"
       }
     ]
   },

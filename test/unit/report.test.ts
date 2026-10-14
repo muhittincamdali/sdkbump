@@ -44,7 +44,14 @@ const report = (findings: Finding[], overrides: Partial<Report> = {}): Report =>
     name: 'App',
     ecosystem: 'react-native',
     versions: [{ name: 'react-native', version: '0.87.1', source: 'declared' }],
-    targets: [{ name: 'App', lifecycle: 'app-delegate', infoPlists: ['App/Info.plist'] }],
+    targets: [
+      {
+        name: 'App',
+        lifecycle: 'app-delegate',
+        infoPlists: ['App/Info.plist'],
+        infoPlistSource: 'file',
+      },
+    ],
   },
   verdict: { code: 'fails-to-launch', text: 'Fails to launch when built with the iOS 27 SDK.' },
   findings,

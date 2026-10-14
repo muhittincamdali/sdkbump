@@ -61,6 +61,7 @@ export {
 export {
   type FixAdvice,
   type Finding,
+  type InfoPlistSource,
   type Lifecycle,
   type Mitigation,
   type Report,

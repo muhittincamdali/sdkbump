@@ -4,6 +4,7 @@ import {
   clean,
   ECOSYSTEM_LABELS,
   GUIDES,
+  INFO_PLIST_LABELS,
   LIFECYCLE_LABELS,
   plural,
   REPOSITORY_URL,
@@ -65,10 +66,13 @@ export function renderMarkdown(report: Report): string {
     '',
   ];
   const facts = [
-    ...project.targets.map(
-      (target) =>
-        `Target ${code(target.name)}: ${LIFECYCLE_LABELS[target.lifecycle]}${target.infoPlists.length ? ` (${target.infoPlists.map(code).join(', ')})` : ''}`,
-    ),
+    ...project.targets.map((target) => {
+      const plists =
+        target.infoPlistSource === 'file'
+          ? target.infoPlists.map(code).join(', ')
+          : INFO_PLIST_LABELS[target.infoPlistSource];
+      return `Target ${code(target.name)}: ${LIFECYCLE_LABELS[target.lifecycle]} (${plists})`;
+    }),
     ...project.versions.map(
       (version) =>
         `${code(version.name)} ${md(version.version ?? 'unknown')} (${md(version.source)})`,

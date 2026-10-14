@@ -24,7 +24,8 @@ const toPosix = (path: string) => path.split(sep).join('/');
 
 function lifecycleOf(app: AppModel, target: AppModel['targets'][number]): Lifecycle {
   if (app.sources.swiftUIApps.some((region) => region.main)) return 'swiftui';
-  return adoptsScenes(app, target) ? 'scenes' : 'app-delegate';
+  if (adoptsScenes(app, target)) return 'scenes';
+  return target.infoPlistSource === 'not-read' ? 'unknown' : 'app-delegate';
 }
 
 function versionsOf(app: AppModel): VersionInfo[] {
@@ -55,6 +56,13 @@ export function verdictOf(findings: readonly Finding[], data: RuleData): Verdict
     return {
       code: 'launches-through-workaround',
       text: `Launches through ${mitigated.mitigation.package}, a run-time workaround; the app itself does not adopt scenes.`,
+    };
+  }
+  const unchecked = open.find((item) => item.rule === 'SCN001' && item.severity === 'info');
+  if (unchecked) {
+    return {
+      code: 'unknown',
+      text: `Launch not determined: sdkbump could not read the Info.plist of ${unchecked.target ?? 'the app'}.`,
     };
   }
   const hasScenesAndOwnWindow =
@@ -91,6 +99,7 @@ export async function scan(path: string, options: ScanOptions = {}): Promise<Rep
     name: target.name,
     lifecycle: lifecycleOf(app, target),
     infoPlists: target.infoPlists.map((plist) => display(plist.path)),
+    infoPlistSource: target.infoPlistSource,
   }));
   const notes = app.notes.map((note) => note.split(`${project.root}${sep}`).join(''));
   const installed = data.workarounds.filter((workaround) =>

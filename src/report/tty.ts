@@ -5,6 +5,7 @@ import {
   clean,
   ECOSYSTEM_LABELS,
   GUIDES,
+  INFO_PLIST_LABELS,
   LIFECYCLE_LABELS,
   plural,
   REPOSITORY_URL,
@@ -76,9 +77,10 @@ function header(report: Report, paint: Paint, width: number): string[] {
     lines.push(...dim(`${version.name} ${version.version ?? '(unknown)'} (${version.source})`));
   }
   for (const target of project.targets) {
-    const plists = target.infoPlists.length
-      ? target.infoPlists.join(', ')
-      : 'Info.plist written by Xcode';
+    const plists =
+      target.infoPlistSource === 'file'
+        ? target.infoPlists.join(', ')
+        : INFO_PLIST_LABELS[target.infoPlistSource];
     lines.push(...dim(`target ${target.name}: ${LIFECYCLE_LABELS[target.lifecycle]} (${plists})`));
   }
   const style =
