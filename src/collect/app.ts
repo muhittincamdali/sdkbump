@@ -104,3 +104,18 @@ export const flutterAppDelegatePaths = (iosDir: string) => ({
   objcHeader: join(iosDir, 'Runner', 'AppDelegate.h'),
   objcImplementation: join(iosDir, 'Runner', 'AppDelegate.m'),
 });
+
+/**
+ * The scene delegate classes an Info.plist names in its scene configurations, without a module
+ * prefix: "$(PRODUCT_MODULE_NAME).SceneDelegate" and "App.SceneDelegate" both give "SceneDelegate".
+ */
+export function sceneDelegateClassNames(plist: InfoPlistFile): string[] {
+  const configurations = (plist.dict.UIApplicationSceneManifest as PlistDict | undefined)
+    ?.UISceneConfigurations;
+  if (!isDict(configurations)) return [];
+  return Object.values(configurations)
+    .flatMap((roles) => (Array.isArray(roles) ? roles : []))
+    .map((entry) => (isDict(entry) ? entry.UISceneDelegateClassName : undefined))
+    .filter((name): name is string => typeof name === 'string')
+    .map((name) => name.split('.').at(-1) ?? name);
+}

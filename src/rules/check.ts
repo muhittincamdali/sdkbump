@@ -2,7 +2,7 @@
 // applies to this kind of project (rules/fixes.ts) and, for React Native and Expo, an installed
 // workaround that handles it at run time.
 import type { AppModel } from '../collect/app.js';
-import { sceneManifest } from '../collect/app.js';
+import { sceneDelegateClassNames, sceneManifest } from '../collect/app.js';
 import { atLeast, majorOf } from '../core/versions.js';
 import type { FixAdvice, Finding } from '../model.js';
 import type { RuleData, RuleId, RuleSource, Severity } from './data.js';
@@ -197,13 +197,28 @@ function scn002(context: Context): RawFinding[] {
   return results;
 }
 
-function scn003(context: Context): RawFinding[] {
-  const { app, data } = context;
-  const forwarding = app.sources.regions.some(
+/**
+ * Whether the app's scene delegate passes scene events on to the app delegate: a scene delegate
+ * class in the sources that derives from a forwarder, or a forwarder named directly in Info.plist
+ * (Expo SDK 57's opt-in writes EXExpoAppSceneDelegate there and adds no class of its own).
+ */
+function usesForwardingSceneDelegate(app: AppModel, forwarders: readonly string[]): boolean {
+  const derived = app.sources.regions.some(
     (region) =>
       app.sources.sceneDelegates.has(region.name) &&
-      region.inherits.some((parent) => data.sceneForwarders.includes(parent)),
+      region.inherits.some((parent) => forwarders.includes(parent)),
   );
+  if (derived) return true;
+  return app.targets.some((target) =>
+    target.infoPlists.some((plist) =>
+      sceneDelegateClassNames(plist).some((name) => forwarders.includes(name)),
+    ),
+  );
+}
+
+function scn003(context: Context): RawFinding[] {
+  const { app, data } = context;
+  const forwarding = usesForwardingSceneDelegate(app, data.sceneForwarders);
   if (forwarding) return [];
   const swiftUI = isSwiftUIApp(app);
   const sceneCode = sceneDelegateText(app);
