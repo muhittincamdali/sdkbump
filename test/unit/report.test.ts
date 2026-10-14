@@ -135,16 +135,56 @@ describe('render (markdown)', () => {
     expect(render(sample, 'markdown')).toMatchSnapshot();
   });
 
-  it('escapes pipes, HTML and backticks from the project', () => {
-    const text = render(
-      report([finding({ file: 'a|b`c.plist', message: 'x | y <script>' })], {
-        project: { ...sample.project, name: 'App <b>|' },
-      }),
-      'markdown',
+  const WJ = '\u2060';
+  const withName = (name: string, overrides: Partial<Finding> = {}) =>
+    render(report([finding(overrides)], { project: { ...sample.project, name } }), 'markdown');
+  const heading = (text: string) => text.split('\n')[0];
+
+  it('escapes pipes and HTML from the project', () => {
+    const text = withName('App <b>|', { message: 'x | y <img src=x onerror=alert(1)>' });
+    expect(heading(text)).toBe('## sdkbump: App \\<b\\>\\| (React Native)');
+    expect(text).toContain('x \\| y \\<img src=x onerror=alert\\(1\\)\\>');
+    expect(text).not.toMatch(/(?<!\\)<(img|b)/);
+  });
+
+  it('keeps an image or a link in the project name as text', () => {
+    expect(heading(withName('![t](https://evil.example/p.png)'))).toBe(
+      `## sdkbump: \\!\\[t\\]\\(https${WJ}://evil.example/p.png\\) (React Native)`,
     );
-    expect(text).toContain('## sdkbump: App &lt;b>\\| (React Native)');
-    expect(text).toContain('`` a|b`c.plist ``');
-    expect(text).toContain('x \\| y &lt;script>');
+    const text = withName('App', { title: '[click](javascript:alert(1))' });
+    expect(text).toContain('| \\[click\\]\\(javascript:alert\\(1\\)\\) |');
+    expect(text).not.toContain('](javascript');
+  });
+
+  it('stops bare URLs, www addresses, e-mail addresses and mentions from becoming links', () => {
+    const text = withName('App', {
+      message:
+        'see https://evil.example, http://x.example, www.evil.example and admin@evil.example @team',
+    });
+    expect(text).toContain(
+      `see https${WJ}://evil.example, http${WJ}://x.example, www${WJ}.evil.example and admin@${WJ}evil.example @${WJ}team`,
+    );
+    expect(text).not.toMatch(/https?:\/\/evil|www\.evil|@evil|@team/);
+  });
+
+  it('keeps headings, emphasis and line breaks in a value inline', () => {
+    const text = withName('# Owned\n\n## Again', { title: '*bold* _it_ ~~gone~~ `x`' });
+    expect(heading(text)).toBe('## sdkbump: \\# Owned \\#\\# Again (React Native)');
+    expect(text).toContain('| \\*bold\\* \\_it\\_ \\~\\~gone\\~\\~ \\`x\\` |');
+    expect(text).not.toMatch(/^#{1,2} (Owned|Again)/m);
+  });
+
+  it('makes the code fence longer than any backtick run in a file name', () => {
+    const text = withName('App', { file: 'a``b`c.plist' });
+    expect(text).toContain('| ```a``b`c.plist``` |');
+    expect(withName('App', { file: '`x' })).toContain('`` `x ``');
+    expect(withName('App', { file: 'Info.plist' })).toContain('| `Info.plist` |');
+  });
+
+  it('escapes a pipe in a file name inside the table only', () => {
+    const text = withName('App', { file: 'a|b.plist' });
+    expect(text).toContain('| `a\\|b.plist` |');
+    expect(text).toContain('`a|b.plist`: Info.plist');
   });
 });
 
