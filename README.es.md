@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@d0783ab2c03063254567d8a69f2bbc7a780e8a24 status=reviewed -->
+<!-- i18n-source: README.md@a27fd9e08503079d2f77990dc0d71a2896261644 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -54,10 +54,10 @@ cd path/to/YourApp
 **2. Ejecuta sdkbump:**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz
+npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
 ```
 
-sdkbump todavía no está en npm (publicarlo ahí está planificado), así que por ahora `npx sdkbump` no funciona. El comando anterior ejecuta la versión 0.1.0 desde GitHub; úsalo donde este README diga `npx sdkbump`.
+sdkbump todavía no está en npm (publicarlo ahí está planificado), así que por ahora `npx sdkbump` no funciona. El comando anterior ejecuta la versión 0.1.1 desde GitHub; úsalo donde este README diga `npx sdkbump`.
 
 **3. Lee la primera línea bajo el nombre de tu proyecto.** «Fails to launch when built with the iOS 27 SDK» (no se inicia al compilarla con el SDK de iOS 27) significa que la app se detiene al iniciarse hasta que corrijas los hallazgos **ERROR**; cada uno indica qué solución de la lista «How to fix» corresponde. Los hallazgos **WARNING** no impiden el inicio, pero dejan de funcionar cuando la app tiene una escena.
 
@@ -86,10 +86,10 @@ Datos de reglas `ios27@2026.10.15`, comprobados con Xcode 27.0 (27A266a). Cuando
 
 ## Instalación
 
-sdkbump todavía no está en npm; publicarlo ahí está planificado. Mientras tanto, ejecuta la versión 0.1.0 desde GitHub como se muestra arriba, o añádelo a un proyecto:
+sdkbump todavía no está en npm; publicarlo ahí está planificado. Mientras tanto, ejecuta la versión 0.1.1 desde GitHub como se muestra arriba, o añádelo a un proyecto:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz
+npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
 npx sdkbump
 ```
 

@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@d0783ab2c03063254567d8a69f2bbc7a780e8a24 status=reviewed -->
+<!-- i18n-source: README.md@a27fd9e08503079d2f77990dc0d71a2896261644 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -54,10 +54,10 @@ cd path/to/YourApp
 **2. Lancez sdkbump :**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz
+npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
 ```
 
-sdkbump n'est pas encore sur npm (sa publication est prévue), donc `npx sdkbump` ne fonctionne pas pour l'instant. La commande ci-dessus exécute la version 0.1.0 depuis GitHub ; utilisez-la partout où ce README mentionne `npx sdkbump`.
+sdkbump n'est pas encore sur npm (sa publication est prévue), donc `npx sdkbump` ne fonctionne pas pour l'instant. La commande ci-dessus exécute la version 0.1.1 depuis GitHub ; utilisez-la partout où ce README mentionne `npx sdkbump`.
 
 **3. Lisez la première ligne sous le nom de votre projet.** « Fails to launch when built with the iOS 27 SDK » (ne se lance pas lorsqu'elle est compilée avec le SDK iOS 27) signifie que l'app s'arrête au lancement tant que vous n'avez pas corrigé les constats **ERROR** ; chacun indique quelle correction de la liste « How to fix » s'applique. Les constats **WARNING** n'empêchent pas le lancement, mais cessent de fonctionner dès que l'app a une scène.
 
@@ -86,10 +86,10 @@ Données de règles `ios27@2026.10.15`, vérifiées avec Xcode 27.0 (27A266a). L
 
 ## Installation
 
-sdkbump n'est pas encore sur npm ; sa publication est prévue. D'ici là, exécutez la version 0.1.0 depuis GitHub comme indiqué ci-dessus, ou ajoutez-la à un projet :
+sdkbump n'est pas encore sur npm ; sa publication est prévue. D'ici là, exécutez la version 0.1.1 depuis GitHub comme indiqué ci-dessus, ou ajoutez-la à un projet :
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz
+npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
 npx sdkbump
 ```
 

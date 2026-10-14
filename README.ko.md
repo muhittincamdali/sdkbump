@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@d0783ab2c03063254567d8a69f2bbc7a780e8a24 status=reviewed -->
+<!-- i18n-source: README.md@a27fd9e08503079d2f77990dc0d71a2896261644 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -53,10 +53,10 @@ cd path/to/YourApp
 **2. sdkbump를 실행합니다.**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz
+npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
 ```
 
-sdkbump는 아직 npm에 공개되어 있지 않아(공개할 계획입니다) 지금은 `npx sdkbump`를 사용할 수 없습니다. 위 명령은 GitHub의 0.1.0 릴리스를 실행합니다. 이 README에서 `npx sdkbump`라고 적힌 곳에는 이 명령을 사용하세요.
+sdkbump는 아직 npm에 공개되어 있지 않아(공개할 계획입니다) 지금은 `npx sdkbump`를 사용할 수 없습니다. 위 명령은 GitHub의 0.1.1 릴리스를 실행합니다. 이 README에서 `npx sdkbump`라고 적힌 곳에는 이 명령을 사용하세요.
 
 **3. 프로젝트 이름 아래의 첫 번째 줄을 읽습니다.** "Fails to launch when built with the iOS 27 SDK"(iOS 27 SDK로 빌드하면 실행되지 않음)는 **ERROR** 항목을 고칠 때까지 앱이 실행 시점에 멈춘다는 뜻이며, 각 항목은 "How to fix" 목록의 어떤 해결 방법이 맞는지 알려 줍니다. **WARNING** 항목은 실행을 막지는 않지만, 앱에 scene이 생기면 동작하지 않게 됩니다.
 
@@ -84,10 +84,10 @@ Apple의 [Transitioning to the UIKit scene-based life cycle](https://developer.a
 
 ## 설치
 
-sdkbump는 아직 npm에 공개되어 있지 않으며, 공개할 계획입니다. 그때까지는 위에서 보여 준 대로 GitHub의 0.1.0 릴리스를 실행하거나 프로젝트에 추가하세요.
+sdkbump는 아직 npm에 공개되어 있지 않으며, 공개할 계획입니다. 그때까지는 위에서 보여 준 대로 GitHub의 0.1.1 릴리스를 실행하거나 프로젝트에 추가하세요.
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz
+npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
 npx sdkbump
 ```
 

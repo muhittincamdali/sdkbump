@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@d0783ab2c03063254567d8a69f2bbc7a780e8a24 status=reviewed -->
+<!-- i18n-source: README.md@a27fd9e08503079d2f77990dc0d71a2896261644 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -53,10 +53,10 @@ cd path/to/YourApp
 **2. Starte sdkbump:**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz
+npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
 ```
 
-sdkbump ist noch nicht auf npm (die Veröffentlichung dort ist geplant), daher funktioniert `npx sdkbump` vorerst nicht. Der Befehl oben führt das Release 0.1.0 von GitHub aus; verwende ihn überall dort, wo diese README `npx sdkbump` nennt.
+sdkbump ist noch nicht auf npm (die Veröffentlichung dort ist geplant), daher funktioniert `npx sdkbump` vorerst nicht. Der Befehl oben führt das Release 0.1.1 von GitHub aus; verwende ihn überall dort, wo diese README `npx sdkbump` nennt.
 
 **3. Lies die erste Zeile unter dem Namen deines Projekts.** „Fails to launch when built with the iOS 27 SDK“ (startet nicht, wenn mit dem iOS-27-SDK gebaut) bedeutet, dass die App beim Start stehen bleibt, bis du die **ERROR**-Funde behoben hast; jeder Fund nennt, welche Lösung aus der Liste „How to fix“ zutrifft. **WARNING**-Funde verhindern den Start nicht, funktionieren aber nicht mehr, sobald die App eine Scene hat.
 
@@ -85,10 +85,10 @@ Regeldaten `ios27@2026.10.15`, geprüft gegen Xcode 27.0 (27A266a). Wenn in Reac
 
 ## Installation
 
-sdkbump ist noch nicht auf npm; die Veröffentlichung dort ist geplant. Bis dahin führst du das Release 0.1.0 von GitHub aus, wie oben gezeigt, oder fügst es einem Projekt hinzu:
+sdkbump ist noch nicht auf npm; die Veröffentlichung dort ist geplant. Bis dahin führst du das Release 0.1.1 von GitHub aus, wie oben gezeigt, oder fügst es einem Projekt hinzu:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz
+npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
 npx sdkbump
 ```
 
