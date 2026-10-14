@@ -359,6 +359,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     expect((await scan(root)).findings).toEqual([]);
   });
 
+  it('trusts EXExpoAppSceneDelegate named in Info.plist, as Expo SDK 57 writes it', async () => {
+    const root = tree({
+      'package.json': JSON.stringify({ dependencies: { expo: '~57.0.29' } }),
+      'ios/App.xcodeproj/project.pbxproj': minimalPbxproj(),
+      'ios/App/Info.plist': infoPlist(sceneManifest('EXExpoAppSceneDelegate')),
+      'ios/App/AppDelegate.swift':
+        'class AppDelegate: ExpoAppDelegate {\n  override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool { true }\n}',
+    });
+    expect((await scan(root)).findings).toEqual([]);
+  });
+
   it('says when scene support is on but ios/ is older', async () => {
     const root = tree({
       'package.json': JSON.stringify({ dependencies: { expo: '~57.0.29' } }),

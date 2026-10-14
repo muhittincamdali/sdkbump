@@ -597,7 +597,7 @@
     "expoScenesByDefault": "58.0.0",
     "flutterAutoMigration": "3.41.0"
   },
-  "sceneForwarders": ["ExpoAppSceneDelegate"],
+  "sceneForwarders": ["ExpoAppSceneDelegate", "EXExpoAppSceneDelegate"],
   "flutterTemplates": {
     "source": "https://github.com/flutter/flutter/blob/3.41.5/packages/flutter_tools/lib/src/migrations/uiscene_migration.dart",
     "swift": [

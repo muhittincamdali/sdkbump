@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "sdkbump",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "ios27",
+    "dataVersion": "2026.10.15",
+    "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)"
+  },
+  "project": {
+    "path": "fixtures/expo-57-scenes",
+    "name": "expo-57",
+    "ecosystem": "expo",
+    "versions": [
+      {
+        "name": "react-native",
+        "version": "0.86.3",
+        "source": "declared"
+      },
+      {
+        "name": "expo",
+        "version": "57.0.29",
+        "source": "declared"
+      },
+      {
+        "name": "expo-build-properties",
+        "version": "57.0.22",
+        "source": "declared"
+      }
+    ],
+    "targets": [
+      {
+        "name": "expo57",
+        "lifecycle": "scenes",
+        "infoPlists": [
+          "ios/expo57/Info.plist"
+        ]
+      }
+    ]
+  },
+  "verdict": {
+    "code": "no-findings",
+    "text": "No findings for the checks in ios27@2026.10.15."
+  },
+  "findings": [],
+  "notes": [],
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "mitigated": 0
+  }
+}
