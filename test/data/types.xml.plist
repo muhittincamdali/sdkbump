@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Name</key>
+	<string>Café &amp; Cœur ☕</string>
+	<key>Small</key>
+	<integer>7</integer>
+	<key>Large</key>
+	<integer>5000000000</integer>
+	<key>Negative</key>
+	<integer>-3</integer>
+	<key>Real</key>
+	<real>1.5</real>
+	<key>Yes</key>
+	<true/>
+	<key>No</key>
+	<false/>
+	<key>When</key>
+	<date>2026-10-15T00:00:00Z</date>
+	<key>Bytes</key>
+	<data>AAEC/w==</data>
+	<key>Many</key>
+	<array><integer>0</integer><integer>1</integer><integer>2</integer><integer>3</integer><integer>4</integer><integer>5</integer><integer>6</integer><integer>7</integer><integer>8</integer><integer>9</integer><integer>10</integer><integer>11</integer><integer>12</integer><integer>13</integer><integer>14</integer><integer>15</integer><integer>16</integer><integer>17</integer><integer>18</integer><integer>19</integer></array>
+	<key>Empty</key>
+	<dict/>
+</dict>
+</plist>
