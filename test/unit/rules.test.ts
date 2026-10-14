@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, symlinkSync } from 'node:fs';
+import { join, relative } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { Report } from '../../src/model.js';
 import { scan } from '../../src/scan.js';
@@ -131,6 +132,51 @@ describe('SCN001 and the verdict', () => {
     expect(report.notes).toEqual([
       'Missing/Info.plist is named in INFOPLIST_FILE but does not exist.',
     ]);
+  });
+
+  describe('does not read an INFOPLIST_FILE outside the project', () => {
+    const outside = tree({ 'Info.plist': infoPlist(sceneManifest()) });
+    const appNaming = (infoPlistPath: string, extra: Record<string, string> = {}) =>
+      tree({
+        'App.xcodeproj/project.pbxproj': minimalPbxproj('App', infoPlistPath),
+        'App/AppDelegate.swift': 'class AppDelegate: UIResponder, UIApplicationDelegate {}',
+        ...extra,
+      });
+
+    it.each([
+      ['an absolute path', join(outside, 'Info.plist')],
+      ['a relative path', relative(appNaming('x'), join(outside, 'Info.plist'))],
+    ])('%s', async (_, path) => {
+      const report = await scan(appNaming(path));
+      expect(report.notes).toHaveLength(1);
+      expect(report.notes[0]).toMatch(/is outside the project; it was not read\.$/);
+      // The scene manifest in the outside file was not used.
+      expect(rules(report)).toContain('SCN001');
+    });
+
+    it('a symbolic link that leads out of the project', async () => {
+      const root = appNaming('App/Info.plist');
+      symlinkSync(join(outside, 'Info.plist'), join(root, 'App/Info.plist'));
+      const report = await scan(root);
+      expect(report.notes).toEqual([
+        'App/Info.plist is named in INFOPLIST_FILE but is outside the project; it was not read.',
+      ]);
+    });
+
+    it('a device file such as /dev/zero', { timeout: 2000 }, async () => {
+      const root = appNaming('App/Info.plist');
+      symlinkSync('/dev/zero', join(root, 'App/Info.plist'));
+      const report = await scan(root);
+      expect(report.notes[0]).toMatch(/is outside the project; it was not read\.$/);
+    });
+
+    it('a folder inside the project', async () => {
+      const root = appNaming('App');
+      const report = await scan(root);
+      expect(report.notes).toEqual([
+        'App is named in INFOPLIST_FILE but is not a file; it was not read.',
+      ]);
+    });
   });
 });
 
