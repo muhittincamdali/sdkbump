@@ -1,7 +1,7 @@
 // Everything the rules look at for one project: its iOS app targets with their Info.plist, and
 // the index of the app's own Swift and Objective-C sources.
-import { readFile, realpath, stat } from 'node:fs/promises';
-import { isAbsolute, join, relative, sep } from 'node:path';
+import { join } from 'node:path';
+import { NOT_READ, readProjectFile } from '../core/files.js';
 import type { Project } from '../detect/project.js';
 import { generatesInfoPlist, infoPlistFiles, iosAppTargets, readXcodeProject } from './pbxproj.js';
 import { isDict, type PlistDict, parsePlist } from './plist.js';
@@ -30,12 +30,6 @@ export interface AppModel {
   notes: string[];
 }
 
-/** Whether `path` is `folder` or inside it (both already resolved with realpath). */
-function isInside(path: string, folder: string): boolean {
-  const rest = relative(folder, path);
-  return rest !== '..' && !rest.startsWith(`..${sep}`) && !isAbsolute(rest);
-}
-
 /**
  * Reads the Info.plist a target names. INFOPLIST_FILE comes from the checked project, so a path
  * that leads (through `..`, an absolute path or a symbolic link) outside the project folder is
@@ -46,24 +40,13 @@ async function readInfoPlist(
   projectRoot: string,
   notes: string[],
 ): Promise<InfoPlistFile | null> {
-  let bytes: Uint8Array;
-  try {
-    const real = await realpath(path);
-    if (!isInside(real, projectRoot)) {
-      notes.push(`${path} is named in INFOPLIST_FILE but is outside the project; it was not read.`);
-      return null;
-    }
-    if (!(await stat(real)).isFile()) {
-      notes.push(`${path} is named in INFOPLIST_FILE but is not a file; it was not read.`);
-      return null;
-    }
-    bytes = await readFile(real);
-  } catch {
-    notes.push(`${path} is named in INFOPLIST_FILE but does not exist.`);
+  const file = await readProjectFile(path, projectRoot);
+  if (!file.found) {
+    notes.push(`${path} is named in INFOPLIST_FILE but ${NOT_READ[file.reason]}`);
     return null;
   }
   try {
-    const { value, keyLines } = parsePlist(bytes);
+    const { value, keyLines } = parsePlist(file.bytes);
     if (!isDict(value)) throw new Error('the top level is not a dictionary');
     return { path, dict: value, keyLines };
   } catch (error) {
@@ -76,7 +59,6 @@ async function readInfoPlist(
 export async function collectApp(project: Project): Promise<AppModel> {
   const notes: string[] = [];
   const targets: AppTarget[] = [];
-  const projectRoot = await realpath(project.root);
   for (const path of project.xcodeProjects) {
     let xcode: Awaited<ReturnType<typeof readXcodeProject>>;
     try {
@@ -94,7 +76,7 @@ export async function collectApp(project: Project): Promise<AppModel> {
       }
       const infoPlists: InfoPlistFile[] = [];
       for (const file of files) {
-        const plist = await readInfoPlist(file, projectRoot, notes);
+        const plist = await readInfoPlist(file, project.root, notes);
         if (plist) infoPlists.push(plist);
       }
       targets.push({
