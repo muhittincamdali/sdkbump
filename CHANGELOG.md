@@ -17,6 +17,9 @@ All notable changes to sdkbump are listed here. The format follows
   pnpm and workspaces link it from outside the app folder.
 - examples/github-actions/sdkbump.yml stops the job after 10 minutes instead of GitHub's default
   of six hours.
+- The examples in `--help` used `npx sdkbump`, which npm cannot find while sdkbump is not
+  published there. They now call `sdkbump`, and the help says so and prints the `npx` command for
+  the GitHub release of the running version.
 
 ## [0.1.0] - 2026-10-15
 

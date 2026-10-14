@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { type CliEnvironment, EXIT, run } from '../../src/cli/run.js';
+import { VERSION } from '../../src/version.js';
 import { infoPlist, minimalPbxproj, sceneManifest, tree } from '../helpers/tree.js';
 
 interface Result {
@@ -125,6 +126,12 @@ describe('sdkbump (in process)', () => {
     const help = await sdkbump(['--help'], failing());
     expect(help.code).toBe(EXIT.ok);
     expect(help.stdout).toContain('Exit codes:');
+    // Not on npm yet: the examples must not suggest `npx sdkbump`, and the release command must
+    // name this version.
+    expect(help.stdout).not.toMatch(/^ {2}npx sdkbump/m);
+    expect(help.stdout).toContain(
+      `npx https://github.com/muhittincamdali/sdkbump/releases/download/v${VERSION}/sdkbump-${VERSION}.tgz`,
+    );
     const version = await sdkbump(['--version'], failing());
     const manifest = JSON.parse(
       readFileSync(new URL('../../package.json', import.meta.url), 'utf8'),
