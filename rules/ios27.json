@@ -1,0 +1,613 @@
+{
+  "$schema": "./schema.json",
+  "ruleSet": "ios27",
+  "dataVersion": "2026.10.15",
+  "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)",
+  "rules": [
+    {
+      "id": "SCN001",
+      "severity": "error",
+      "title": "No scene configuration",
+      "summary": "The app declares no scene: its Info.plist has no UIApplicationSceneManifest with a configuration, and its app delegate does not implement application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, it stops at launch with \"UIScene life cycle is required for apps built with this SDK\".",
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        },
+        {
+          "title": "Apple: application(_:configurationForConnecting:options:)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:configurationforconnecting:options:)"
+        }
+      ]
+    },
+    {
+      "id": "SCN002",
+      "severity": "error",
+      "title": "Window created in the app delegate",
+      "summary": "The app delegate creates the app's window with UIWindow(frame:). Once the app has a scene, UIKit shows only windows that belong to a scene, so this window never appears and the app shows a black screen. Create the window in the scene delegate with UIWindow(windowScene:).",
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle (Configure your window scene)",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        }
+      ]
+    },
+    {
+      "id": "SCN003",
+      "severity": "warning",
+      "title": "App delegate method UIKit no longer calls",
+      "summary": "Under the scene life cycle UIKit sends links, user activities, quick actions and foreground and background transitions to the scene delegate, and stops calling the app delegate methods (and launch option keys) that used to receive them, even if they stay implemented.",
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle (Migrate app life-cycle logic)",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        }
+      ]
+    },
+    {
+      "id": "SCN004",
+      "severity": "warning",
+      "title": "Window looked up through the application",
+      "summary": "The code finds a window through UIApplication (keyWindow, windows) or the app delegate's window property. With scenes, keyWindow spans every connected scene, windows is deprecated, and UIKit no longer sets the app delegate's window, so it is nil unless the app assigns it and a forced unwrap of it crashes.",
+      "sources": [
+        {
+          "title": "Apple: UIApplication.keyWindow",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/keywindow"
+        },
+        {
+          "title": "Apple: UIApplication.windows",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/windows"
+        }
+      ]
+    }
+  ],
+  "hooks": [
+    {
+      "id": "open-url",
+      "kind": "method",
+      "swift": "application(_:open:options:)",
+      "objc": "application:openURL:options:",
+      "replacement": "scene(_:openURLContexts:), and connectionOptions.urlContexts in scene(_:willConnectTo:options:) for a link that launches the app",
+      "swiftUI": ".onOpenURL",
+      "sources": [
+        {
+          "title": "Apple: application(_:open:options:) (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:open:options:)"
+        }
+      ]
+    },
+    {
+      "id": "continue-user-activity",
+      "kind": "method",
+      "swift": "application(_:continue:restorationHandler:)",
+      "objc": "application:continueUserActivity:restorationHandler:",
+      "replacement": "scene(_:continue:), and connectionOptions.userActivities in scene(_:willConnectTo:options:)",
+      "swiftUI": ".onContinueUserActivity",
+      "sources": [
+        {
+          "title": "Apple: application(_:continue:restorationHandler:) (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:continue:restorationhandler:)"
+        }
+      ]
+    },
+    {
+      "id": "will-continue-user-activity",
+      "kind": "method",
+      "swift": "application(_:willContinueUserActivityWithType:)",
+      "objc": "application:willContinueUserActivityWithType:",
+      "replacement": "scene(_:willContinueUserActivityWithType:)",
+      "swiftUI": null,
+      "sources": [
+        {
+          "title": "Apple: application(_:willContinueUserActivityWithType:) (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:willcontinueuseractivitywithtype:)"
+        }
+      ]
+    },
+    {
+      "id": "fail-to-continue-user-activity",
+      "kind": "method",
+      "swift": "application(_:didFailToContinueUserActivityWithType:error:)",
+      "objc": "application:didFailToContinueUserActivityWithType:error:",
+      "replacement": "scene(_:didFailToContinueUserActivityWithType:error:)",
+      "swiftUI": null,
+      "sources": [
+        {
+          "title": "Apple: application(_:didFailToContinueUserActivityWithType:error:) (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:didfailtocontinueuseractivitywithtype:error:)"
+        }
+      ]
+    },
+    {
+      "id": "quick-action",
+      "kind": "method",
+      "swift": "application(_:performActionFor:completionHandler:)",
+      "objc": "application:performActionForShortcutItem:completionHandler:",
+      "replacement": "windowScene(_:performActionFor:completionHandler:), and connectionOptions.shortcutItem in scene(_:willConnectTo:options:)",
+      "swiftUI": null,
+      "sources": [
+        {
+          "title": "Apple: application(_:performActionFor:completionHandler:) (not called for scene-based apps)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:performactionfor:completionhandler:)"
+        }
+      ]
+    },
+    {
+      "id": "did-become-active",
+      "kind": "method",
+      "swift": "applicationDidBecomeActive(_:)",
+      "objc": "applicationDidBecomeActive:",
+      "replacement": "sceneDidBecomeActive(_:), or UIApplication.didBecomeActiveNotification for the whole app",
+      "swiftUI": "scenePhase",
+      "sources": [
+        {
+          "title": "Apple: applicationDidBecomeActive(_:)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/applicationdidbecomeactive(_:)"
+        }
+      ]
+    },
+    {
+      "id": "will-resign-active",
+      "kind": "method",
+      "swift": "applicationWillResignActive(_:)",
+      "objc": "applicationWillResignActive:",
+      "replacement": "sceneWillResignActive(_:), or UIApplication.willResignActiveNotification for the whole app",
+      "swiftUI": "scenePhase",
+      "sources": [
+        {
+          "title": "Apple: applicationWillResignActive(_:)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/applicationwillresignactive(_:)"
+        }
+      ]
+    },
+    {
+      "id": "did-enter-background",
+      "kind": "method",
+      "swift": "applicationDidEnterBackground(_:)",
+      "objc": "applicationDidEnterBackground:",
+      "replacement": "sceneDidEnterBackground(_:), or UIApplication.didEnterBackgroundNotification for the whole app",
+      "swiftUI": "scenePhase",
+      "sources": [
+        {
+          "title": "Apple: applicationDidEnterBackground(_:)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/applicationdidenterbackground(_:)"
+        }
+      ]
+    },
+    {
+      "id": "will-enter-foreground",
+      "kind": "method",
+      "swift": "applicationWillEnterForeground(_:)",
+      "objc": "applicationWillEnterForeground:",
+      "replacement": "sceneWillEnterForeground(_:), or UIApplication.willEnterForegroundNotification for the whole app",
+      "swiftUI": "scenePhase",
+      "sources": [
+        {
+          "title": "Apple: applicationWillEnterForeground(_:)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplicationdelegate/applicationwillenterforeground(_:)"
+        }
+      ]
+    },
+    {
+      "id": "launch-url",
+      "kind": "launch-option",
+      "swift": "launchOptions[.url]",
+      "objc": "UIApplicationLaunchOptionsURLKey",
+      "replacement": "connectionOptions.urlContexts in scene(_:willConnectTo:options:)",
+      "swiftUI": ".onOpenURL",
+      "sources": [
+        {
+          "title": "Apple: UIApplication.LaunchOptionsKey.url (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/launchoptionskey/url"
+        }
+      ]
+    },
+    {
+      "id": "launch-user-activity",
+      "kind": "launch-option",
+      "swift": "launchOptions[.userActivityDictionary]",
+      "objc": "UIApplicationLaunchOptionsUserActivityDictionaryKey",
+      "replacement": "connectionOptions.userActivities in scene(_:willConnectTo:options:)",
+      "swiftUI": ".onContinueUserActivity",
+      "sources": [
+        {
+          "title": "Apple: UIApplication.LaunchOptionsKey.userActivityDictionary (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/launchoptionskey/useractivitydictionary"
+        }
+      ]
+    },
+    {
+      "id": "launch-shortcut-item",
+      "kind": "launch-option",
+      "swift": "launchOptions[.shortcutItem]",
+      "objc": "UIApplicationLaunchOptionsShortcutItemKey",
+      "replacement": "connectionOptions.shortcutItem in scene(_:willConnectTo:options:)",
+      "swiftUI": null,
+      "sources": [
+        {
+          "title": "Apple: UIApplication.LaunchOptionsKey.shortcutItem (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/launchoptionskey/shortcutitem"
+        }
+      ]
+    },
+    {
+      "id": "launch-remote-notification",
+      "kind": "launch-option",
+      "swift": "launchOptions[.remoteNotification]",
+      "objc": "UIApplicationLaunchOptionsRemoteNotificationKey",
+      "replacement": "userNotificationCenter(_:didReceive:withCompletionHandler:) on a UNUserNotificationCenterDelegate set before launch finishes; silent notifications keep using application(_:didReceiveRemoteNotification:fetchCompletionHandler:)",
+      "swiftUI": null,
+      "sources": [
+        {
+          "title": "Apple: UIApplication.LaunchOptionsKey.remoteNotification (deprecated in iOS 26)",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/launchoptionskey/remotenotification"
+        }
+      ]
+    }
+  ],
+  "windowLookups": [
+    {
+      "id": "key-window",
+      "title": "Window looked up through keyWindow",
+      "api": "UIApplication.shared.keyWindow",
+      "message": "keyWindow returns a key window across all connected scenes (deprecated in iOS 13).",
+      "sources": [
+        {
+          "title": "Apple: UIApplication.keyWindow",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/keywindow"
+        }
+      ]
+    },
+    {
+      "id": "windows",
+      "title": "Window looked up through UIApplication.windows",
+      "api": "UIApplication.shared.windows",
+      "message": "windows lists the windows of every scene (deprecated in iOS 15); use the windows of the relevant UIWindowScene.",
+      "sources": [
+        {
+          "title": "Apple: UIApplication.windows",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/windows"
+        }
+      ]
+    },
+    {
+      "id": "delegate-window",
+      "title": "Window looked up through the app delegate",
+      "api": "UIApplication.shared.delegate?.window",
+      "message": "UIKit does not set the app delegate's window once a scene owns the window, so it is nil unless the app assigns it.",
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle (Configure your window scene)",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        }
+      ]
+    },
+    {
+      "id": "app-delegate-window",
+      "title": "Root view controller read from the app delegate's window",
+      "api": "window?.rootViewController in the app delegate",
+      "message": "UIKit does not set the app delegate's window once a scene owns the window, and application(_:didFinishLaunchingWithOptions:) runs before any scene connects; reading its root view controller finds nil, and a forced cast of it crashes.",
+      "sources": [
+        {
+          "title": "Flutter: UIScene adoption (Bespoke FlutterViewController usage)",
+          "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate"
+        }
+      ]
+    }
+  ],
+  "fixes": [
+    {
+      "id": "native-adopt-scenes",
+      "ecosystems": ["native"],
+      "title": "Adopt a scene delegate",
+      "steps": [
+        "Add a SceneDelegate class (UIResponder, UIWindowSceneDelegate) that creates the window in scene(_:willConnectTo:options:).",
+        "Add UIApplicationSceneManifest to Info.plist with a UIWindowSceneSessionRoleApplication configuration whose UISceneDelegateClassName is $(PRODUCT_MODULE_NAME).SceneDelegate, or implement application(_:configurationForConnecting:options:).",
+        "Move the app delegate methods sdkbump lists under SCN003 to the scene delegate."
+      ],
+      "guide": "docs/guides/native-ios.md",
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        }
+      ]
+    },
+    {
+      "id": "native-window-in-scene",
+      "ecosystems": ["native"],
+      "title": "Create the window in the scene delegate",
+      "steps": [
+        "In scene(_:willConnectTo:options:), create the window with UIWindow(windowScene:), set its root view controller and call makeKeyAndVisible().",
+        "Remove the window creation from application(_:didFinishLaunchingWithOptions:)."
+      ],
+      "guide": "docs/guides/native-ios.md",
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle (Configure your window scene)",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        }
+      ]
+    },
+    {
+      "id": "native-move-hook",
+      "ecosystems": ["native"],
+      "title": "Move it to the scene delegate",
+      "steps": [
+        "Implement the scene delegate method named in the finding and move the code there."
+      ],
+      "guide": "docs/guides/native-ios.md",
+      "sources": [
+        {
+          "title": "Apple: Transitioning to the UIKit scene-based life cycle (Migrate app life-cycle logic)",
+          "url": "https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle"
+        }
+      ]
+    },
+    {
+      "id": "swiftui-modifier",
+      "ecosystems": ["native"],
+      "title": "Use the SwiftUI scene API",
+      "steps": [
+        "A SwiftUI App always runs on scenes, so UIKit never calls this app delegate method. Use the SwiftUI replacement named in the finding on a view in your WindowGroup."
+      ],
+      "guide": "docs/guides/native-ios.md",
+      "sources": [
+        {
+          "title": "Apple: onOpenURL(perform:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/onopenurl(perform:)"
+        },
+        {
+          "title": "Apple: ScenePhase",
+          "url": "https://developer.apple.com/documentation/swiftui/scenephase"
+        }
+      ]
+    },
+    {
+      "id": "window-from-scene",
+      "ecosystems": ["native", "flutter", "react-native", "expo"],
+      "title": "Find the window through the scene",
+      "steps": [
+        "From a view or view controller, use view.window or view.window?.windowScene.",
+        "Elsewhere, pick the foreground UIWindowScene from UIApplication.shared.connectedScenes and use its keyWindow or windows."
+      ],
+      "guide": "docs/guides/native-ios.md",
+      "sources": [
+        {
+          "title": "Apple: UIApplication.windows",
+          "url": "https://developer.apple.com/documentation/uikit/uiapplication/windows"
+        }
+      ]
+    },
+    {
+      "id": "flutter-auto-migrate",
+      "ecosystems": ["flutter"],
+      "title": "Let Flutter 3.41 or later migrate the app",
+      "steps": [
+        "Upgrade to Flutter 3.41 or later.",
+        "Run `flutter build ios` (or `flutter run`). With an unmodified AppDelegate and UIMainStoryboardFile set to Main, it rewrites AppDelegate and Info.plist and prints \"Finished migration to UIScene lifecycle\"."
+      ],
+      "guide": "docs/guides/flutter.md",
+      "sources": [
+        {
+          "title": "Flutter: UIScene adoption (Auto-migrate)",
+          "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate"
+        },
+        {
+          "title": "flutter_tools: uiscene_migration.dart (Flutter 3.41.5)",
+          "url": "https://github.com/flutter/flutter/blob/3.41.5/packages/flutter_tools/lib/src/migrations/uiscene_migration.dart"
+        }
+      ]
+    },
+    {
+      "id": "flutter-manual-migration",
+      "ecosystems": ["flutter"],
+      "title": "Migrate the Flutter app by hand",
+      "steps": [
+        "Conform AppDelegate to FlutterImplicitEngineDelegate and move GeneratedPluginRegistrant.register, method channels and platform views into didInitializeImplicitFlutterEngine(_:).",
+        "Add UIApplicationSceneManifest to ios/Runner/Info.plist with a configuration whose UISceneDelegateClassName is FlutterSceneDelegate and UISceneStoryboardFile is Main."
+      ],
+      "guide": "docs/guides/flutter.md",
+      "sources": [
+        {
+          "title": "Flutter: UIScene adoption (Migrate AppDelegate, Migrate Info.plist)",
+          "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate"
+        }
+      ]
+    },
+    {
+      "id": "flutter-engine-bridge",
+      "ecosystems": ["flutter"],
+      "title": "Create channels from the engine bridge",
+      "steps": [
+        "Create method channels in didInitializeImplicitFlutterEngine(_:) with engineBridge.applicationRegistrar.messenger() instead of reading window?.rootViewController."
+      ],
+      "guide": "docs/guides/flutter.md",
+      "sources": [
+        {
+          "title": "Flutter: UIScene adoption (Migrate AppDelegate)",
+          "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate"
+        }
+      ]
+    },
+    {
+      "id": "flutter-scene-delegate-hooks",
+      "ecosystems": ["flutter"],
+      "title": "Handle it in a FlutterSceneDelegate subclass",
+      "steps": [
+        "Create SceneDelegate: FlutterSceneDelegate, name it in UISceneDelegateClassName, and override the scene delegate method named in the finding, calling super so plugins still receive the event."
+      ],
+      "guide": "docs/guides/flutter.md",
+      "sources": [
+        {
+          "title": "Flutter: UIScene adoption (Create a SceneDelegate)",
+          "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate"
+        }
+      ]
+    },
+    {
+      "id": "rn-upgrade-088",
+      "ecosystems": ["react-native"],
+      "title": "Upgrade to React Native 0.88",
+      "steps": [
+        "React Native 0.88 moves the window and React Native start-up to a SceneDelegate and adds the scene manifest. On 15 October 2026 it is a release candidate (0.88.0-rc.6 on npm's next tag); 0.87.1 and earlier have no scene support.",
+        "Compare ios/ with the 0.88 template (AppDelegate.swift, SceneDelegate.swift, Info.plist) when you upgrade."
+      ],
+      "guide": "docs/guides/react-native-expo.md",
+      "sources": [
+        {
+          "title": "react/react-native#58545: 0.87 and below crash upon launch on iOS 27",
+          "url": "https://github.com/react/react-native/issues/58545"
+        },
+        {
+          "title": "reactwg/react-native-releases#1439: pick SceneDelegate support into 0.87",
+          "url": "https://github.com/reactwg/react-native-releases/issues/1439"
+        }
+      ]
+    },
+    {
+      "id": "rn-manual-scene-delegate",
+      "ecosystems": ["react-native"],
+      "title": "Add a SceneDelegate by hand",
+      "steps": [
+        "Port the 0.88 template's SceneDelegate and Info.plist manifest to your version: create the window from the UIWindowScene and start React Native into it there.",
+        "Before 0.88, startReactNative takes launch options, not connection options, so convert the connection options of a link that launches the app."
+      ],
+      "guide": "docs/guides/react-native-expo.md",
+      "sources": [
+        {
+          "title": "react/react-native#58545 (workarounds in the comments)",
+          "url": "https://github.com/react/react-native/issues/58545"
+        }
+      ]
+    },
+    {
+      "id": "rn-linking-scene",
+      "ecosystems": ["react-native"],
+      "title": "Forward links from the scene delegate",
+      "steps": [
+        "Call RCTLinkingManager.scene(_:openURLContexts:) and RCTLinkingManager.scene(_:continue:) from the scene delegate, as the React Native 0.88 template does."
+      ],
+      "guide": "docs/guides/react-native-expo.md",
+      "sources": [
+        {
+          "title": "react/react-native#58545",
+          "url": "https://github.com/react/react-native/issues/58545"
+        }
+      ]
+    },
+    {
+      "id": "expo-57-scene-support",
+      "ecosystems": ["expo"],
+      "title": "Turn on scene support (Expo SDK 57)",
+      "steps": [
+        "Use expo 57.0.23 or later and expo-build-properties 57.0.20 or later (npx expo install expo-build-properties).",
+        "In app.json, add [\"expo-build-properties\", { \"ios\": { \"enableSceneSupport\": true } }] to plugins.",
+        "Regenerate the native project: npx expo prebuild --clean -p ios. ExpoAppSceneDelegate then creates the window and passes links, user activities and quick actions on to AppDelegate."
+      ],
+      "guide": "docs/guides/react-native-expo.md",
+      "sources": [
+        {
+          "title": "expo/expo#46664: Xcode 27 support for Expo SDK 57",
+          "url": "https://github.com/expo/expo/issues/46664#issuecomment-5683396867"
+        },
+        {
+          "title": "Expo SDK 57: BuildProperties",
+          "url": "https://docs.expo.dev/versions/v57.0.0/sdk/build-properties/"
+        },
+        {
+          "title": "expo/expo#50191: backport UIKit scene lifecycle runtime",
+          "url": "https://github.com/expo/expo/pull/50191"
+        }
+      ]
+    },
+    {
+      "id": "expo-upgrade",
+      "ecosystems": ["expo"],
+      "title": "Upgrade Expo",
+      "steps": [
+        "Expo SDK 56 and earlier have no scene support. Upgrade to SDK 57 (57.0.23 or later) and turn scene support on, or to SDK 58, which uses scenes by default."
+      ],
+      "guide": "docs/guides/react-native-expo.md",
+      "sources": [
+        {
+          "title": "expo/expo#46664: Xcode 27 support for Expo SDK 57",
+          "url": "https://github.com/expo/expo/issues/46664#issuecomment-5683396867"
+        }
+      ]
+    },
+    {
+      "id": "expo-prebuild",
+      "ecosystems": ["expo"],
+      "title": "Regenerate ios/",
+      "steps": [
+        "Scene support is configured, but ios/ was generated before. Run npx expo prebuild --clean -p ios."
+      ],
+      "guide": "docs/guides/react-native-expo.md",
+      "sources": [
+        {
+          "title": "expo/expo#46664: Xcode 27 support for Expo SDK 57",
+          "url": "https://github.com/expo/expo/issues/46664#issuecomment-5683396867"
+        }
+      ]
+    }
+  ],
+  "workarounds": [
+    {
+      "package": "react-native-uiscene-bridge",
+      "ecosystems": ["react-native", "expo"],
+      "mitigates": ["SCN001", "SCN002", "SCN003"],
+      "summary": "Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.",
+      "limits": [
+        "Tested in the simulator only, not on a device (its README).",
+        "One window: iPad multiwindow needs real scene support.",
+        "Universal links, Handoff and quick actions were not tested (its README).",
+        "iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported."
+      ],
+      "sources": [
+        {
+          "title": "react-native-uiscene-bridge README",
+          "url": "https://github.com/Atomics-hub/react-native-uiscene-bridge"
+        }
+      ]
+    },
+    {
+      "package": "react-native-xcode27",
+      "ecosystems": ["react-native", "expo"],
+      "mitigates": ["SCN001", "SCN002", "SCN003"],
+      "summary": "Includes the launch fix of react-native-uiscene-bridge, plus build fixes for pod deployment targets below 15.0 and the fmt pod.",
+      "limits": [
+        "Tested in the simulator only, not on a device (its README).",
+        "One window: iPad multiwindow needs real scene support.",
+        "CocoaPods only.",
+        "Use it or react-native-uiscene-bridge, not both (its README)."
+      ],
+      "sources": [
+        {
+          "title": "react-native-xcode27 README",
+          "url": "https://github.com/Atomics-hub/react-native-xcode27"
+        }
+      ]
+    }
+  ],
+  "milestones": {
+    "reactNativeScenes": "0.88.0",
+    "expoSceneSupport": "57.0.23",
+    "expoBuildProperties": "57.0.20",
+    "expoScenesByDefault": "58.0.0",
+    "flutterAutoMigration": "3.41.0"
+  },
+  "sceneForwarders": ["ExpoAppSceneDelegate"],
+  "flutterTemplates": {
+    "source": "https://github.com/flutter/flutter/blob/3.41.5/packages/flutter_tools/lib/src/migrations/uiscene_migration.dart",
+    "swift": [
+      "52e07aa46a20a50a25da45952fe95bf85fcc97e6ba05f21c637122e6a7a01bb1",
+      "47345458393f7aaeaeeb014a37e71ea3ebf9ec6ecb9d9d4d60f20b4eb1041de2",
+      "6460472b83ed3a55622e7ca0ae50a7e2934c8c43c3b0d37f84fef1f04e05276a",
+      "2523222711c347a340df534c214eef6845cbbf20e535a8f6917dee044bb776b8",
+      "048bce013243d04f4a586e0cca287d1e6f4a5929258fb7ac4d2c5d7300731f7d"
+    ],
+    "objcHeader": "098a4496ab711fcac05e20a047e6b7388956eaac5e4b87052bb69684daa81e04",
+    "objcImplementation": "2598323df55a494c1190f3d974cb1cdce0531948e7445064859467a21084b506"
+  }
+}
