@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@a27fd9e08503079d2f77990dc0d71a2896261644 status=reviewed -->
+<!-- i18n-source: README.md@77c82b6cd23f0eceb0fba6cd048e93321b97a246 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -81,7 +81,9 @@ geçen her yerde onu kullanın.
 SDK" (iOS 27 SDK'sıyla derlendiğinde açılmıyor), **ERROR** bulgularını düzeltene kadar uygulamanın
 açılışta duracağı anlamına gelir; her bulgu, "How to fix" listesindeki hangi çözümün geçerli
 olduğunu söyler. **WARNING** bulguları açılışı engellemez, ancak uygulamada bir sahne olunca
-çalışmayı bırakır.
+çalışmayı bırakır. "Launch not determined" (açılıp açılmayacağı belirlenemedi), sdkbump'ın bir
+Info.plist'i okuyamadığı anlamına gelir; raporun sonundaki notlar hangisi olduğunu ve nedenini
+söyler (aşağıdaki Sınırlar bölümüne bakın).
 
 ## iOS 27 SDK'sıyla derleyince ne değişiyor
 
@@ -229,6 +231,25 @@ saniye sürdü. Makine daha yüklüyken süreler uzar.
 | Yerel uygulamalar için `fix --dry-run`, SARIF çıktısı, GitHub Action                                                 | planlanıyor (0.8) |
 | Kararlı kural şeması ve JSON yapısı                                                                                  | planlanıyor (1.0) |
 
+## Sınırlar
+
+- **Derleyici değil, kalıp.** Kurallar, yorumları ve dizgeleri boşaltılmış Swift ve Objective-C
+  metni üzerinde çalışan düzenli ifadelerdir. Üretilmiş kod, makroların arkasındaki kod veya
+  alışılmadık biçimde yazılmış kod gözden kaçabilir ya da yanlışlıkla eşleşebilir. Sözdizimi
+  ağaçları planlanıyor (0.5).
+- **Yalnızca uygulamanın kendi kaynakları.** Pods, `node_modules`, Flutter eklentileri ve diğer
+  bağımlılıklar okunmaz; bu yüzden UIKit'in artık çağırmadığı app delegate yöntemlerine dayanan bir
+  eklenti raporlanmaz. Bağımlılık denetimi planlanıyor (0.2).
+- **Derleme ayarları yalnızca project.pbxproj'den.** sdkbump, `INFOPLIST_FILE` ve
+  `GENERATE_INFOPLIST_FILE` ayarlarını proje dosyasından okur ve `$(SRCROOT)`, `$(PROJECT_DIR)`,
+  `$(TARGET_NAME)` ile `$(PRODUCT_NAME)` değerlerini yerine koyar. `.xcconfig` dosyalarını okumaz,
+  diğer derleme ayarlarını yerine koymaz ve proje klasörünün dışındaki bir Info.plist'i okumaz. Bir
+  hedefin Info.plist'ini okuyamadığında tahmin yürütmek yerine SCN001'i info düzeyinde bir bulgu
+  yapar ve sonucu "Launch not determined" olarak verir.
+- **Bastırma dosyası yok.** Bir bulgu incelendi olarak işaretlenemez; hangi önem düzeylerinin
+  çalıştırmayı başarısız yapacağına `--fail-on` karar verir.
+- **Yalnızca dosyalar.** sdkbump uygulamayı derlemez ve açmaz; `--verify` planlanıyor (0.3).
+
 ## Dokümantasyon
 
 API başvurusu ve rehberler: [muhittincamdali.github.io/sdkbump](https://muhittincamdali.github.io/sdkbump/).
@@ -263,7 +284,7 @@ olduğuna bağlıdır:
 | Node.js      | 22.12          |
 
 sdkbump'ın Xcode'a ihtiyacı yoktur: dosyaları okur, bu yüzden Linux'ta da çalışır. CI testleri
-Node.js 22 ve 24'te (Linux) çalıştırır; yerelde 262 testin tamamı bir Mac'te (Apple silicon)
+Node.js 22 ve 24'te (Linux) çalıştırır; yerelde 269 testin tamamı bir Mac'te (Apple silicon)
 Node.js 22.23, 24.22 ve 26.11 ile geçer. Simülatör kayıtları Xcode 27 yüklü bir Mac gerektirir ve
 CI'ın parçası değildir.
 
