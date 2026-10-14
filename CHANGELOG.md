@@ -20,6 +20,14 @@ All notable changes to sdkbump are listed here. The format follows
   - SCN003 (warning): 13 app delegate methods and launch option keys UIKit no longer uses with
     scenes, unless the scene delegate already handles them;
   - SCN004 (warning): window lookups through `keyWindow`, `windows` or the app delegate's window.
+
+  The rule IDs differ from the first plan for this release, where SCN002 stood for "no
+  `application(_:configurationForConnecting:options:)`". That case is part of SCN001: a scene
+  configuration in the Info.plist or from that method is enough to launch, and the app stops only
+  when both are missing (rows A and C of
+  [examples/launch-matrix](examples/launch-matrix/README.md)). SCN002 became the window created in
+  the app delegate, the black screen in rows E, G and H, and SCN003 the app delegate methods and
+  launch option keys.
 - A fix for each finding by ecosystem and version: native and SwiftUI, Flutter (automatic
   migration only when Flutter's own conditions hold), React Native 0.88 or a hand-written scene
   delegate, Expo SDK 57's opt-in or SDK 58, with alternatives and guides.
