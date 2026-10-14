@@ -56,31 +56,30 @@ function letterFixes(
   return result;
 }
 
-function header(report: Report, paint: Paint): string[] {
+function header(report: Report, paint: Paint, width: number): string[] {
   const { project, rules } = report;
+  const dim = (text: string) => wrap(clean(text), width).map((line) => paint('dim', line));
+  const [name = '', ...rest] = wrap(
+    clean(`${project.name} · ${ECOSYSTEM_LABELS[project.ecosystem]} · ${project.path}`),
+    width,
+  );
+  const nameLength = clean(project.name).length;
   const lines = [
-    paint(
-      'dim',
+    ...dim(
       `sdkbump ${report.tool.version} · rules ${rules.ruleSet}@${rules.dataVersion} · ${rules.sdk}`,
     ),
     '',
-    `${paint('bold', clean(project.name))} · ${ECOSYSTEM_LABELS[project.ecosystem]} · ${clean(project.path)}`,
+    `${paint('bold', name.slice(0, nameLength))}${name.slice(nameLength)}`,
+    ...rest,
   ];
   for (const version of project.versions) {
-    lines.push(
-      paint('dim', clean(`${version.name} ${version.version ?? '(unknown)'} (${version.source})`)),
-    );
+    lines.push(...dim(`${version.name} ${version.version ?? '(unknown)'} (${version.source})`));
   }
   for (const target of project.targets) {
     const plists = target.infoPlists.length
       ? target.infoPlists.join(', ')
       : 'Info.plist written by Xcode';
-    lines.push(
-      paint(
-        'dim',
-        clean(`target ${target.name}: ${LIFECYCLE_LABELS[target.lifecycle]} (${plists})`),
-      ),
-    );
+    lines.push(...dim(`target ${target.name}: ${LIFECYCLE_LABELS[target.lifecycle]} (${plists})`));
   }
   const style =
     report.verdict.code === 'fails-to-launch' || report.verdict.code === 'black-screen'
@@ -88,7 +87,11 @@ function header(report: Report, paint: Paint): string[] {
       : report.verdict.code === 'no-findings'
         ? 'green'
         : 'yellow';
-  lines.push('', paint('bold', paint(style, report.verdict.text)), '');
+  lines.push(
+    '',
+    ...wrap(report.verdict.text, width).map((line) => paint('bold', paint(style, line))),
+    '',
+  );
   return lines;
 }
 
@@ -100,7 +103,7 @@ export function renderTty(report: Report, options: TtyOptions): string {
       (line) => `${INDENT}${style ? paint(style, line) : line}`,
     );
   const fixes = letterFixes(report.findings);
-  const out = header(report, paint);
+  const out = header(report, paint, width);
 
   for (const item of report.findings) {
     const label = (item.mitigation ? 'HANDLED' : item.severity.toUpperCase()).padEnd(LABEL_WIDTH);
