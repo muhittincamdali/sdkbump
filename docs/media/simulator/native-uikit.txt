@@ -1,0 +1,5 @@
+fixture:    fixtures/native-uikit
+built with: Xcode 27.0 (27A266a), SDK iphonesimulator27.0
+simulator:  iOS 27.0
+result:     not running 4 seconds after launch
+log:        Application failed to launch: UIScene life cycle is required for apps built with this SDK. See "Transitioning to the UIKit scene-based life cycle" in the UIKit documentation for more information on migration.
