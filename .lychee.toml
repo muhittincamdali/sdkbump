@@ -31,6 +31,8 @@ exclude = [
   '^https?://api\.example\.com',
   # Pull request and comparison pages that only exist after a push.
   '^https://github\.com/[^/]+/[^/]+/compare/',
+  # Release pages: CHANGELOG.md links a version before its tag is pushed.
+  '^https://github\.com/[^/]+/[^/]+/releases/tag/',
 ]
 
 exclude_path = [
