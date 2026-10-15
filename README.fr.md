@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@77c82b6cd23f0eceb0fba6cd048e93321b97a246 status=reviewed -->
+<!-- i18n-source: README.md@672d6255d691aab63cdb64c272e01df7422453df status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -9,7 +9,7 @@
 
 <p align="center">
 <a href="https://github.com/muhittincamdali/sdkbump/actions/workflows/ci.yml"><img src="https://github.com/muhittincamdali/sdkbump/actions/workflows/ci.yml/badge.svg" alt="État de la CI"></a>
-<a href="https://github.com/muhittincamdali/sdkbump/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg" alt="Dernière version: v0.1.1"></picture></a>
+<a href="https://github.com/muhittincamdali/sdkbump/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg" alt="Dernière version: v0.1.2"></picture></a>
 <a href="https://github.com/muhittincamdali/sdkbump/blob/main/package.json"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-light.svg" alt="Version du langage: Node.js 22.12+"></picture></a>
 <a href="https://github.com/muhittincamdali/sdkbump/blob/main/LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-light.svg" alt="Licence: MIT"></picture></a>
 </p>
@@ -54,10 +54,10 @@ cd path/to/YourApp
 **2. Lancez sdkbump :**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
+npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
 ```
 
-sdkbump n'est pas encore sur npm (sa publication est prévue), donc `npx sdkbump` ne fonctionne pas pour l'instant. La commande ci-dessus exécute la version 0.1.1 depuis GitHub ; utilisez-la partout où ce README mentionne `npx sdkbump`.
+sdkbump n'est pas encore sur npm (sa publication est prévue), donc `npx sdkbump` ne fonctionne pas pour l'instant. La commande ci-dessus exécute la version 0.1.2 depuis GitHub ; utilisez-la partout où ce README mentionne `npx sdkbump`.
 
 **3. Lisez la première ligne sous le nom de votre projet.** « Fails to launch when built with the iOS 27 SDK » (ne se lance pas lorsqu'elle est compilée avec le SDK iOS 27) signifie que l'app s'arrête au lancement tant que vous n'avez pas corrigé les constats **ERROR** ; chacun indique quelle correction de la liste « How to fix » s'applique. Les constats **WARNING** n'empêchent pas le lancement, mais cessent de fonctionner dès que l'app a une scène. « Launch not determined » (lancement non déterminé) signifie que sdkbump n'a pas pu lire un Info.plist ; les notes à la fin du rapport indiquent lequel et pourquoi (voir Limites plus bas).
 
@@ -86,10 +86,10 @@ Données de règles `ios27@2026.10.15`, vérifiées avec Xcode 27.0 (27A266a). L
 
 ## Installation
 
-sdkbump n'est pas encore sur npm ; sa publication est prévue. D'ici là, exécutez la version 0.1.1 depuis GitHub comme indiqué ci-dessus, ou ajoutez-la à un projet :
+sdkbump n'est pas encore sur npm ; sa publication est prévue. D'ici là, exécutez la version 0.1.2 depuis GitHub comme indiqué ci-dessus, ou ajoutez-la à un projet :
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
+npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
 npx sdkbump
 ```
 

@@ -136,7 +136,7 @@ Run sdkbump in the project folder again. It is not on npm yet, so run the releas
 in the README's [quick start](https://github.com/muhittincamdali/sdkbump#quick-start):
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
+npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
 ```
 
 The native-uikit-scenes fixture reports no findings, and it launches in the iOS 27.0 simulator

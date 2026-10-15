@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@77c82b6cd23f0eceb0fba6cd048e93321b97a246 status=reviewed -->
+<!-- i18n-source: README.md@672d6255d691aab63cdb64c272e01df7422453df status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -9,7 +9,7 @@
 
 <p align="center">
 <a href="https://github.com/muhittincamdali/sdkbump/actions/workflows/ci.yml"><img src="https://github.com/muhittincamdali/sdkbump/actions/workflows/ci.yml/badge.svg" alt="CI 状态"></a>
-<a href="https://github.com/muhittincamdali/sdkbump/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg" alt="最新版本: v0.1.1"></picture></a>
+<a href="https://github.com/muhittincamdali/sdkbump/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg" alt="最新版本: v0.1.2"></picture></a>
 <a href="https://github.com/muhittincamdali/sdkbump/blob/main/package.json"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-light.svg" alt="语言版本: Node.js 22.12+"></picture></a>
 <a href="https://github.com/muhittincamdali/sdkbump/blob/main/LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-light.svg" alt="许可证: MIT"></picture></a>
 </p>
@@ -53,10 +53,10 @@ cd path/to/YourApp
 **2. 运行 sdkbump：**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
+npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
 ```
 
-sdkbump 目前还没有发布到 npm（计划发布），所以暂时无法使用 `npx sdkbump`。上面的命令会运行 GitHub 上的 0.1.1 版本；本 README 中凡是写到 `npx sdkbump` 的地方，请改用这条命令。
+sdkbump 目前还没有发布到 npm（计划发布），所以暂时无法使用 `npx sdkbump`。上面的命令会运行 GitHub 上的 0.1.2 版本；本 README 中凡是写到 `npx sdkbump` 的地方，请改用这条命令。
 
 **3. 阅读项目名称下方的第一行。** “Fails to launch when built with the iOS 27 SDK”（使用 iOS 27 SDK 构建后无法启动）表示在你修复 **ERROR** 级别的发现之前，应用会在启动时停止；每一项发现都会说明适用“How to fix”列表中的哪种修复方式。**WARNING** 级别的发现不会阻止启动，但应用有了 scene 之后就会失效。 “Launch not determined”（无法判断能否启动）表示 sdkbump 没能读取某个 Info.plist；报告末尾的注释会说明是哪一个以及原因（见下方“限制”）。
 
@@ -84,10 +84,10 @@ sdkbump 目前还没有发布到 npm（计划发布），所以暂时无法使�
 
 ## 安装
 
-sdkbump 目前还没有发布到 npm，计划发布。在此之前，请按上文所示运行 GitHub 上的 0.1.1 版本，或将其添加到项目中：
+sdkbump 目前还没有发布到 npm，计划发布。在此之前，请按上文所示运行 GitHub 上的 0.1.2 版本，或将其添加到项目中：
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
+npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
 npx sdkbump
 ```
 

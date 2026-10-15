@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@77c82b6cd23f0eceb0fba6cd048e93321b97a246 status=reviewed -->
+<!-- i18n-source: README.md@672d6255d691aab63cdb64c272e01df7422453df status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -9,7 +9,7 @@
 
 <p align="center">
 <a href="https://github.com/muhittincamdali/sdkbump/actions/workflows/ci.yml"><img src="https://github.com/muhittincamdali/sdkbump/actions/workflows/ci.yml/badge.svg" alt="CI ステータス"></a>
-<a href="https://github.com/muhittincamdali/sdkbump/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg" alt="最新バージョン: v0.1.1"></picture></a>
+<a href="https://github.com/muhittincamdali/sdkbump/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg" alt="最新バージョン: v0.1.2"></picture></a>
 <a href="https://github.com/muhittincamdali/sdkbump/blob/main/package.json"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-light.svg" alt="言語バージョン: Node.js 22.12+"></picture></a>
 <a href="https://github.com/muhittincamdali/sdkbump/blob/main/LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-light.svg" alt="ライセンス: MIT"></picture></a>
 </p>
@@ -53,10 +53,10 @@ cd path/to/YourApp
 **2. sdkbump を実行します。**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
+npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
 ```
 
-sdkbump はまだ npm に公開されていない（公開は予定しています）ため、今のところ `npx sdkbump` は使えません。上のコマンドは GitHub 上の 0.1.1 リリースを実行します。この README に `npx sdkbump` と書かれている箇所では、このコマンドを使ってください。
+sdkbump はまだ npm に公開されていない（公開は予定しています）ため、今のところ `npx sdkbump` は使えません。上のコマンドは GitHub 上の 0.1.2 リリースを実行します。この README に `npx sdkbump` と書かれている箇所では、このコマンドを使ってください。
 
 **3. プロジェクト名の下の最初の行を読みます。** 「Fails to launch when built with the iOS 27 SDK」（iOS 27 SDK でビルドすると起動に失敗する）とある場合、**ERROR** の指摘を直すまでアプリは起動時に停止します。それぞれの指摘には、「How to fix」の一覧のどの修正が当てはまるかが書かれています。**WARNING** の指摘は起動を妨げませんが、アプリにシーンができると動作しなくなります。 「Launch not determined」（起動するかどうか判定できない）は、sdkbump が Info.plist を読めなかったことを意味します。どのファイルをなぜ読めなかったかは、レポート末尾の注記に書かれています（下の「制限事項」を参照）。
 
@@ -84,10 +84,10 @@ Apple の [Transitioning to the UIKit scene-based life cycle](https://developer.
 
 ## インストール
 
-sdkbump はまだ npm に公開されていません。公開は予定しています。それまでは、前述のとおり GitHub 上の 0.1.1 リリースを実行するか、プロジェクトに追加してください。
+sdkbump はまだ npm に公開されていません。公開は予定しています。それまでは、前述のとおり GitHub 上の 0.1.2 リリースを実行するか、プロジェクトに追加してください。
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
+npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
 npx sdkbump
 ```
 
