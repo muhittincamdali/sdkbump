@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@e7c26ac3f2f831b9ddcef6819035e35fad0b96b1 status=reviewed -->
+<!-- i18n-source: README.md@49073c524eb2b7aad433b6794961ec40869c1170 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -53,10 +53,10 @@ cd path/to/YourApp
 **2. sdkbump를 실행합니다.**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
+npx @mcamdali/sdkbump
 ```
 
-sdkbump는 아직 npm에 공개되어 있지 않아(공개할 계획입니다) 지금은 `npx sdkbump`를 사용할 수 없습니다. 위 명령은 GitHub의 0.1.2 릴리스를 실행합니다. 이 README에서 `npx sdkbump`라고 적힌 곳에는 이 명령을 사용하세요.
+npm 패키지 이름은 `@mcamdali/sdkbump`이고, 설치되는 명령은 `sdkbump`입니다. scope 없이 `npx sdkbump`를 실행하면 이 패키지가 실행되지 않습니다.
 
 **3. 프로젝트 이름 아래의 첫 번째 줄을 읽습니다.** "Fails to launch when built with the iOS 27 SDK"(iOS 27 SDK로 빌드하면 실행되지 않음)는 **ERROR** 항목을 고칠 때까지 앱이 실행 시점에 멈춘다는 뜻이며, 각 항목은 "How to fix" 목록의 어떤 해결 방법이 맞는지 알려 줍니다. **WARNING** 항목은 실행을 막지는 않지만, 앱에 scene이 생기면 동작하지 않게 됩니다. "Launch not determined"(실행 여부를 판단할 수 없음)는 sdkbump가 Info.plist를 읽지 못했다는 뜻이며, 어떤 파일을 왜 읽지 못했는지는 보고서 끝의 참고 사항에 나옵니다(아래 "한계" 참고).
 
@@ -84,14 +84,14 @@ Apple의 [Transitioning to the UIKit scene-based life cycle](https://developer.a
 
 ## 설치
 
-sdkbump는 아직 npm에 공개되어 있지 않으며, 공개할 계획입니다. 그때까지는 위에서 보여 준 대로 GitHub의 0.1.2 릴리스를 실행하거나 프로젝트에 추가하세요.
+npm에서 `sdkbump` 명령을 설치합니다(패키지 `@mcamdali/sdkbump`).
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
-npx sdkbump
+npm i -g @mcamdali/sdkbump
+sdkbump
 ```
 
-sdkbump가 npm에 공개되면 `npx sdkbump`가 최신 버전을 내려받아 실행하고, `npm install --save-dev sdkbump`로 특정 버전을 고정할 수 있습니다. `muhittincamdali/tap`용 Homebrew formula는 릴리스 워크플로가 준비합니다(tap의 첫 릴리스와 함께 제공할 계획입니다).
+프로젝트에서는 `npm install --save-dev @mcamdali/sdkbump`로 버전을 고정할 수 있고, 그다음 `npx sdkbump`가 그 사본을 실행합니다. 각 [GitHub 릴리스](https://github.com/muhittincamdali/sdkbump/releases)에는 같은 패키지가 `sdkbump-<버전>.tgz`로 `SHA256SUMS` 파일과 함께 들어 있으며, `npx`로 npm 없이 URL에서 바로 실행할 수 있습니다. `muhittincamdali/tap`용 Homebrew formula는 릴리스 워크플로가 준비합니다(tap의 첫 릴리스와 함께 제공할 계획입니다).
 
 ## 사용법
 
@@ -114,13 +114,13 @@ sdkbump는 iOS 앱을 스스로 찾습니다. 네이티브 앱은 루트 또는 
 ### Markdown 보고서를 코드와 함께 보관하기
 
 ```sh
-npx sdkbump --format markdown --output sdkbump.md
+npx @mcamdali/sdkbump --format markdown --output sdkbump.md
 ```
 
 ### 스크립트에서 JSON 보고서 사용하기
 
 ```sh
-npx sdkbump --format json > sdkbump.json
+npx @mcamdali/sdkbump --format json > sdkbump.json
 ```
 
 각 항목에는 `rule`, `severity`, `file`, `line`, `message`, 단계와 가이드가 담긴 `fix`, `alternatives`, `mitigation`(우회용 패키지가 처리하면 설정됩니다), `sources`가 있습니다. 구조는 `schemaVersion` 0이며 1.0 이전에 바뀔 수 있습니다. [examples/shell/launch-blockers.sh](examples/shell/launch-blockers.sh)는 `jq`로 이를 걸러 냅니다.

@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@e7c26ac3f2f831b9ddcef6819035e35fad0b96b1 status=reviewed -->
+<!-- i18n-source: README.md@49073c524eb2b7aad433b6794961ec40869c1170 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -54,10 +54,10 @@ cd path/to/YourApp
 **2. Lancez sdkbump :**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
+npx @mcamdali/sdkbump
 ```
 
-sdkbump n'est pas encore sur npm (sa publication est prévue), donc `npx sdkbump` ne fonctionne pas pour l'instant. La commande ci-dessus exécute la version 0.1.2 depuis GitHub ; utilisez-la partout où ce README mentionne `npx sdkbump`.
+Le paquet npm s'appelle `@mcamdali/sdkbump` ; la commande qu'il installe s'appelle `sdkbump`. Un `npx sdkbump` sans scope ne l'exécute pas.
 
 **3. Lisez la première ligne sous le nom de votre projet.** « Fails to launch when built with the iOS 27 SDK » (ne se lance pas lorsqu'elle est compilée avec le SDK iOS 27) signifie que l'app s'arrête au lancement tant que vous n'avez pas corrigé les constats **ERROR** ; chacun indique quelle correction de la liste « How to fix » s'applique. Les constats **WARNING** n'empêchent pas le lancement, mais cessent de fonctionner dès que l'app a une scène. « Launch not determined » (lancement non déterminé) signifie que sdkbump n'a pas pu lire un Info.plist ; les notes à la fin du rapport indiquent lequel et pourquoi (voir Limites plus bas).
 
@@ -86,14 +86,14 @@ Données de règles `ios27@2026.10.15`, vérifiées avec Xcode 27.0 (27A266a). L
 
 ## Installation
 
-sdkbump n'est pas encore sur npm ; sa publication est prévue. D'ici là, exécutez la version 0.1.2 depuis GitHub comme indiqué ci-dessus, ou ajoutez-la à un projet :
+Installez la commande `sdkbump` depuis npm (paquet `@mcamdali/sdkbump`) :
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
-npx sdkbump
+npm i -g @mcamdali/sdkbump
+sdkbump
 ```
 
-Une fois sdkbump sur npm, `npx sdkbump` téléchargera et exécutera la dernière version, et `npm install --save-dev sdkbump` en épinglera une. Une formule Homebrew pour `muhittincamdali/tap` est préparée par le workflow de publication (prévue avec la première version du tap).
+Dans un projet, `npm install --save-dev @mcamdali/sdkbump` épingle une version, puis `npx sdkbump` exécute cette copie. Chaque [version GitHub](https://github.com/muhittincamdali/sdkbump/releases) contient aussi le même paquet sous le nom `sdkbump-<version>.tgz`, avec un fichier `SHA256SUMS` ; `npx` l'exécute depuis son URL sans passer par npm. Une formule Homebrew pour `muhittincamdali/tap` est préparée par le workflow de publication (prévue avec la première version du tap).
 
 ## Utilisation
 
@@ -116,13 +116,13 @@ sdkbump trouve seul l'app iOS : un `.xcodeproj` à la racine ou un dossier plus
 ### Conserver un rapport Markdown avec le code
 
 ```sh
-npx sdkbump --format markdown --output sdkbump.md
+npx @mcamdali/sdkbump --format markdown --output sdkbump.md
 ```
 
 ### Utiliser le rapport JSON dans des scripts
 
 ```sh
-npx sdkbump --format json > sdkbump.json
+npx @mcamdali/sdkbump --format json > sdkbump.json
 ```
 
 Chaque constat a `rule`, `severity`, `file`, `line`, `message`, le `fix` avec ses étapes et son guide, `alternatives`, `mitigation` (renseigné lorsqu'un paquet de contournement le gère) et `sources`. La structure est `schemaVersion` 0 et peut changer avant la 1.0. [examples/shell/launch-blockers.sh](examples/shell/launch-blockers.sh) le filtre avec `jq`.

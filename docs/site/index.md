@@ -5,7 +5,7 @@ Native/Expo project for what the iOS 27 SDK changes, starting with the UIScene l
 which fix applies to each finding.
 
 ```sh
-npx sdkbump
+npx @mcamdali/sdkbump
 ```
 
 ## Guides
@@ -22,7 +22,7 @@ The command line is a thin layer over the package's exports, so the same checks 
 JavaScript:
 
 ```ts
-import { render, scan } from 'sdkbump';
+import { render, scan } from '@mcamdali/sdkbump';
 
 const report = await scan('path/to/app');
 console.log(report.verdict.text);

@@ -65,12 +65,11 @@ cd path/to/YourApp
 **2. Run sdkbump:**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
+npx @mcamdali/sdkbump
 ```
 
-sdkbump is not on npm yet (publishing it there is planned), so `npx sdkbump` does not work for
-now. The command above runs the 0.1.2 release from GitHub; use it wherever this README says
-`npx sdkbump`.
+The npm package is `@mcamdali/sdkbump`; the command it installs is `sdkbump`. An unscoped
+`npx sdkbump` does not run it.
 
 **3. Read the first line under your project's name.** "Fails to launch when built with the iOS 27
 SDK" means the app stops at launch until you fix the **ERROR** findings; each one says which fix
@@ -114,16 +113,17 @@ time are shown as handled, with the limits from its README, and do not fail the 
 
 ## Installation
 
-sdkbump is not on npm yet; publishing it there is planned. Until then, run the 0.1.2 release from
-GitHub as shown above, or add it to a project:
+Install the `sdkbump` command from npm (package `@mcamdali/sdkbump`):
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
-npx sdkbump
+npm i -g @mcamdali/sdkbump
+sdkbump
 ```
 
-Once sdkbump is on npm, `npx sdkbump` downloads and runs the latest version, and
-`npm install --save-dev sdkbump` pins one. A Homebrew formula for `muhittincamdali/tap` is
+In a project, `npm install --save-dev @mcamdali/sdkbump` pins a version, and `npx sdkbump` then
+runs that copy. Each [GitHub release](https://github.com/muhittincamdali/sdkbump/releases) also
+carries the same package as `sdkbump-<version>.tgz` with a `SHA256SUMS` file; `npx` runs it from
+its URL without npm. A Homebrew formula for `muhittincamdali/tap` is
 prepared by the release workflow (planned with the first release of the tap).
 
 ## Usage
@@ -152,13 +152,13 @@ tests. Expo apps without `ios/` are checked from package.json and app.json.
 ### Keep a Markdown report with the code
 
 ```sh
-npx sdkbump --format markdown --output sdkbump.md
+npx @mcamdali/sdkbump --format markdown --output sdkbump.md
 ```
 
 ### Use the JSON report in scripts
 
 ```sh
-npx sdkbump --format json > sdkbump.json
+npx @mcamdali/sdkbump --format json > sdkbump.json
 ```
 
 Each finding has `rule`, `severity`, `file`, `line`, `message`, the `fix` with its steps and guide,

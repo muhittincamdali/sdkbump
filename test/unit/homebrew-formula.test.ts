@@ -6,7 +6,9 @@ const SHA = 'a'.repeat(64);
 describe('Homebrew formula', () => {
   it('installs the npm tarball of the given version with Homebrew’s npm arguments', () => {
     const text = formula({ version: '0.1.0', sha256: SHA });
-    expect(text).toContain('url "https://registry.npmjs.org/sdkbump/-/sdkbump-0.1.0.tgz"');
+    expect(text).toContain(
+      'url "https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz"',
+    );
     expect(text).toContain(`sha256 "${SHA}"`);
     expect(text).toContain('system "npm", "install", *std_npm_args');
     expect(text).toContain('depends_on "node"');

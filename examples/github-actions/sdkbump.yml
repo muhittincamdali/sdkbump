@@ -3,8 +3,9 @@
 # fails when sdkbump finds something that stops the app at launch or blanks its screen (errors).
 # Add `--fail-on warning` to fail on warnings too, or `--fail-on none` to report only.
 #
-# sdkbump is not on npm yet; until it is, the job runs the 0.1.2 release tarball from GitHub.
-# Afterwards, `npx --yes sdkbump@0.1` does the same.
+# The job runs the latest 0.1 release of the npm package @mcamdali/sdkbump (the command is sdkbump).
+# To run one fixed release instead, put its GitHub release tarball in place of @mcamdali/sdkbump@0.1,
+# e.g. https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz.
 name: sdkbump
 
 on:
@@ -41,7 +42,7 @@ jobs:
       - name: Check for the iOS 27 SDK changes
         run: |
           status=0
-          npx --yes https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz \
+          npx --yes @mcamdali/sdkbump@0.1 \
             --format markdown --output sdkbump.md || status=$?
           # Exit code 2 (the project could not be read) can come without a report.
           if [ -f sdkbump.md ]; then

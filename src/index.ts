@@ -3,7 +3,7 @@
  * `schemaVersion` 0 and may change before 1.0.
  *
  * ```ts
- * import { render, scan } from 'sdkbump';
+ * import { render, scan } from '@mcamdali/sdkbump';
  *
  * const report = await scan('path/to/app');
  * console.log(report.verdict.text);

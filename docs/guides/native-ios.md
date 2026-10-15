@@ -132,11 +132,11 @@ let presenter = scene?.keyWindow?.rootViewController
 
 ## Check again
 
-Run sdkbump in the project folder again. It is not on npm yet, so run the release from GitHub as
-in the README's [quick start](https://github.com/muhittincamdali/sdkbump#quick-start):
+Run sdkbump in the project folder again, as in the README's
+[quick start](https://github.com/muhittincamdali/sdkbump#quick-start):
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
+npx @mcamdali/sdkbump
 ```
 
 The native-uikit-scenes fixture reports no findings, and it launches in the iOS 27.0 simulator

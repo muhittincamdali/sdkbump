@@ -65,7 +65,7 @@ export function record(demo: Demo): Session {
   return {
     title: demo.title,
     comment: demo.comment,
-    command: `npx sdkbump fixtures/${demo.fixture}`,
+    command: `npx @mcamdali/sdkbump fixtures/${demo.fixture}`,
     output,
   };
 }

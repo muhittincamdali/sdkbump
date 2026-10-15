@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="816" height="1309" viewBox="0 0 816 1309" role="img" aria-label="npx sdkbump fixtures/flutter-custom-appdelegate: terminal output">
+<svg xmlns="http://www.w3.org/2000/svg" width="816" height="1309" viewBox="0 0 816 1309" role="img" aria-label="npx @mcamdali/sdkbump fixtures/flutter-custom-appdelegate: terminal output">
 <title>sdkbump · Flutter app with a custom AppDelegate</title>
 <style>
 text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;white-space:pre}
@@ -15,69 +15,69 @@ text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",mo
 <circle cx="20" cy="17" r="6" fill="#0071E3"/><circle cx="40" cy="17" r="6" fill="#5AC8FA"/><circle cx="60" cy="17" r="6" fill="#D0E2F7"/>
 <text x="408" y="22" text-anchor="middle" fill="#5A6B80" style="font-size:12px">sdkbump · Flutter app with a custom AppDelegate</text>
 <text x="20" y="67" fill="#5A6B80"># fixtures/flutter-custom-appdelegate: Flutter 3.24 template, AppDelegate customised</text>
-<text x="20" y="86"><tspan fill="#0071E3" font-weight="700">$ </tspan><tspan fill="#0B1F33"><tspan class="t" style="animation-delay:0.40s">n</tspan><tspan class="t" style="animation-delay:0.45s">p</tspan><tspan class="t" style="animation-delay:0.49s">x</tspan><tspan class="t" style="animation-delay:0.54s"> </tspan><tspan class="t" style="animation-delay:0.58s">s</tspan><tspan class="t" style="animation-delay:0.63s">d</tspan><tspan class="t" style="animation-delay:0.67s">k</tspan><tspan class="t" style="animation-delay:0.72s">b</tspan><tspan class="t" style="animation-delay:0.76s">u</tspan><tspan class="t" style="animation-delay:0.80s">m</tspan><tspan class="t" style="animation-delay:0.85s">p</tspan><tspan class="t" style="animation-delay:0.90s"> </tspan><tspan class="t" style="animation-delay:0.94s">f</tspan><tspan class="t" style="animation-delay:0.98s">i</tspan><tspan class="t" style="animation-delay:1.03s">x</tspan><tspan class="t" style="animation-delay:1.07s">t</tspan><tspan class="t" style="animation-delay:1.12s">u</tspan><tspan class="t" style="animation-delay:1.17s">r</tspan><tspan class="t" style="animation-delay:1.21s">e</tspan><tspan class="t" style="animation-delay:1.25s">s</tspan><tspan class="t" style="animation-delay:1.30s">/</tspan><tspan class="t" style="animation-delay:1.34s">f</tspan><tspan class="t" style="animation-delay:1.39s">l</tspan><tspan class="t" style="animation-delay:1.44s">u</tspan><tspan class="t" style="animation-delay:1.48s">t</tspan><tspan class="t" style="animation-delay:1.52s">t</tspan><tspan class="t" style="animation-delay:1.57s">e</tspan><tspan class="t" style="animation-delay:1.61s">r</tspan><tspan class="t" style="animation-delay:1.66s">-</tspan><tspan class="t" style="animation-delay:1.71s">c</tspan><tspan class="t" style="animation-delay:1.75s">u</tspan><tspan class="t" style="animation-delay:1.79s">s</tspan><tspan class="t" style="animation-delay:1.84s">t</tspan><tspan class="t" style="animation-delay:1.88s">o</tspan><tspan class="t" style="animation-delay:1.93s">m</tspan><tspan class="t" style="animation-delay:1.98s">-</tspan><tspan class="t" style="animation-delay:2.02s">a</tspan><tspan class="t" style="animation-delay:2.06s">p</tspan><tspan class="t" style="animation-delay:2.11s">p</tspan><tspan class="t" style="animation-delay:2.15s">d</tspan><tspan class="t" style="animation-delay:2.20s">e</tspan><tspan class="t" style="animation-delay:2.25s">l</tspan><tspan class="t" style="animation-delay:2.29s">e</tspan><tspan class="t" style="animation-delay:2.33s">g</tspan><tspan class="t" style="animation-delay:2.38s">a</tspan><tspan class="t" style="animation-delay:2.42s">t</tspan><tspan class="t" style="animation-delay:2.47s">e</tspan></tspan></text>
-<text class="t" x="20" y="105" style="animation-delay:3.01s"><tspan fill="#5A6B80">sdkbump 0.1.2 · rules ios27@2026.10.15 · iOS 27.0 SDK (Xcode 27.0, 27A266a)</tspan></text>
-<text class="t" x="20" y="124" style="animation-delay:3.05s"></text>
-<text class="t" x="20" y="143" style="animation-delay:3.08s"><tspan fill="#00285C" font-weight="700">flutter_custom</tspan><tspan fill="#0B1F33"> · Flutter · fixtures/flutter-custom-appdelegate</tspan></text>
-<text class="t" x="20" y="162" style="animation-delay:3.12s"><tspan fill="#5A6B80">flutter (unknown) (not pinned)</tspan></text>
-<text class="t" x="20" y="181" style="animation-delay:3.15s"><tspan fill="#5A6B80">target Runner: app delegate life cycle (ios/Runner/Info.plist)</tspan></text>
-<text class="t" x="20" y="200" style="animation-delay:3.19s"></text>
-<text class="t" x="20" y="219" style="animation-delay:3.22s"><tspan fill="#00285C" font-weight="700">Fails to launch when built with the iOS 27 SDK.</tspan></text>
-<text class="t" x="20" y="238" style="animation-delay:3.26s"></text>
-<text class="t" x="20" y="257" style="animation-delay:3.29s"><tspan fill="#00285C" font-weight="700">ERROR    </tspan><tspan fill="#00285C" font-weight="700">SCN001 No scene configuration</tspan></text>
-<text class="t" x="20" y="276" style="animation-delay:3.33s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0071E3">ios/Runner/Info.plist</tspan></text>
-<text class="t" x="20" y="295" style="animation-delay:3.36s"><tspan fill="#0B1F33">         Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement</tspan></text>
-<text class="t" x="20" y="314" style="animation-delay:3.40s"><tspan fill="#0B1F33">         application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, the app</tspan></text>
-<text class="t" x="20" y="333" style="animation-delay:3.43s"><tspan fill="#0B1F33">         stops at launch: "UIScene life cycle is required for apps built with this SDK". Flutter</tspan></text>
-<text class="t" x="20" y="352" style="animation-delay:3.47s"><tspan fill="#0B1F33">         will not migrate it automatically: ios/Runner/AppDelegate.swift differs from the templates</tspan></text>
-<text class="t" x="20" y="371" style="animation-delay:3.50s"><tspan fill="#0B1F33">         Flutter migrates.</tspan></text>
-<text class="t" x="20" y="390" style="animation-delay:3.54s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [A] Migrate the Flutter app by hand</tspan></text>
-<text class="t" x="20" y="409" style="animation-delay:3.57s"></text>
-<text class="t" x="20" y="428" style="animation-delay:3.61s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">SCN003 application(_:open:options:) is not called with scenes</tspan></text>
-<text class="t" x="20" y="447" style="animation-delay:3.64s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0071E3">ios/Runner/AppDelegate.swift:28</tspan></text>
-<text class="t" x="20" y="466" style="animation-delay:3.68s"><tspan fill="#0B1F33">         UIKit does not call this method once the app uses scenes. Use scene(_:openURLContexts:),</tspan></text>
-<text class="t" x="20" y="485" style="animation-delay:3.71s"><tspan fill="#0B1F33">         and connectionOptions.urlContexts in scene(_:willConnectTo:options:) for a link that</tspan></text>
-<text class="t" x="20" y="504" style="animation-delay:3.75s"><tspan fill="#0B1F33">         launches the app.</tspan></text>
-<text class="t" x="20" y="523" style="animation-delay:3.78s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [B] Handle it in a FlutterSceneDelegate subclass</tspan></text>
-<text class="t" x="20" y="542" style="animation-delay:3.82s"></text>
-<text class="t" x="20" y="561" style="animation-delay:3.85s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">SCN004 Root view controller read from the app delegate's window</tspan></text>
-<text class="t" x="20" y="580" style="animation-delay:3.89s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0071E3">ios/Runner/AppDelegate.swift:10</tspan></text>
-<text class="t" x="20" y="599" style="animation-delay:3.92s"><tspan fill="#0B1F33">         UIKit does not set the app delegate's window once a scene owns the window, and</tspan></text>
-<text class="t" x="20" y="618" style="animation-delay:3.96s"><tspan fill="#0B1F33">         application(_:didFinishLaunchingWithOptions:) runs before any scene connects; reading its</tspan></text>
-<text class="t" x="20" y="637" style="animation-delay:3.99s"><tspan fill="#0B1F33">         root view controller finds nil, and a forced cast of it crashes.</tspan></text>
-<text class="t" x="20" y="656" style="animation-delay:4.03s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [C] Create channels from the engine bridge</tspan></text>
-<text class="t" x="20" y="675" style="animation-delay:4.06s"></text>
-<text class="t" x="20" y="694" style="animation-delay:4.10s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">SCN004 Root view controller read from the app delegate's window</tspan></text>
-<text class="t" x="20" y="713" style="animation-delay:4.13s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0071E3">ios/Runner/AppDelegate.swift:34</tspan></text>
-<text class="t" x="20" y="732" style="animation-delay:4.17s"><tspan fill="#0B1F33">         UIKit does not set the app delegate's window once a scene owns the window, and</tspan></text>
-<text class="t" x="20" y="751" style="animation-delay:4.21s"><tspan fill="#0B1F33">         application(_:didFinishLaunchingWithOptions:) runs before any scene connects; reading its</tspan></text>
-<text class="t" x="20" y="770" style="animation-delay:4.24s"><tspan fill="#0B1F33">         root view controller finds nil, and a forced cast of it crashes.</tspan></text>
-<text class="t" x="20" y="789" style="animation-delay:4.28s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [C] Create channels from the engine bridge</tspan></text>
-<text class="t" x="20" y="808" style="animation-delay:4.31s"></text>
-<text class="t" x="20" y="827" style="animation-delay:4.34s"><tspan fill="#00285C" font-weight="700">How to fix</tspan></text>
-<text class="t" x="20" y="846" style="animation-delay:4.38s"></text>
-<text class="t" x="20" y="865" style="animation-delay:4.42s"><tspan fill="#00285C" font-weight="700">[A]      </tspan><tspan fill="#00285C" font-weight="700">Migrate the Flutter app by hand</tspan></text>
-<text class="t" x="20" y="884" style="animation-delay:4.45s"><tspan fill="#0B1F33">         1. Conform AppDelegate to FlutterImplicitEngineDelegate and move</tspan></text>
-<text class="t" x="20" y="903" style="animation-delay:4.48s"><tspan fill="#0B1F33">            GeneratedPluginRegistrant.register, method channels and platform views into</tspan></text>
-<text class="t" x="20" y="922" style="animation-delay:4.52s"><tspan fill="#0B1F33">            didInitializeImplicitFlutterEngine(_:).</tspan></text>
-<text class="t" x="20" y="941" style="animation-delay:4.55s"><tspan fill="#0B1F33">         2. Add UIApplicationSceneManifest to ios/Runner/Info.plist with a configuration whose</tspan></text>
-<text class="t" x="20" y="960" style="animation-delay:4.59s"><tspan fill="#0B1F33">            UISceneDelegateClassName is FlutterSceneDelegate and UISceneStoryboardFile is Main.</tspan></text>
-<text class="t" x="20" y="979" style="animation-delay:4.63s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md</tspan></text>
-<text class="t" x="20" y="998" style="animation-delay:4.66s"></text>
-<text class="t" x="20" y="1017" style="animation-delay:4.70s"><tspan fill="#00285C" font-weight="700">[B]      </tspan><tspan fill="#00285C" font-weight="700">Handle it in a FlutterSceneDelegate subclass</tspan></text>
-<text class="t" x="20" y="1036" style="animation-delay:4.73s"><tspan fill="#0B1F33">         1. Create SceneDelegate: FlutterSceneDelegate, name it in UISceneDelegateClassName, and</tspan></text>
-<text class="t" x="20" y="1055" style="animation-delay:4.76s"><tspan fill="#0B1F33">            override the scene delegate method named in the finding, calling super so plugins still</tspan></text>
-<text class="t" x="20" y="1074" style="animation-delay:4.80s"><tspan fill="#0B1F33">            receive the event.</tspan></text>
-<text class="t" x="20" y="1093" style="animation-delay:4.83s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md</tspan></text>
-<text class="t" x="20" y="1112" style="animation-delay:4.87s"></text>
-<text class="t" x="20" y="1131" style="animation-delay:4.90s"><tspan fill="#00285C" font-weight="700">[C]      </tspan><tspan fill="#00285C" font-weight="700">Create channels from the engine bridge</tspan></text>
-<text class="t" x="20" y="1150" style="animation-delay:4.94s"><tspan fill="#0B1F33">         1. Create method channels in didInitializeImplicitFlutterEngine(_:) with</tspan></text>
-<text class="t" x="20" y="1169" style="animation-delay:4.97s"><tspan fill="#0B1F33">            engineBridge.applicationRegistrar.messenger() instead of reading</tspan></text>
-<text class="t" x="20" y="1188" style="animation-delay:5.01s"><tspan fill="#0B1F33">            window?.rootViewController.</tspan></text>
-<text class="t" x="20" y="1207" style="animation-delay:5.04s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md</tspan></text>
-<text class="t" x="20" y="1226" style="animation-delay:5.08s"></text>
-<text class="t" x="20" y="1245" style="animation-delay:5.12s"><tspan fill="#00285C" font-weight="700">1 error, 3 warnings</tspan></text>
-<text class="t" x="20" y="1264" style="animation-delay:5.15s"><tspan fill="#0B1F33">Guide: https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md</tspan></text>
-<text class="t" x="20" y="1283" style="animation-delay:5.39s"><tspan fill="#0071E3" font-weight="700">$ </tspan></text>
-<rect class="caret" x="35.66" y="1271" width="7.83" height="16" fill="#0071E3" style="animation-delay:5.39s"/>
+<text x="20" y="86"><tspan fill="#0071E3" font-weight="700">$ </tspan><tspan fill="#0B1F33"><tspan class="t" style="animation-delay:0.40s">n</tspan><tspan class="t" style="animation-delay:0.45s">p</tspan><tspan class="t" style="animation-delay:0.49s">x</tspan><tspan class="t" style="animation-delay:0.54s"> </tspan><tspan class="t" style="animation-delay:0.58s">@</tspan><tspan class="t" style="animation-delay:0.63s">m</tspan><tspan class="t" style="animation-delay:0.67s">c</tspan><tspan class="t" style="animation-delay:0.72s">a</tspan><tspan class="t" style="animation-delay:0.76s">m</tspan><tspan class="t" style="animation-delay:0.80s">d</tspan><tspan class="t" style="animation-delay:0.85s">a</tspan><tspan class="t" style="animation-delay:0.90s">l</tspan><tspan class="t" style="animation-delay:0.94s">i</tspan><tspan class="t" style="animation-delay:0.98s">/</tspan><tspan class="t" style="animation-delay:1.03s">s</tspan><tspan class="t" style="animation-delay:1.07s">d</tspan><tspan class="t" style="animation-delay:1.12s">k</tspan><tspan class="t" style="animation-delay:1.17s">b</tspan><tspan class="t" style="animation-delay:1.21s">u</tspan><tspan class="t" style="animation-delay:1.25s">m</tspan><tspan class="t" style="animation-delay:1.30s">p</tspan><tspan class="t" style="animation-delay:1.34s"> </tspan><tspan class="t" style="animation-delay:1.39s">f</tspan><tspan class="t" style="animation-delay:1.44s">i</tspan><tspan class="t" style="animation-delay:1.48s">x</tspan><tspan class="t" style="animation-delay:1.52s">t</tspan><tspan class="t" style="animation-delay:1.57s">u</tspan><tspan class="t" style="animation-delay:1.61s">r</tspan><tspan class="t" style="animation-delay:1.66s">e</tspan><tspan class="t" style="animation-delay:1.71s">s</tspan><tspan class="t" style="animation-delay:1.75s">/</tspan><tspan class="t" style="animation-delay:1.79s">f</tspan><tspan class="t" style="animation-delay:1.84s">l</tspan><tspan class="t" style="animation-delay:1.88s">u</tspan><tspan class="t" style="animation-delay:1.93s">t</tspan><tspan class="t" style="animation-delay:1.98s">t</tspan><tspan class="t" style="animation-delay:2.02s">e</tspan><tspan class="t" style="animation-delay:2.06s">r</tspan><tspan class="t" style="animation-delay:2.11s">-</tspan><tspan class="t" style="animation-delay:2.15s">c</tspan><tspan class="t" style="animation-delay:2.20s">u</tspan><tspan class="t" style="animation-delay:2.25s">s</tspan><tspan class="t" style="animation-delay:2.29s">t</tspan><tspan class="t" style="animation-delay:2.33s">o</tspan><tspan class="t" style="animation-delay:2.38s">m</tspan><tspan class="t" style="animation-delay:2.42s">-</tspan><tspan class="t" style="animation-delay:2.47s">a</tspan><tspan class="t" style="animation-delay:2.51s">p</tspan><tspan class="t" style="animation-delay:2.56s">p</tspan><tspan class="t" style="animation-delay:2.60s">d</tspan><tspan class="t" style="animation-delay:2.65s">e</tspan><tspan class="t" style="animation-delay:2.69s">l</tspan><tspan class="t" style="animation-delay:2.74s">e</tspan><tspan class="t" style="animation-delay:2.78s">g</tspan><tspan class="t" style="animation-delay:2.83s">a</tspan><tspan class="t" style="animation-delay:2.88s">t</tspan><tspan class="t" style="animation-delay:2.92s">e</tspan></tspan></text>
+<text class="t" x="20" y="105" style="animation-delay:3.46s"><tspan fill="#5A6B80">sdkbump 0.1.2 · rules ios27@2026.10.15 · iOS 27.0 SDK (Xcode 27.0, 27A266a)</tspan></text>
+<text class="t" x="20" y="124" style="animation-delay:3.50s"></text>
+<text class="t" x="20" y="143" style="animation-delay:3.53s"><tspan fill="#00285C" font-weight="700">flutter_custom</tspan><tspan fill="#0B1F33"> · Flutter · fixtures/flutter-custom-appdelegate</tspan></text>
+<text class="t" x="20" y="162" style="animation-delay:3.57s"><tspan fill="#5A6B80">flutter (unknown) (not pinned)</tspan></text>
+<text class="t" x="20" y="181" style="animation-delay:3.60s"><tspan fill="#5A6B80">target Runner: app delegate life cycle (ios/Runner/Info.plist)</tspan></text>
+<text class="t" x="20" y="200" style="animation-delay:3.64s"></text>
+<text class="t" x="20" y="219" style="animation-delay:3.67s"><tspan fill="#00285C" font-weight="700">Fails to launch when built with the iOS 27 SDK.</tspan></text>
+<text class="t" x="20" y="238" style="animation-delay:3.71s"></text>
+<text class="t" x="20" y="257" style="animation-delay:3.75s"><tspan fill="#00285C" font-weight="700">ERROR    </tspan><tspan fill="#00285C" font-weight="700">SCN001 No scene configuration</tspan></text>
+<text class="t" x="20" y="276" style="animation-delay:3.78s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0071E3">ios/Runner/Info.plist</tspan></text>
+<text class="t" x="20" y="295" style="animation-delay:3.81s"><tspan fill="#0B1F33">         Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement</tspan></text>
+<text class="t" x="20" y="314" style="animation-delay:3.85s"><tspan fill="#0B1F33">         application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, the app</tspan></text>
+<text class="t" x="20" y="333" style="animation-delay:3.88s"><tspan fill="#0B1F33">         stops at launch: "UIScene life cycle is required for apps built with this SDK". Flutter</tspan></text>
+<text class="t" x="20" y="352" style="animation-delay:3.92s"><tspan fill="#0B1F33">         will not migrate it automatically: ios/Runner/AppDelegate.swift differs from the templates</tspan></text>
+<text class="t" x="20" y="371" style="animation-delay:3.96s"><tspan fill="#0B1F33">         Flutter migrates.</tspan></text>
+<text class="t" x="20" y="390" style="animation-delay:3.99s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [A] Migrate the Flutter app by hand</tspan></text>
+<text class="t" x="20" y="409" style="animation-delay:4.03s"></text>
+<text class="t" x="20" y="428" style="animation-delay:4.06s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">SCN003 application(_:open:options:) is not called with scenes</tspan></text>
+<text class="t" x="20" y="447" style="animation-delay:4.09s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0071E3">ios/Runner/AppDelegate.swift:28</tspan></text>
+<text class="t" x="20" y="466" style="animation-delay:4.13s"><tspan fill="#0B1F33">         UIKit does not call this method once the app uses scenes. Use scene(_:openURLContexts:),</tspan></text>
+<text class="t" x="20" y="485" style="animation-delay:4.17s"><tspan fill="#0B1F33">         and connectionOptions.urlContexts in scene(_:willConnectTo:options:) for a link that</tspan></text>
+<text class="t" x="20" y="504" style="animation-delay:4.20s"><tspan fill="#0B1F33">         launches the app.</tspan></text>
+<text class="t" x="20" y="523" style="animation-delay:4.23s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [B] Handle it in a FlutterSceneDelegate subclass</tspan></text>
+<text class="t" x="20" y="542" style="animation-delay:4.27s"></text>
+<text class="t" x="20" y="561" style="animation-delay:4.30s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">SCN004 Root view controller read from the app delegate's window</tspan></text>
+<text class="t" x="20" y="580" style="animation-delay:4.34s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0071E3">ios/Runner/AppDelegate.swift:10</tspan></text>
+<text class="t" x="20" y="599" style="animation-delay:4.38s"><tspan fill="#0B1F33">         UIKit does not set the app delegate's window once a scene owns the window, and</tspan></text>
+<text class="t" x="20" y="618" style="animation-delay:4.41s"><tspan fill="#0B1F33">         application(_:didFinishLaunchingWithOptions:) runs before any scene connects; reading its</tspan></text>
+<text class="t" x="20" y="637" style="animation-delay:4.45s"><tspan fill="#0B1F33">         root view controller finds nil, and a forced cast of it crashes.</tspan></text>
+<text class="t" x="20" y="656" style="animation-delay:4.48s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [C] Create channels from the engine bridge</tspan></text>
+<text class="t" x="20" y="675" style="animation-delay:4.51s"></text>
+<text class="t" x="20" y="694" style="animation-delay:4.55s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">SCN004 Root view controller read from the app delegate's window</tspan></text>
+<text class="t" x="20" y="713" style="animation-delay:4.58s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0071E3">ios/Runner/AppDelegate.swift:34</tspan></text>
+<text class="t" x="20" y="732" style="animation-delay:4.62s"><tspan fill="#0B1F33">         UIKit does not set the app delegate's window once a scene owns the window, and</tspan></text>
+<text class="t" x="20" y="751" style="animation-delay:4.66s"><tspan fill="#0B1F33">         application(_:didFinishLaunchingWithOptions:) runs before any scene connects; reading its</tspan></text>
+<text class="t" x="20" y="770" style="animation-delay:4.69s"><tspan fill="#0B1F33">         root view controller finds nil, and a forced cast of it crashes.</tspan></text>
+<text class="t" x="20" y="789" style="animation-delay:4.72s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [C] Create channels from the engine bridge</tspan></text>
+<text class="t" x="20" y="808" style="animation-delay:4.76s"></text>
+<text class="t" x="20" y="827" style="animation-delay:4.79s"><tspan fill="#00285C" font-weight="700">How to fix</tspan></text>
+<text class="t" x="20" y="846" style="animation-delay:4.83s"></text>
+<text class="t" x="20" y="865" style="animation-delay:4.87s"><tspan fill="#00285C" font-weight="700">[A]      </tspan><tspan fill="#00285C" font-weight="700">Migrate the Flutter app by hand</tspan></text>
+<text class="t" x="20" y="884" style="animation-delay:4.90s"><tspan fill="#0B1F33">         1. Conform AppDelegate to FlutterImplicitEngineDelegate and move</tspan></text>
+<text class="t" x="20" y="903" style="animation-delay:4.94s"><tspan fill="#0B1F33">            GeneratedPluginRegistrant.register, method channels and platform views into</tspan></text>
+<text class="t" x="20" y="922" style="animation-delay:4.97s"><tspan fill="#0B1F33">            didInitializeImplicitFlutterEngine(_:).</tspan></text>
+<text class="t" x="20" y="941" style="animation-delay:5.00s"><tspan fill="#0B1F33">         2. Add UIApplicationSceneManifest to ios/Runner/Info.plist with a configuration whose</tspan></text>
+<text class="t" x="20" y="960" style="animation-delay:5.04s"><tspan fill="#0B1F33">            UISceneDelegateClassName is FlutterSceneDelegate and UISceneStoryboardFile is Main.</tspan></text>
+<text class="t" x="20" y="979" style="animation-delay:5.08s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md</tspan></text>
+<text class="t" x="20" y="998" style="animation-delay:5.11s"></text>
+<text class="t" x="20" y="1017" style="animation-delay:5.14s"><tspan fill="#00285C" font-weight="700">[B]      </tspan><tspan fill="#00285C" font-weight="700">Handle it in a FlutterSceneDelegate subclass</tspan></text>
+<text class="t" x="20" y="1036" style="animation-delay:5.18s"><tspan fill="#0B1F33">         1. Create SceneDelegate: FlutterSceneDelegate, name it in UISceneDelegateClassName, and</tspan></text>
+<text class="t" x="20" y="1055" style="animation-delay:5.21s"><tspan fill="#0B1F33">            override the scene delegate method named in the finding, calling super so plugins still</tspan></text>
+<text class="t" x="20" y="1074" style="animation-delay:5.25s"><tspan fill="#0B1F33">            receive the event.</tspan></text>
+<text class="t" x="20" y="1093" style="animation-delay:5.29s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md</tspan></text>
+<text class="t" x="20" y="1112" style="animation-delay:5.32s"></text>
+<text class="t" x="20" y="1131" style="animation-delay:5.36s"><tspan fill="#00285C" font-weight="700">[C]      </tspan><tspan fill="#00285C" font-weight="700">Create channels from the engine bridge</tspan></text>
+<text class="t" x="20" y="1150" style="animation-delay:5.39s"><tspan fill="#0B1F33">         1. Create method channels in didInitializeImplicitFlutterEngine(_:) with</tspan></text>
+<text class="t" x="20" y="1169" style="animation-delay:5.42s"><tspan fill="#0B1F33">            engineBridge.applicationRegistrar.messenger() instead of reading</tspan></text>
+<text class="t" x="20" y="1188" style="animation-delay:5.46s"><tspan fill="#0B1F33">            window?.rootViewController.</tspan></text>
+<text class="t" x="20" y="1207" style="animation-delay:5.50s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md</tspan></text>
+<text class="t" x="20" y="1226" style="animation-delay:5.53s"></text>
+<text class="t" x="20" y="1245" style="animation-delay:5.56s"><tspan fill="#00285C" font-weight="700">1 error, 3 warnings</tspan></text>
+<text class="t" x="20" y="1264" style="animation-delay:5.60s"><tspan fill="#0B1F33">Guide: https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md</tspan></text>
+<text class="t" x="20" y="1283" style="animation-delay:5.83s"><tspan fill="#0071E3" font-weight="700">$ </tspan></text>
+<rect class="caret" x="35.66" y="1271" width="7.83" height="16" fill="#0071E3" style="animation-delay:5.83s"/>
 </svg>

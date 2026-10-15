@@ -30,7 +30,7 @@ describe('parseAnsi', () => {
 });
 
 describe('terminalSvg', () => {
-  const session = { title: 'demo', command: 'npx sdkbump', output: 'a <b> & c\n' };
+  const session = { title: 'demo', command: 'npx @mcamdali/sdkbump', output: 'a <b> & c\n' };
 
   it('escapes text and carries no scripts or external references', () => {
     const svg = terminalSvg(session, 'dark');

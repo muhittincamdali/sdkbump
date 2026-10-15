@@ -4,7 +4,7 @@ exports[`Homebrew formula > installs the npm tarball of the given version with H
 "class Sdkbump < Formula
   desc "Check iOS, Flutter and React Native apps for iOS 27 SDK changes"
   homepage "https://github.com/muhittincamdali/sdkbump"
-  url "https://registry.npmjs.org/sdkbump/-/sdkbump-0.1.0.tgz"
+  url "https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.0/sdkbump-0.1.0.tgz"
   sha256 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
   license "MIT"
 
