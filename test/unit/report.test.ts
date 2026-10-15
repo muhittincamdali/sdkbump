@@ -205,6 +205,62 @@ describe('render (json)', () => {
   });
 });
 
+describe('render (control characters from the project)', () => {
+  const ESCAPES = {
+    'CSI clear screen': '\u001b[2J\u001b[H',
+    'OSC 8 hyperlink': '\u001b]8;;https://evil.example/\u0007Click here\u001b]8;;\u0007',
+    'OSC 52 clipboard': '\u001b]52;c;cm0gLXJmIH4K\u0007',
+    'C1 CSI (U+009B)': '\u009b31mRED',
+    'DEL and C1 OSC/ST': '\u007f\u009d52;c;eA==\u009c',
+  };
+  // biome-ignore lint/suspicious/noControlCharactersInRegex: the test is that none are left.
+  const CONTROL = /[\u0000-\u0008\u000b-\u001f\u007f-\u009f]/;
+  // The colour codes sdkbump writes itself: ESC [ <number> m.
+  const OWN_COLOURS = new RegExp(`${String.fromCharCode(27)}\\[\\d+m`, 'g');
+  // A target sdkbump could not read the Info.plist of: its name is also in the verdict.
+  const hostile = (payload: string): Report =>
+    report([finding({ file: `App${payload}/Info.plist`, target: `App${payload}` })], {
+      project: {
+        ...sample.project,
+        name: `App${payload}`,
+        versions: [{ name: 'react-native', version: `0.87.1${payload}`, source: 'declared' }],
+        targets: [
+          {
+            name: `App${payload}`,
+            lifecycle: 'unknown',
+            infoPlists: [],
+            infoPlistSource: 'not-read',
+          },
+        ],
+      },
+      verdict: {
+        code: 'unknown',
+        text: `Launch not determined: sdkbump could not read the Info.plist of App${payload}.`,
+      },
+      notes: [`App${payload}: INFOPLIST_FILE is not read.`],
+    });
+
+  for (const [name, payload] of Object.entries(ESCAPES)) {
+    it(`replaces ${name} in every format, the verdict included`, () => {
+      const tty = render(hostile(payload), 'tty', { color: false });
+      expect(tty).not.toMatch(CONTROL);
+      expect(tty).toContain('Launch not determined: sdkbump could not read the Info.plist of');
+      const coloured = render(hostile(payload), 'tty', { color: true });
+      expect(coloured.replace(OWN_COLOURS, '')).not.toMatch(CONTROL);
+      expect(render(hostile(payload), 'markdown')).not.toMatch(CONTROL);
+      const json = render(hostile(payload), 'json');
+      expect(json).not.toMatch(CONTROL);
+      expect(JSON.parse(json).verdict.text).toContain('�');
+    });
+  }
+
+  it('does not change the report it is given', () => {
+    const input = hostile(ESCAPES['OSC 52 clipboard']);
+    render(input, 'json');
+    expect(input.verdict.text).toContain('\u001b]52;');
+  });
+});
+
 describe('text helpers', () => {
   it('wraps on spaces and keeps long words whole', () => {
     expect(wrap('one two three four', 9)).toEqual(['one two', 'three', 'four']);

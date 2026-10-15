@@ -1,8 +1,8 @@
 // The terminal report: the verdict first, then each finding with where it is and what it means,
 // then each fix once, lettered, with its steps and guide. Findings name the fixes by letter.
+// render() has already replaced the control characters in every string of the report.
 import type { FixAdvice, Finding, Report } from '../model.js';
 import {
-  clean,
   ECOSYSTEM_LABELS,
   GUIDES,
   INFO_PLIST_LABELS,
@@ -59,12 +59,12 @@ function letterFixes(
 
 function header(report: Report, paint: Paint, width: number): string[] {
   const { project, rules } = report;
-  const dim = (text: string) => wrap(clean(text), width).map((line) => paint('dim', line));
+  const dim = (text: string) => wrap(text, width).map((line) => paint('dim', line));
   const [name = '', ...rest] = wrap(
-    clean(`${project.name} · ${ECOSYSTEM_LABELS[project.ecosystem]} · ${project.path}`),
+    `${project.name} · ${ECOSYSTEM_LABELS[project.ecosystem]} · ${project.path}`,
     width,
   );
-  const nameLength = clean(project.name).length;
+  const nameLength = project.name.length;
   const lines = [
     ...dim(
       `sdkbump ${report.tool.version} · rules ${rules.ruleSet}@${rules.dataVersion} · ${rules.sdk}`,
@@ -101,9 +101,7 @@ export function renderTty(report: Report, options: TtyOptions): string {
   const paint = painter(options.color);
   const width = Math.max(60, options.width ?? 100);
   const body = (text: string, style?: Style) =>
-    wrap(clean(text), width - LABEL_WIDTH).map(
-      (line) => `${INDENT}${style ? paint(style, line) : line}`,
-    );
+    wrap(text, width - LABEL_WIDTH).map((line) => `${INDENT}${style ? paint(style, line) : line}`);
   const fixes = letterFixes(report.findings);
   const out = header(report, paint, width);
 
@@ -111,13 +109,13 @@ export function renderTty(report: Report, options: TtyOptions): string {
     const label = (item.mitigation ? 'HANDLED' : item.severity.toUpperCase()).padEnd(LABEL_WIDTH);
     const style = item.mitigation ? 'green' : SEVERITY_STYLE[item.severity];
     const [titleFirst = '', ...titleRest] = wrap(
-      clean(`${item.rule}  ${item.title}`),
+      `${item.rule}  ${item.title}`,
       width - LABEL_WIDTH,
     );
     out.push(
       `${paint('bold', paint(style, label))}${paint('bold', titleFirst)}`,
       ...titleRest.map((line) => `${INDENT}${paint('bold', line)}`),
-      `${INDENT}${paint('cyan', clean(`${item.file}${item.line ? `:${item.line}` : ''}`))}`,
+      `${INDENT}${paint('cyan', `${item.file}${item.line ? `:${item.line}` : ''}`)}`,
       ...body(item.message),
     );
     if (item.mitigation) {
@@ -140,12 +138,10 @@ export function renderTty(report: Report, options: TtyOptions): string {
   if (fixes.size > 0) {
     out.push(paint('bold', 'How to fix'), '');
     for (const { letter, fix } of fixes.values()) {
-      out.push(
-        `${paint('bold', `[${letter}]`.padEnd(LABEL_WIDTH))}${paint('bold', clean(fix.title))}`,
-      );
+      out.push(`${paint('bold', `[${letter}]`.padEnd(LABEL_WIDTH))}${paint('bold', fix.title)}`);
       fix.steps.forEach((step, index) => {
         const marker = `${index + 1}. `;
-        const [first = '', ...rest] = wrap(clean(step), width - LABEL_WIDTH - marker.length);
+        const [first = '', ...rest] = wrap(step, width - LABEL_WIDTH - marker.length);
         out.push(
           `${INDENT}${marker}${first}`,
           ...rest.map((line) => `${INDENT}${' '.repeat(marker.length)}${line}`),
@@ -156,7 +152,7 @@ export function renderTty(report: Report, options: TtyOptions): string {
   }
 
   for (const note of report.notes)
-    out.push(...wrap(clean(`Note: ${note}`), width).map((line) => paint('dim', line)));
+    out.push(...wrap(`Note: ${note}`, width).map((line) => paint('dim', line)));
   if (report.notes.length) out.push('');
   const { errors, warnings, info, mitigated } = report.summary;
   const counts = [plural(errors, 'error'), plural(warnings, 'warning')];

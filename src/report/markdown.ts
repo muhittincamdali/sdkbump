@@ -1,7 +1,7 @@
 // The Markdown report, for a pull request comment, a job summary or a file kept with the code.
+// render() has already replaced the control characters in every string of the report.
 import type { FixAdvice, Finding, Report } from '../model.js';
 import {
-  clean,
   ECOSYSTEM_LABELS,
   GUIDES,
   INFO_PLIST_LABELS,
@@ -23,10 +23,10 @@ const BACKTICK_RUNS = /`+/g;
 
 /**
  * Text from the checked project (names, versions, paths, plist values) as plain text in a
- * paragraph, heading or table cell: no control characters, line breaks, markup or bare links.
+ * paragraph, heading or table cell: no line breaks, markup or bare links.
  */
 const md = (text: string) =>
-  clean(text)
+  text
     .replace(/\s*\n\s*/g, ' ')
     .replace(MARKUP, '\\$&')
     .replace(BARE_LINKS, `$&${WORD_JOINER}`);
@@ -37,7 +37,7 @@ const md = (text: string) =>
  * a space (Markdown strips one space from each side).
  */
 const code = (text: string) => {
-  const value = clean(text).replace(/\n/g, ' ');
+  const value = text.replace(/\n/g, ' ');
   if (!value) return '';
   const longestRun = Math.max(0, ...(value.match(BACKTICK_RUNS) ?? []).map((run) => run.length));
   const fence = '`'.repeat(longestRun + 1);

@@ -41,6 +41,16 @@ export function clean(text: string): string {
   return text.replace(/[\u0000-\u0008\u000B-\u001F\u007F-\u009F]/g, '�');
 }
 
+/** A copy of a report (or any part of one) with every string passed through clean(). */
+export function withoutControlCharacters<T>(value: T): T {
+  if (typeof value === 'string') return clean(value) as T;
+  if (Array.isArray(value)) return value.map(withoutControlCharacters) as T;
+  if (value === null || typeof value !== 'object') return value;
+  return Object.fromEntries(
+    Object.entries(value).map(([key, item]) => [key, withoutControlCharacters(item)]),
+  ) as T;
+}
+
 /** Splits text into lines of at most `width` columns (a longer word gets a line of its own). */
 export function wrap(text: string, width: number): string[] {
   const lines: string[] = [];
