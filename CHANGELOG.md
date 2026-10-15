@@ -7,6 +7,24 @@ All notable changes to sdkbump are listed here. The format follows
 
 ## [Unreleased]
 
+### Security
+
+- Terminal: the verdict "Launch not determined: sdkbump could not read the Info.plist of
+  `<target>`" (new in 0.1.2) was printed without replacing control characters, so a target name in
+  project.pbxproj could send escape sequences (OSC 52 clipboard write, OSC 8 links, CSI, C1 CSI
+  U+009B) to the terminal. The same verdict reached stderr in the `--output` message, and error
+  messages that name the checked folder (for example "is a Flutter project without an iOS app")
+  carried escape sequences in a folder name since 0.1.0. render() now replaces control
+  characters in every string of the report once, before any format, and every message on stderr
+  is cleaned the same way.
+- JSON: DEL and C1 control characters (U+007F to U+009F) in file names, versions and target names
+  were written raw, because `JSON.stringify` escapes only U+0000 to U+001F. They are now U+FFFD
+  like in the other formats.
+- Markdown: a URL or www address right after a letter or an underscore (`_https://…`) became a
+  link; `#1`, `owner/repo#1` and `GH-1` became issue and pull request links; and a note starting
+  with `- `, `1. `, `---` or four spaces opened a list, a rule or a code block. These are now
+  plain text. The rendering was checked with GitHub's Markdown API.
+
 ## [0.1.2] - 2026-10-15
 
 ### Added

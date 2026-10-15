@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@672d6255d691aab63cdb64c272e01df7422453df status=reviewed -->
+<!-- i18n-source: README.md@e7c26ac3f2f831b9ddcef6819035e35fad0b96b1 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -211,7 +211,7 @@ Otros proyectos trabajan en el mismo cambio; cuál te conviene depende de lo que
 | --------- | -------------- |
 | Node.js   | 22.12          |
 
-sdkbump no necesita Xcode: lee archivos, así que también funciona en Linux. CI ejecuta las pruebas en Node.js 22 y 24 (Linux); en local, las 269 pasan en Node.js 22.23, 24.22 y 26.11 en un Mac (Apple silicon). Las grabaciones del simulador requieren un Mac con Xcode 27 y no forman parte de CI.
+sdkbump no necesita Xcode: lee archivos, así que también funciona en Linux. CI ejecuta las pruebas en Node.js 22 y 24 (Linux); en local, las 280 pasan en Node.js 22.23, 24.22 y 26.11 en un Mac (Apple silicon). Las grabaciones del simulador requieren un Mac con Xcode 27 y no forman parte de CI.
 
 ## Arquitectura
 
