@@ -271,7 +271,7 @@ Other projects work on the same change; which one fits depends on what you need:
 | Node.js   | 22.12           |
 
 sdkbump does not need Xcode: it reads files, so it also runs on Linux. CI runs the tests on
-Node.js 22 and 24 (Linux); locally all 269 pass on Node.js 22.23, 24.22 and 26.11 on a Mac (Apple
+Node.js 22 and 24 (Linux); locally all 280 pass on Node.js 22.23, 24.22 and 26.11 on a Mac (Apple
 silicon). The simulator recordings need a Mac with Xcode 27 and are not part of CI.
 
 ## Architecture

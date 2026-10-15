@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@672d6255d691aab63cdb64c272e01df7422453df status=reviewed -->
+<!-- i18n-source: README.md@e7c26ac3f2f831b9ddcef6819035e35fad0b96b1 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -209,7 +209,7 @@ API 레퍼런스와 가이드: [muhittincamdali.github.io/sdkbump](https://muhit
 | ------- | --------- |
 | Node.js | 22.12     |
 
-sdkbump에는 Xcode가 필요 없습니다. 파일을 읽기만 하므로 Linux에서도 실행됩니다. CI는 Node.js 22와 24(Linux)에서 테스트를 실행하며, 로컬에서는 269개가 모두 Mac(Apple silicon)의 Node.js 22.23, 24.22, 26.11에서 통과합니다. 시뮬레이터 녹화에는 Xcode 27이 설치된 Mac이 필요하며 CI에는 포함되지 않습니다.
+sdkbump에는 Xcode가 필요 없습니다. 파일을 읽기만 하므로 Linux에서도 실행됩니다. CI는 Node.js 22와 24(Linux)에서 테스트를 실행하며, 로컬에서는 280개가 모두 Mac(Apple silicon)의 Node.js 22.23, 24.22, 26.11에서 통과합니다. 시뮬레이터 녹화에는 Xcode 27이 설치된 Mac이 필요하며 CI에는 포함되지 않습니다.
 
 ## 아키텍처
 
