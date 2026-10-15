@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@ba3c2848ca500795f02fd0630b45e9ea94fdb604 status=reviewed -->
+<!-- i18n-source: README.md@a538fe14ba97a7e97263b47668d1d035d097b554 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -132,8 +132,7 @@ sdkbump
 Bir projede `npm install --save-dev @mcamdali/sdkbump` bir sürümü sabitler; ardından
 `npx sdkbump` o kopyayı çalıştırır. Her [GitHub sürümü](https://github.com/muhittincamdali/sdkbump/releases) aynı paketi
 `sdkbump-<sürüm>.tgz` olarak bir `SHA256SUMS` dosyasıyla birlikte taşır; `npx` onu npm olmadan
-URL'sinden çalıştırır. `muhittincamdali/tap` için bir Homebrew
-formülü release workflow'u tarafından hazırlanır (tap'in ilk sürümüyle birlikte planlanıyor).
+URL'sinden çalıştırır. Homebrew ile: `brew install muhittincamdali/tap/sdkbump`.
 
 ## Kullanım
 

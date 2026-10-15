@@ -123,8 +123,7 @@ sdkbump
 In a project, `npm install --save-dev @mcamdali/sdkbump` pins a version, and `npx sdkbump` then
 runs that copy. Each [GitHub release](https://github.com/muhittincamdali/sdkbump/releases) also
 carries the same package as `sdkbump-<version>.tgz` with a `SHA256SUMS` file; `npx` runs it from
-its URL without npm. A Homebrew formula for `muhittincamdali/tap` is
-prepared by the release workflow (planned with the first release of the tap).
+its URL without npm. With Homebrew: `brew install muhittincamdali/tap/sdkbump`.
 
 ## Usage
 

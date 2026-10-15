@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@ba3c2848ca500795f02fd0630b45e9ea94fdb604 status=reviewed -->
+<!-- i18n-source: README.md@a538fe14ba97a7e97263b47668d1d035d097b554 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -93,7 +93,7 @@ npm i -g @mcamdali/sdkbump
 sdkbump
 ```
 
-Dans un projet, `npm install --save-dev @mcamdali/sdkbump` épingle une version, puis `npx sdkbump` exécute cette copie. Chaque [version GitHub](https://github.com/muhittincamdali/sdkbump/releases) contient aussi le même paquet sous le nom `sdkbump-<version>.tgz`, avec un fichier `SHA256SUMS` ; `npx` l'exécute depuis son URL sans passer par npm. Une formule Homebrew pour `muhittincamdali/tap` est préparée par le workflow de publication (prévue avec la première version du tap).
+Dans un projet, `npm install --save-dev @mcamdali/sdkbump` épingle une version, puis `npx sdkbump` exécute cette copie. Chaque [version GitHub](https://github.com/muhittincamdali/sdkbump/releases) contient aussi le même paquet sous le nom `sdkbump-<version>.tgz`, avec un fichier `SHA256SUMS` ; `npx` l'exécute depuis son URL sans passer par npm. Avec Homebrew : `brew install muhittincamdali/tap/sdkbump`.
 
 ## Utilisation
 

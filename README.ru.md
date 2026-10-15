@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@ba3c2848ca500795f02fd0630b45e9ea94fdb604 status=reviewed -->
+<!-- i18n-source: README.md@a538fe14ba97a7e97263b47668d1d035d097b554 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -93,7 +93,7 @@ npm i -g @mcamdali/sdkbump
 sdkbump
 ```
 
-В проекте `npm install --save-dev @mcamdali/sdkbump` фиксирует версию, после чего `npx sdkbump` запускает эту копию. Каждый [релиз на GitHub](https://github.com/muhittincamdali/sdkbump/releases) также содержит тот же пакет в виде `sdkbump-<версия>.tgz` с файлом `SHA256SUMS`; `npx` запускает его по URL без npm. Формулу Homebrew для `muhittincamdali/tap` подготавливает workflow релиза (запланировано вместе с первым релизом tap).
+В проекте `npm install --save-dev @mcamdali/sdkbump` фиксирует версию, после чего `npx sdkbump` запускает эту копию. Каждый [релиз на GitHub](https://github.com/muhittincamdali/sdkbump/releases) также содержит тот же пакет в виде `sdkbump-<версия>.tgz` с файлом `SHA256SUMS`; `npx` запускает его по URL без npm. Через Homebrew: `brew install muhittincamdali/tap/sdkbump`.
 
 ## Использование
 

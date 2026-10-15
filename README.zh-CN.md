@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@ba3c2848ca500795f02fd0630b45e9ea94fdb604 status=reviewed -->
+<!-- i18n-source: README.md@a538fe14ba97a7e97263b47668d1d035d097b554 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -91,7 +91,7 @@ npm i -g @mcamdali/sdkbump
 sdkbump
 ```
 
-在项目中，`npm install --save-dev @mcamdali/sdkbump` 会锁定一个版本，之后 `npx sdkbump` 运行的就是这个副本。每个 [GitHub 发布版本](https://github.com/muhittincamdali/sdkbump/releases)也以 `sdkbump-<版本>.tgz` 的形式附带同一个包和 `SHA256SUMS` 文件，`npx` 可以不经 npm 直接从其 URL 运行。适用于 `muhittincamdali/tap` 的 Homebrew formula 由发布工作流准备（计划随 tap 的首个版本提供）。
+在项目中，`npm install --save-dev @mcamdali/sdkbump` 会锁定一个版本，之后 `npx sdkbump` 运行的就是这个副本。每个 [GitHub 发布版本](https://github.com/muhittincamdali/sdkbump/releases)也以 `sdkbump-<版本>.tgz` 的形式附带同一个包和 `SHA256SUMS` 文件，`npx` 可以不经 npm 直接从其 URL 运行。使用 Homebrew：`brew install muhittincamdali/tap/sdkbump`。
 
 ## 使用方法
 
