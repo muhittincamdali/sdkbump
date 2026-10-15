@@ -47,4 +47,4 @@ Sources: [Apple: Transitioning to the UIKit scene-based life cycle \(Configure y
 
 0 errors, 0 warnings, 2 handled by a workaround. Guide: [React Native](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md).
 
-<sub>[sdkbump](https://github.com/muhittincamdali/sdkbump) 0.1.1, rules ios27@2026.10.15 (iOS 27.0 SDK \(Xcode 27.0, 27A266a\)). Static checks; they do not build or run the app.</sub>
+<sub>[sdkbump](https://github.com/muhittincamdali/sdkbump) 0.1.2, rules ios27@2026.10.15 (iOS 27.0 SDK \(Xcode 27.0, 27A266a\)). Static checks; they do not build or run the app.</sub>

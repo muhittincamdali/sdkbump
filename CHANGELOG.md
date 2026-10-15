@@ -7,6 +7,8 @@ All notable changes to sdkbump are listed here. The format follows
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-10-15
+
 ### Added
 
 - A Limits section in the README and its translations: the rules are patterns over source text,
@@ -95,6 +97,7 @@ All notable changes to sdkbump are listed here. The format follows
 - Guides, an API reference site, terminal demos from the CLI, and recordings of the native
   fixtures and a nine-app launch matrix in the iOS 27.0 simulator (Xcode 27.0).
 
-[Unreleased]: https://github.com/muhittincamdali/sdkbump/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/muhittincamdali/sdkbump/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.2
 [0.1.1]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.1
 [0.1.0]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.0
