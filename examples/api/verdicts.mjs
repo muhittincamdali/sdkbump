@@ -2,10 +2,10 @@
 //
 //   node examples/api/verdicts.mjs [project ...]
 //
-// Without arguments it checks the fixtures in this repository. In your own code, install sdkbump
+// Without arguments it checks the fixtures in this repository. In your own code, install @mcamdali/sdkbump
 // and pass the folders of your apps.
 import { fileURLToPath } from 'node:url';
-import { scan } from 'sdkbump';
+import { scan } from '@mcamdali/sdkbump';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const projects =

@@ -33,7 +33,10 @@ interface Options {
   color: boolean;
 }
 
-/** The tarball the GitHub release of this version carries; npx runs it while sdkbump is not on npm. */
+/** The npm package; the command it installs is `sdkbump`. */
+export const PACKAGE_NAME = '@mcamdali/sdkbump';
+
+/** The tarball the GitHub release of this version carries (the same file as on npm). */
 export const RELEASE_TARBALL_URL = `${REPOSITORY_URL}/releases/download/v${VERSION}/sdkbump-${VERSION}.tgz`;
 
 const HELP_AFTER = `
@@ -48,8 +51,11 @@ Examples:
   sdkbump --format json > sdkbump.json
   sdkbump --fail-on warning            also fails on warnings, e.g. in CI
 
-sdkbump is not on npm yet, so \`npx sdkbump\` does not find it. Run this release from GitHub:
+The npm package is ${PACKAGE_NAME}; the command is sdkbump:
+  npx ${PACKAGE_NAME}                runs the latest version without installing it
+  npm i -g ${PACKAGE_NAME}           installs the sdkbump command
   npx ${RELEASE_TARBALL_URL}
+                                       runs this release from GitHub
 
 Docs: ${REPOSITORY_URL}#readme`;
 

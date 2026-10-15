@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { infoPlist, minimalPbxproj, tree } from '../helpers/tree.js';
 
-// The compiled entry point, as `npx sdkbump` runs it (test/setup/build.ts builds it first).
+// The compiled entry point, as the installed `sdkbump` command runs it (test/setup/build.ts builds it first).
 const BIN = fileURLToPath(new URL('../../dist/cli/main.js', import.meta.url));
 
 function sdkbump(cwd: string, ...args: string[]) {
