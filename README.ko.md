@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@49073c524eb2b7aad433b6794961ec40869c1170 status=reviewed -->
+<!-- i18n-source: README.md@a538fe14ba97a7e97263b47668d1d035d097b554 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -9,7 +9,7 @@
 
 <p align="center">
 <a href="https://github.com/muhittincamdali/sdkbump/actions/workflows/ci.yml"><img src="https://github.com/muhittincamdali/sdkbump/actions/workflows/ci.yml/badge.svg" alt="CI 상태"></a>
-<a href="https://github.com/muhittincamdali/sdkbump/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg" alt="최신 버전: v0.1.2"></picture></a>
+<a href="https://github.com/muhittincamdali/sdkbump/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-version-light.svg" alt="최신 버전: v0.1.3"></picture></a>
 <a href="https://github.com/muhittincamdali/sdkbump/blob/main/package.json"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-language-light.svg" alt="언어 버전: Node.js 22.12+"></picture></a>
 <a href="https://github.com/muhittincamdali/sdkbump/blob/main/LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/badge-license-light.svg" alt="라이선스: MIT"></picture></a>
 </p>
@@ -91,7 +91,7 @@ npm i -g @mcamdali/sdkbump
 sdkbump
 ```
 
-프로젝트에서는 `npm install --save-dev @mcamdali/sdkbump`로 버전을 고정할 수 있고, 그다음 `npx sdkbump`가 그 사본을 실행합니다. 각 [GitHub 릴리스](https://github.com/muhittincamdali/sdkbump/releases)에는 같은 패키지가 `sdkbump-<버전>.tgz`로 `SHA256SUMS` 파일과 함께 들어 있으며, `npx`로 npm 없이 URL에서 바로 실행할 수 있습니다. `muhittincamdali/tap`용 Homebrew formula는 릴리스 워크플로가 준비합니다(tap의 첫 릴리스와 함께 제공할 계획입니다).
+프로젝트에서는 `npm install --save-dev @mcamdali/sdkbump`로 버전을 고정할 수 있고, 그다음 `npx sdkbump`가 그 사본을 실행합니다. 각 [GitHub 릴리스](https://github.com/muhittincamdali/sdkbump/releases)에는 같은 패키지가 `sdkbump-<버전>.tgz`로 `SHA256SUMS` 파일과 함께 들어 있으며, `npx`로 npm 없이 URL에서 바로 실행할 수 있습니다. Homebrew에서는 `brew install muhittincamdali/tap/sdkbump`로 설치합니다.
 
 ## 사용법
 
