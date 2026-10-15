@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@a27fd9e08503079d2f77990dc0d71a2896261644 status=reviewed -->
+<!-- i18n-source: README.md@77c82b6cd23f0eceb0fba6cd048e93321b97a246 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -58,7 +58,7 @@ npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-
 
 sdkbump ist noch nicht auf npm (die Veröffentlichung dort ist geplant), daher funktioniert `npx sdkbump` vorerst nicht. Der Befehl oben führt das Release 0.1.1 von GitHub aus; verwende ihn überall dort, wo diese README `npx sdkbump` nennt.
 
-**3. Lies die erste Zeile unter dem Namen deines Projekts.** „Fails to launch when built with the iOS 27 SDK“ (startet nicht, wenn mit dem iOS-27-SDK gebaut) bedeutet, dass die App beim Start stehen bleibt, bis du die **ERROR**-Funde behoben hast; jeder Fund nennt, welche Lösung aus der Liste „How to fix“ zutrifft. **WARNING**-Funde verhindern den Start nicht, funktionieren aber nicht mehr, sobald die App eine Scene hat.
+**3. Lies die erste Zeile unter dem Namen deines Projekts.** „Fails to launch when built with the iOS 27 SDK“ (startet nicht, wenn mit dem iOS-27-SDK gebaut) bedeutet, dass die App beim Start stehen bleibt, bis du die **ERROR**-Funde behoben hast; jeder Fund nennt, welche Lösung aus der Liste „How to fix“ zutrifft. **WARNING**-Funde verhindern den Start nicht, funktionieren aber nicht mehr, sobald die App eine Scene hat. „Launch not determined“ (Start nicht bestimmbar) bedeutet, dass sdkbump eine Info.plist nicht lesen konnte; die Hinweise am Ende des Berichts sagen, welche und warum (siehe Grenzen weiter unten).
 
 ## Was sich ändert, wenn du mit dem iOS-27-SDK baust
 
@@ -175,6 +175,14 @@ Gemessen am 15. Oktober 2026 auf einem Mac (Apple Silicon, M5 Max) mit Node.js 2
 | `fix --dry-run` für native Apps, SARIF-Ausgabe, GitHub Action                                         | geplant (0.8) |
 | Stabiles Regelschema und JSON-Layout                                                                  | geplant (1.0) |
 
+## Grenzen
+
+- **Muster, kein Compiler.** Die Regeln sind reguläre Ausdrücke über Swift- und Objective-C-Text, in dem Kommentare und Strings ausgeblendet sind. Generierter Code, Code hinter Makros oder ungewöhnlich geschriebener Code kann übersehen oder fälschlich erkannt werden. Syntaxbäume sind geplant (0.5).
+- **Nur die eigenen Quellen der App.** Pods, `node_modules`, Flutter-Plugins und andere Abhängigkeiten werden nicht gelesen; ein Plugin, das sich auf App-Delegate-Methoden verlässt, die UIKit nicht mehr aufruft, wird also nicht gemeldet. Prüfungen der Abhängigkeiten sind geplant (0.2).
+- **Build-Einstellungen nur aus project.pbxproj.** sdkbump liest `INFOPLIST_FILE` und `GENERATE_INFOPLIST_FILE` aus der Projektdatei und setzt `$(SRCROOT)`, `$(PROJECT_DIR)`, `$(TARGET_NAME)` und `$(PRODUCT_NAME)` ein. Es liest keine `.xcconfig`-Dateien, setzt keine anderen Build-Einstellungen ein und liest keine Info.plist außerhalb des Projektordners. Kann es die Info.plist eines Targets nicht lesen, ist SCN001 ein Info-Fund und das Ergebnis lautet „Launch not determined“, statt zu raten.
+- **Keine Datei zum Unterdrücken.** Ein Fund lässt sich nicht als geprüft markieren; `--fail-on` legt fest, welche Schweregrade den Lauf fehlschlagen lassen.
+- **Nur Dateien.** sdkbump baut und startet die App nicht; `--verify` ist geplant (0.3).
+
 ## Dokumentation
 
 API-Referenz und Anleitungen: [muhittincamdali.github.io/sdkbump](https://muhittincamdali.github.io/sdkbump/).
@@ -202,7 +210,7 @@ Andere Projekte arbeiten an derselben Änderung; welches passt, hängt davon ab,
 | --------- | -------------- |
 | Node.js   | 22.12          |
 
-sdkbump braucht kein Xcode: Es liest Dateien und läuft deshalb auch unter Linux. CI führt die Tests mit Node.js 22 und 24 (Linux) aus; lokal bestehen alle 262 mit Node.js 22.23, 24.22 und 26.11 auf einem Mac (Apple Silicon). Die Simulator-Aufnahmen brauchen einen Mac mit Xcode 27 und sind nicht Teil von CI.
+sdkbump braucht kein Xcode: Es liest Dateien und läuft deshalb auch unter Linux. CI führt die Tests mit Node.js 22 und 24 (Linux) aus; lokal bestehen alle 269 mit Node.js 22.23, 24.22 und 26.11 auf einem Mac (Apple Silicon). Die Simulator-Aufnahmen brauchen einen Mac mit Xcode 27 und sind nicht Teil von CI.
 
 ## Architektur
 

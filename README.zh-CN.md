@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@a27fd9e08503079d2f77990dc0d71a2896261644 status=reviewed -->
+<!-- i18n-source: README.md@77c82b6cd23f0eceb0fba6cd048e93321b97a246 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -58,7 +58,7 @@ npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-
 
 sdkbump 目前还没有发布到 npm（计划发布），所以暂时无法使用 `npx sdkbump`。上面的命令会运行 GitHub 上的 0.1.1 版本；本 README 中凡是写到 `npx sdkbump` 的地方，请改用这条命令。
 
-**3. 阅读项目名称下方的第一行。** “Fails to launch when built with the iOS 27 SDK”（使用 iOS 27 SDK 构建后无法启动）表示在你修复 **ERROR** 级别的发现之前，应用会在启动时停止；每一项发现都会说明适用“How to fix”列表中的哪种修复方式。**WARNING** 级别的发现不会阻止启动，但应用有了 scene 之后就会失效。
+**3. 阅读项目名称下方的第一行。** “Fails to launch when built with the iOS 27 SDK”（使用 iOS 27 SDK 构建后无法启动）表示在你修复 **ERROR** 级别的发现之前，应用会在启动时停止；每一项发现都会说明适用“How to fix”列表中的哪种修复方式。**WARNING** 级别的发现不会阻止启动，但应用有了 scene 之后就会失效。 “Launch not determined”（无法判断能否启动）表示 sdkbump 没能读取某个 Info.plist；报告末尾的注释会说明是哪一个以及原因（见下方“限制”）。
 
 ## 使用 iOS 27 SDK 构建时有哪些变化
 
@@ -174,6 +174,14 @@ console.log(render(report, 'markdown'));
 | 面向原生应用的 `fix --dry-run`、SARIF 输出、GitHub Action                     | 计划中（0.8） |
 | 稳定的规则 schema 和 JSON 结构                                                | 计划中（1.0） |
 
+## 限制
+
+- **基于模式，而不是编译器。** 规则是作用于 Swift 和 Objective-C 文本的正则表达式，文本中的注释和字符串已被清空。生成的代码、藏在宏里的代码或写法不常见的代码可能被漏掉或误判。语法树计划中（0.5）。
+- **只读取应用自身的源码。** 不读取 Pods、`node_modules`、Flutter 插件和其他依赖，因此依赖 UIKit 已不再调用的 app delegate 方法的插件不会被报告。依赖检查计划中（0.2）。
+- **构建设置只来自 project.pbxproj。** sdkbump 从项目文件读取 `INFOPLIST_FILE` 和 `GENERATE_INFOPLIST_FILE`，并展开 `$(SRCROOT)`、`$(PROJECT_DIR)`、`$(TARGET_NAME)` 和 `$(PRODUCT_NAME)`。它不读取 `.xcconfig` 文件，不展开其他构建设置，也不读取项目文件夹之外的 Info.plist。无法读取某个 target 的 Info.plist 时，SCN001 会作为 info 级别的发现报告，结论为“Launch not determined”，而不是猜测。
+- **没有屏蔽文件。** 无法把某项发现标记为已审查；由 `--fail-on` 决定哪些严重级别会让运行失败。
+- **只读取文件。** sdkbump 不会构建或启动应用；`--verify` 计划中（0.3）。
+
 ## 文档
 
 API 参考与指南：[muhittincamdali.github.io/sdkbump](https://muhittincamdali.github.io/sdkbump/)。
@@ -201,7 +209,7 @@ API 参考与指南：[muhittincamdali.github.io/sdkbump](https://muhittincamdal
 | ------- | -------- |
 | Node.js | 22.12    |
 
-sdkbump 不需要 Xcode：它只读取文件，因此也可以在 Linux 上运行。CI 在 Node.js 22 和 24（Linux）上运行测试；在本地的 Mac（Apple silicon）上，全部 262 个测试在 Node.js 22.23、24.22 和 26.11 上均通过。模拟器录像需要安装了 Xcode 27 的 Mac，不属于 CI 的一部分。
+sdkbump 不需要 Xcode：它只读取文件，因此也可以在 Linux 上运行。CI 在 Node.js 22 和 24（Linux）上运行测试；在本地的 Mac（Apple silicon）上，全部 269 个测试在 Node.js 22.23、24.22 和 26.11 上均通过。模拟器录像需要安装了 Xcode 27 的 Mac，不属于 CI 的一部分。
 
 ## 架构
 

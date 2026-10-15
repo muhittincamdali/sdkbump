@@ -75,7 +75,8 @@ now. The command above runs the 0.1.1 release from GitHub; use it wherever this 
 **3. Read the first line under your project's name.** "Fails to launch when built with the iOS 27
 SDK" means the app stops at launch until you fix the **ERROR** findings; each one says which fix
 from the "How to fix" list applies. **WARNING** findings do not stop the launch but stop working
-once the app has a scene.
+once the app has a scene. "Launch not determined" means sdkbump could not read an Info.plist; the
+notes at the end of the report say which one and why (see Limits below).
 
 ## What changes when you build with the iOS 27 SDK
 
@@ -220,6 +221,24 @@ run took 0.33 seconds. A busier machine gives longer times.
 | `fix --dry-run` for native apps, SARIF output, GitHub Action                                  | planned (0.8) |
 | Stable rule schema and JSON layout                                                            | planned (1.0) |
 
+## Limits
+
+- **Patterns, not a compiler.** The rules are regular expressions over Swift and Objective-C text
+  whose comments and strings are blanked. Code that is generated, hidden behind macros or written
+  in an unusual shape can be missed or matched by mistake. Syntax trees are planned (0.5).
+- **Only the app's own sources.** Pods, `node_modules`, Flutter plugins and other dependencies are
+  not read, so a plugin that relies on app delegate methods UIKit no longer calls is not reported.
+  Dependency checks are planned (0.2).
+- **Build settings from project.pbxproj only.** sdkbump reads `INFOPLIST_FILE` and
+  `GENERATE_INFOPLIST_FILE` from the project file and expands `$(SRCROOT)`, `$(PROJECT_DIR)`,
+  `$(TARGET_NAME)` and `$(PRODUCT_NAME)`. It does not read `.xcconfig` files or expand other build
+  settings, and it does not read an Info.plist outside the project folder. When it cannot read a
+  target's Info.plist, SCN001 is an info finding and the verdict is "Launch not determined"
+  instead of a guess.
+- **No suppression file.** A finding cannot be marked as reviewed; `--fail-on` decides which
+  severities fail the run.
+- **Files only.** sdkbump does not build or launch the app; `--verify` is planned (0.3).
+
 ## Documentation
 
 API reference and guides: [muhittincamdali.github.io/sdkbump](https://muhittincamdali.github.io/sdkbump/).
@@ -252,7 +271,7 @@ Other projects work on the same change; which one fits depends on what you need:
 | Node.js   | 22.12           |
 
 sdkbump does not need Xcode: it reads files, so it also runs on Linux. CI runs the tests on
-Node.js 22 and 24 (Linux); locally all 262 pass on Node.js 22.23, 24.22 and 26.11 on a Mac (Apple
+Node.js 22 and 24 (Linux); locally all 269 pass on Node.js 22.23, 24.22 and 26.11 on a Mac (Apple
 silicon). The simulator recordings need a Mac with Xcode 27 and are not part of CI.
 
 ## Architecture

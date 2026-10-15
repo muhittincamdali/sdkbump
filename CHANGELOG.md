@@ -7,6 +7,18 @@ All notable changes to sdkbump are listed here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- A Limits section in the README and its translations: the rules are patterns over source text,
+  only the app's own sources are read, build settings come only from project.pbxproj (no
+  .xcconfig files, four expanded variables), there is no suppression file, and nothing is built or
+  launched. The quick start explains the "Launch not determined" verdict.
+
+### Changed
+
+- collect/plist.ts and collect/sources.ts are split into smaller modules (plist-value, plist-xml,
+  plist-binary, blank, regions, core/lines). The public API is the same.
+
 ### Fixed
 
 - An app target whose Info.plist sdkbump could not read was reported as "Fails to launch" with an

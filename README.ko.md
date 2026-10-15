@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@a27fd9e08503079d2f77990dc0d71a2896261644 status=reviewed -->
+<!-- i18n-source: README.md@77c82b6cd23f0eceb0fba6cd048e93321b97a246 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -58,7 +58,7 @@ npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-
 
 sdkbump는 아직 npm에 공개되어 있지 않아(공개할 계획입니다) 지금은 `npx sdkbump`를 사용할 수 없습니다. 위 명령은 GitHub의 0.1.1 릴리스를 실행합니다. 이 README에서 `npx sdkbump`라고 적힌 곳에는 이 명령을 사용하세요.
 
-**3. 프로젝트 이름 아래의 첫 번째 줄을 읽습니다.** "Fails to launch when built with the iOS 27 SDK"(iOS 27 SDK로 빌드하면 실행되지 않음)는 **ERROR** 항목을 고칠 때까지 앱이 실행 시점에 멈춘다는 뜻이며, 각 항목은 "How to fix" 목록의 어떤 해결 방법이 맞는지 알려 줍니다. **WARNING** 항목은 실행을 막지는 않지만, 앱에 scene이 생기면 동작하지 않게 됩니다.
+**3. 프로젝트 이름 아래의 첫 번째 줄을 읽습니다.** "Fails to launch when built with the iOS 27 SDK"(iOS 27 SDK로 빌드하면 실행되지 않음)는 **ERROR** 항목을 고칠 때까지 앱이 실행 시점에 멈춘다는 뜻이며, 각 항목은 "How to fix" 목록의 어떤 해결 방법이 맞는지 알려 줍니다. **WARNING** 항목은 실행을 막지는 않지만, 앱에 scene이 생기면 동작하지 않게 됩니다. "Launch not determined"(실행 여부를 판단할 수 없음)는 sdkbump가 Info.plist를 읽지 못했다는 뜻이며, 어떤 파일을 왜 읽지 못했는지는 보고서 끝의 참고 사항에 나옵니다(아래 "한계" 참고).
 
 ## iOS 27 SDK로 빌드하면 무엇이 달라지나요
 
@@ -174,6 +174,14 @@ iOS 27.0 시뮬레이터(iPhone 17, Xcode 27.0으로 빌드)에서 네이티브 
 | 네이티브 앱용 `fix --dry-run`, SARIF 출력, GitHub Action                           | 예정(0.8) |
 | 안정된 규칙 스키마와 JSON 구조                                                     | 예정(1.0) |
 
+## 한계
+
+- **컴파일러가 아니라 패턴입니다.** 규칙은 주석과 문자열을 공백으로 바꾼 Swift와 Objective-C 텍스트에 적용하는 정규 표현식입니다. 생성된 코드, 매크로 안의 코드, 흔하지 않은 방식으로 작성한 코드는 놓치거나 잘못 잡을 수 있습니다. 구문 트리는 예정(0.5)입니다.
+- **앱 자체 소스만 읽습니다.** Pods, `node_modules`, Flutter 플러그인 등 의존성은 읽지 않으므로, UIKit이 더 이상 호출하지 않는 app delegate 메서드에 기대는 플러그인은 보고되지 않습니다. 의존성 검사는 예정(0.2)입니다.
+- **빌드 설정은 project.pbxproj에서만 읽습니다.** sdkbump는 프로젝트 파일에서 `INFOPLIST_FILE`과 `GENERATE_INFOPLIST_FILE`을 읽고 `$(SRCROOT)`, `$(PROJECT_DIR)`, `$(TARGET_NAME)`, `$(PRODUCT_NAME)`을 펼칩니다. `.xcconfig` 파일은 읽지 않고, 다른 빌드 설정도 펼치지 않으며, 프로젝트 폴더 밖의 Info.plist도 읽지 않습니다. 타깃의 Info.plist를 읽지 못하면 추측하는 대신 SCN001을 info 항목으로 보고하고 판정을 "Launch not determined"로 표시합니다.
+- **억제 파일이 없습니다.** 항목을 검토 완료로 표시할 수 없으며, 어떤 심각도에서 실행을 실패로 할지는 `--fail-on`으로 정합니다.
+- **파일만 읽습니다.** sdkbump는 앱을 빌드하거나 실행하지 않습니다. `--verify`는 예정(0.3)입니다.
+
 ## 문서
 
 API 레퍼런스와 가이드: [muhittincamdali.github.io/sdkbump](https://muhittincamdali.github.io/sdkbump/).
@@ -201,7 +209,7 @@ API 레퍼런스와 가이드: [muhittincamdali.github.io/sdkbump](https://muhit
 | ------- | --------- |
 | Node.js | 22.12     |
 
-sdkbump에는 Xcode가 필요 없습니다. 파일을 읽기만 하므로 Linux에서도 실행됩니다. CI는 Node.js 22와 24(Linux)에서 테스트를 실행하며, 로컬에서는 262개가 모두 Mac(Apple silicon)의 Node.js 22.23, 24.22, 26.11에서 통과합니다. 시뮬레이터 녹화에는 Xcode 27이 설치된 Mac이 필요하며 CI에는 포함되지 않습니다.
+sdkbump에는 Xcode가 필요 없습니다. 파일을 읽기만 하므로 Linux에서도 실행됩니다. CI는 Node.js 22와 24(Linux)에서 테스트를 실행하며, 로컬에서는 269개가 모두 Mac(Apple silicon)의 Node.js 22.23, 24.22, 26.11에서 통과합니다. 시뮬레이터 녹화에는 Xcode 27이 설치된 Mac이 필요하며 CI에는 포함되지 않습니다.
 
 ## 아키텍처
 
