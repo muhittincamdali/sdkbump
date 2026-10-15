@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@e7c26ac3f2f831b9ddcef6819035e35fad0b96b1 status=reviewed -->
+<!-- i18n-source: README.md@49073c524eb2b7aad433b6794961ec40869c1170 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -54,10 +54,10 @@ cd path/to/YourApp
 **2. Запустите sdkbump:**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
+npx @mcamdali/sdkbump
 ```
 
-sdkbump пока нет в npm (публикация там запланирована), поэтому `npx sdkbump` сейчас не работает. Команда выше запускает релиз 0.1.2 с GitHub; используйте её везде, где в этом README написано `npx sdkbump`.
+Пакет в npm называется `@mcamdali/sdkbump`; команда, которую он устанавливает, — `sdkbump`. `npx sdkbump` без scope его не запускает.
 
 **3. Прочитайте первую строку под названием вашего проекта.** «Fails to launch when built with the iOS 27 SDK» (не запускается, если собрано с SDK iOS 27) означает, что приложение будет останавливаться при запуске, пока вы не исправите находки уровня **ERROR**; в каждой сказано, какое исправление из списка «How to fix» подходит. Находки уровня **WARNING** не мешают запуску, но перестают работать, когда у приложения появляется сцена. «Launch not determined» (запуск не определён) означает, что sdkbump не смог прочитать Info.plist; в примечаниях в конце отчёта сказано, какой и почему (см. «Ограничения» ниже).
 
@@ -86,14 +86,14 @@ sdkbump пока нет в npm (публикация там запланиров
 
 ## Установка
 
-sdkbump пока нет в npm; публикация там запланирована. До тех пор запускайте релиз 0.1.2 с GitHub, как показано выше, или добавьте его в проект:
+Установите команду `sdkbump` из npm (пакет `@mcamdali/sdkbump`):
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
-npx sdkbump
+npm i -g @mcamdali/sdkbump
+sdkbump
 ```
 
-Когда sdkbump появится в npm, `npx sdkbump` будет скачивать и запускать последнюю версию, а `npm install --save-dev sdkbump` — фиксировать конкретную. Формулу Homebrew для `muhittincamdali/tap` подготавливает workflow релиза (запланировано вместе с первым релизом tap).
+В проекте `npm install --save-dev @mcamdali/sdkbump` фиксирует версию, после чего `npx sdkbump` запускает эту копию. Каждый [релиз на GitHub](https://github.com/muhittincamdali/sdkbump/releases) также содержит тот же пакет в виде `sdkbump-<версия>.tgz` с файлом `SHA256SUMS`; `npx` запускает его по URL без npm. Формулу Homebrew для `muhittincamdali/tap` подготавливает workflow релиза (запланировано вместе с первым релизом tap).
 
 ## Использование
 
@@ -116,13 +116,13 @@ sdkbump сам находит iOS-приложение: `.xcodeproj` в корн
 ### Хранить отчёт в Markdown вместе с кодом
 
 ```sh
-npx sdkbump --format markdown --output sdkbump.md
+npx @mcamdali/sdkbump --format markdown --output sdkbump.md
 ```
 
 ### Использовать отчёт JSON в скриптах
 
 ```sh
-npx sdkbump --format json > sdkbump.json
+npx @mcamdali/sdkbump --format json > sdkbump.json
 ```
 
 У каждой находки есть `rule`, `severity`, `file`, `line`, `message`, `fix` с шагами и руководством, `alternatives`, `mitigation` (заполняется, если находку обрабатывает пакет-обходной путь) и `sources`. Формат — `schemaVersion` 0, и до версии 1.0 он может измениться. [examples/shell/launch-blockers.sh](examples/shell/launch-blockers.sh) фильтрует его с помощью `jq`.

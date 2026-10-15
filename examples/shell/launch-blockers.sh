@@ -5,7 +5,7 @@
 #   sh examples/shell/launch-blockers.sh [project folder]
 #
 # Prints nothing when there are none. Inside this repository it runs the build in dist/; elsewhere
-# set SDKBUMP to the command you run sdkbump with (for example "npx --yes sdkbump@0.1").
+# set SDKBUMP to the command you run sdkbump with (for example "npx --yes @mcamdali/sdkbump@0.1").
 set -eu
 project="${1:-.}"
 here="$(cd "$(dirname "$0")" && pwd)"

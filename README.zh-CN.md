@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@e7c26ac3f2f831b9ddcef6819035e35fad0b96b1 status=reviewed -->
+<!-- i18n-source: README.md@49073c524eb2b7aad433b6794961ec40869c1170 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -53,10 +53,10 @@ cd path/to/YourApp
 **2. 运行 sdkbump：**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
+npx @mcamdali/sdkbump
 ```
 
-sdkbump 目前还没有发布到 npm（计划发布），所以暂时无法使用 `npx sdkbump`。上面的命令会运行 GitHub 上的 0.1.2 版本；本 README 中凡是写到 `npx sdkbump` 的地方，请改用这条命令。
+npm 包名是 `@mcamdali/sdkbump`，它安装的命令是 `sdkbump`。不带 scope 的 `npx sdkbump` 不会运行它。
 
 **3. 阅读项目名称下方的第一行。** “Fails to launch when built with the iOS 27 SDK”（使用 iOS 27 SDK 构建后无法启动）表示在你修复 **ERROR** 级别的发现之前，应用会在启动时停止；每一项发现都会说明适用“How to fix”列表中的哪种修复方式。**WARNING** 级别的发现不会阻止启动，但应用有了 scene 之后就会失效。 “Launch not determined”（无法判断能否启动）表示 sdkbump 没能读取某个 Info.plist；报告末尾的注释会说明是哪一个以及原因（见下方“限制”）。
 
@@ -84,14 +84,14 @@ sdkbump 目前还没有发布到 npm（计划发布），所以暂时无法使�
 
 ## 安装
 
-sdkbump 目前还没有发布到 npm，计划发布。在此之前，请按上文所示运行 GitHub 上的 0.1.2 版本，或将其添加到项目中：
+从 npm 安装 `sdkbump` 命令（包名 `@mcamdali/sdkbump`）：
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
-npx sdkbump
+npm i -g @mcamdali/sdkbump
+sdkbump
 ```
 
-sdkbump 发布到 npm 之后，`npx sdkbump` 会下载并运行最新版本，`npm install --save-dev sdkbump` 则会锁定某个版本。适用于 `muhittincamdali/tap` 的 Homebrew formula 由发布工作流准备（计划随 tap 的首个版本提供）。
+在项目中，`npm install --save-dev @mcamdali/sdkbump` 会锁定一个版本，之后 `npx sdkbump` 运行的就是这个副本。每个 [GitHub 发布版本](https://github.com/muhittincamdali/sdkbump/releases)也以 `sdkbump-<版本>.tgz` 的形式附带同一个包和 `SHA256SUMS` 文件，`npx` 可以不经 npm 直接从其 URL 运行。适用于 `muhittincamdali/tap` 的 Homebrew formula 由发布工作流准备（计划随 tap 的首个版本提供）。
 
 ## 使用方法
 
@@ -114,13 +114,13 @@ sdkbump 会自行找到 iOS 应用：原生应用是根目录或下一级文件�
 ### 将 Markdown 报告与代码一起保存
 
 ```sh
-npx sdkbump --format markdown --output sdkbump.md
+npx @mcamdali/sdkbump --format markdown --output sdkbump.md
 ```
 
 ### 在脚本中使用 JSON 报告
 
 ```sh
-npx sdkbump --format json > sdkbump.json
+npx @mcamdali/sdkbump --format json > sdkbump.json
 ```
 
 每项发现都包含 `rule`、`severity`、`file`、`line`、`message`、带有步骤和指南的 `fix`、`alternatives`、`mitigation`（当有变通方案包处理该问题时会设置）以及 `sources`。其结构为 `schemaVersion` 0，在 1.0 之前可能会变化。[examples/shell/launch-blockers.sh](examples/shell/launch-blockers.sh) 用 `jq` 对其进行过滤。

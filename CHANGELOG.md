@@ -7,6 +7,13 @@ All notable changes to sdkbump are listed here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- The package is published on npm as @mcamdali/sdkbump; the command is still sdkbump. Install it
+  with `npm i -g @mcamdali/sdkbump` or run it with `npx @mcamdali/sdkbump`; an unscoped
+  `npx sdkbump` does not run it. The GitHub release tarball keeps the name `sdkbump-<version>.tgz`,
+  and the Homebrew formula is written from it instead of from the npm registry.
+
 ### Security
 
 - Terminal: the verdict "Launch not determined: sdkbump could not read the Info.plist of
