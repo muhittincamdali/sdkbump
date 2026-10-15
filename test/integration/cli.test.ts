@@ -135,6 +135,35 @@ describe('sdkbump (in process)', () => {
     expect(result.stderr).not.toContain('bug');
   });
 
+  // OSC 52 (write the clipboard), CSI (clear the screen) and C1 CSI, raw.
+  const ESCAPE = '\u001b]52;c;cm0gLXJmIH4K\u0007\u001b[2J\u009b31m\u007f';
+  // biome-ignore lint/suspicious/noControlCharactersInRegex: the test is that none are left.
+  const CONTROL = /[\u0000-\u0008\u000b-\u001f\u007f-\u009f]/;
+
+  it('keeps escape sequences in a folder name out of the error message', async () => {
+    const root = tree({ [`app${ESCAPE}/pubspec.yaml`]: 'name: app\nflutter:\n' });
+    const result = await sdkbump([`app${ESCAPE}`], root);
+    expect(result.code).toBe(EXIT.error);
+    expect(result.stderr).toContain('is a Flutter project without an iOS app');
+    expect(result.stderr).not.toMatch(CONTROL);
+  });
+
+  it('keeps escape sequences in a target name out of the --output message', async () => {
+    const pbxEscape = '\\U001b]52;c;cm0gLXJmIH4K\\U0007\\U001b[2J\\U009b31m\\U007f';
+    const root = tree({
+      'App.xcodeproj/project.pbxproj': minimalPbxproj(
+        `"App${pbxEscape}"`,
+        '$(CUSTOM_DIR)/Info.plist',
+      ),
+      'App/AppDelegate.swift': 'class AppDelegate: UIResponder, UIApplicationDelegate {}',
+    });
+    const result = await sdkbump(['--output', 'report.txt'], root);
+    expect(result.stderr).toContain('Wrote report.txt: Launch not determined');
+    expect(result.stderr).toContain('App�]52;c;');
+    expect(result.stderr).not.toMatch(CONTROL);
+    expect(readFileSync(join(root, 'report.txt'), 'utf8')).not.toMatch(CONTROL);
+  });
+
   it('exits 2 on bad arguments', async () => {
     const result = await sdkbump(['--format', 'xml'], failing());
     expect(result.code).toBe(EXIT.error);

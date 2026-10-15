@@ -4,7 +4,7 @@ import { Command, CommanderError, Option } from 'commander';
 import { ProjectError } from '../detect/project.js';
 import type { Report } from '../model.js';
 import { FORMATS, type Format, render } from '../report/index.js';
-import { REPOSITORY_URL } from '../report/text.js';
+import { clean, REPOSITORY_URL } from '../report/text.js';
 import { scan } from '../scan.js';
 import { VERSION } from '../version.js';
 
@@ -94,7 +94,11 @@ export function failsOn(report: Report, failOn: FailOn): boolean {
 }
 
 /** Runs the CLI with the given arguments (without `node` and the script) and returns the exit code. */
-export async function run(argv: readonly string[], io: CliEnvironment): Promise<number> {
+export async function run(argv: readonly string[], environment: CliEnvironment): Promise<number> {
+  // Messages name folders, files and targets of the checked project, and the verdict after
+  // --output names a target. Every write to stderr is cleaned here, so none of them can carry an
+  // escape sequence to the terminal.
+  const io = { ...environment, stderr: (text: string) => environment.stderr(clean(text)) };
   const command = program(io);
   try {
     await command.parseAsync([...argv], { from: 'user' });
