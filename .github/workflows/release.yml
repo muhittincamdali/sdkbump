@@ -6,13 +6,17 @@ name: Release
 #    tests and build pass; the packed tarball installs and runs (scripts/smoke-pack.ts).
 # 2. github-release: creates the GitHub release with that CHANGELOG section as its notes and the
 #    tarball attached. A release that already exists keeps its notes; only missing files are added.
-# 3. npm: publishes the verified tarball with provenance through npm trusted publishing, when the
-#    repository variable NPM_TRUSTED_PUBLISHING is "true". Until then the owner publishes by hand.
-# 4. homebrew: once the version is on npm, writes Formula/sdkbump.rb from the registry tarball and
-#    opens a pull request on muhittincamdali/homebrew-tap (secret HOMEBREW_TAP_TOKEN; without it
-#    the formula is only uploaded as an artifact).
+# 3. npm: publishes the verified tarball as @mcamdali/sdkbump with provenance through npm trusted
+#    publishing, when the repository variable NPM_TRUSTED_PUBLISHING is "true". Until then the
+#    owner publishes by hand.
+# 4. homebrew: once the GitHub release exists, writes Formula/sdkbump.rb from its tarball and opens
+#    a pull request on muhittincamdali/homebrew-tap (secret HOMEBREW_TAP_TOKEN; without it the
+#    formula is only uploaded as an artifact).
 #
-# Run it by hand with an existing tag to redo the Homebrew step, e.g. after a manual npm publish.
+# The package is scoped, so npm pack writes mcamdali-sdkbump-<version>.tgz; the release keeps the
+# name sdkbump-<version>.tgz that earlier releases and the docs use. It is the same file.
+#
+# Run it by hand with an existing tag to redo the Homebrew step.
 
 on:
   push:
@@ -80,9 +84,12 @@ jobs:
         run: node scripts/smoke-pack.ts
 
       - name: Pack
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
           mkdir -p "$RUNNER_TEMP/release"
           npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/release"
+          mv "$RUNNER_TEMP/release/mcamdali-sdkbump-$VERSION.tgz" "$RUNNER_TEMP/release/sdkbump-$VERSION.tgz"
           cp "$RUNNER_TEMP/notes.md" "$RUNNER_TEMP/release/notes.md"
           (cd "$RUNNER_TEMP/release" && sha256sum ./*.tgz > SHA256SUMS)
 
@@ -139,7 +146,7 @@ jobs:
       id-token: write
     environment:
       name: npm
-      url: https://www.npmjs.com/package/sdkbump/v/${{ needs.verify.outputs.version }}
+      url: https://www.npmjs.com/package/@mcamdali/sdkbump/v/${{ needs.verify.outputs.version }}
     steps:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -161,10 +168,10 @@ jobs:
 
   homebrew:
     name: Homebrew formula
-    needs: [verify, npm]
+    needs: [verify, github-release]
     if: >-
       always() && needs.verify.result == 'success' && !contains(needs.verify.outputs.version, '-') &&
-      (needs.npm.result == 'success' || github.event_name == 'workflow_dispatch')
+      (needs.github-release.result == 'success' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
@@ -179,11 +186,11 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Write the formula from the registry tarball
+      - name: Write the formula from the release tarball
         env:
           VERSION: ${{ needs.verify.outputs.version }}
         run: |
-          url="https://registry.npmjs.org/sdkbump/-/sdkbump-$VERSION.tgz"
+          url="https://github.com/muhittincamdali/sdkbump/releases/download/v$VERSION/sdkbump-$VERSION.tgz"
           for attempt in $(seq 1 20); do
             if curl -fsSL -o "$RUNNER_TEMP/sdkbump.tgz" "$url"; then break; fi
             if [ "$attempt" = 20 ]; then echo "::error::$url is not available"; exit 1; fi
@@ -221,9 +228,9 @@ jobs:
             exit 0
           fi
           git -c user.name="Muhittin Camdali" -c user.email="muhittincamdali@gmail.com" \
-            commit -m "sdkbump $VERSION" -m "Formula for sdkbump $VERSION from the npm registry tarball."
+            commit -m "sdkbump $VERSION" -m "Formula for sdkbump $VERSION from the GitHub release tarball."
           gh auth setup-git
           git push origin "$branch"
           gh pr create --repo muhittincamdali/homebrew-tap --head "$branch" \
             --title "sdkbump $VERSION" \
-            --body "Updates Formula/sdkbump.rb to sdkbump $VERSION (https://www.npmjs.com/package/sdkbump/v/$VERSION)."
+            --body "Updates Formula/sdkbump.rb to sdkbump $VERSION (https://github.com/muhittincamdali/sdkbump/releases/tag/v$VERSION)."

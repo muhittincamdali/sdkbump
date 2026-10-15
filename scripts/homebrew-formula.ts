@@ -1,12 +1,13 @@
-// Writes the Homebrew formula for one published npm version. The release workflow runs it with the
-// registry tarball's SHA-256 and opens a pull request on muhittincamdali/homebrew-tap:
+// Writes the Homebrew formula for one release. The release workflow runs it with the SHA-256 of the
+// release tarball (the file the GitHub release carries and npm publishes as @mcamdali/sdkbump) and
+// opens a pull request on muhittincamdali/homebrew-tap:
 //
 //   node scripts/homebrew-formula.ts 0.1.0 <sha256> > Formula/sdkbump.rb
 import { fileURLToPath } from 'node:url';
 
 export interface FormulaInput {
   version: string;
-  /** SHA-256 of https://registry.npmjs.org/sdkbump/-/sdkbump-<version>.tgz */
+  /** SHA-256 of the release tarball, sdkbump-<version>.tgz */
   sha256: string;
 }
 
@@ -21,7 +22,7 @@ export function formula({ version, sha256 }: FormulaInput): string {
   return `class Sdkbump < Formula
   desc "${DESCRIPTION}"
   homepage "https://github.com/muhittincamdali/sdkbump"
-  url "https://registry.npmjs.org/sdkbump/-/sdkbump-${version}.tgz"
+  url "https://github.com/muhittincamdali/sdkbump/releases/download/v${version}/sdkbump-${version}.tgz"
   sha256 "${sha256}"
   license "MIT"
 
