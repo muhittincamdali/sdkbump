@@ -174,6 +174,30 @@ describe('render (markdown)', () => {
     expect(text).not.toMatch(/https?:\/\/evil|www\.evil|@evil|@team/);
   });
 
+  it('stops URLs and www addresses right after a letter or an underscore from becoming links', () => {
+    const text = withName('_https://evil.example/a x_www.evil.example Xhttp://evil.example/b');
+    expect(heading(text)).toBe(
+      `## sdkbump: \\_https${WJ}://evil.example/a x\\_www${WJ}.evil.example Xhttp${WJ}://evil.example/b (React Native)`,
+    );
+    expect(text).not.toMatch(/https?:\/\/evil|www\.evil/);
+  });
+
+  it('stops issue references from becoming links', () => {
+    const text = withName('App', { message: 'see #1, owner/repo#2 and GH-3' });
+    expect(text).toContain(`see \\#${WJ}1, owner/repo\\#${WJ}2 and GH${WJ}-3`);
+    expect(text).not.toMatch(/#\d|GH-\d/);
+  });
+
+  it('keeps a value at the start of a line from opening a list, a code block or a rule', () => {
+    const notes = ['- injected item', '+ injected', '12. injected', '    indented code', '---'];
+    const text = render(report([finding({})], { notes }), 'markdown');
+    expect(text).toContain('> \\- injected item\n');
+    expect(text).toContain('> \\+ injected\n');
+    expect(text).toContain('> 12\\. injected\n');
+    expect(text).toContain('> indented code\n');
+    expect(text).toContain('> \\---\n');
+  });
+
   it('keeps headings, emphasis and line breaks in a value inline', () => {
     const text = withName('# Owned\n\n## Again', { title: '*bold* _it_ ~~gone~~ `x`' });
     expect(heading(text)).toBe('## sdkbump: \\# Owned \\#\\# Again (React Native)');

@@ -14,21 +14,30 @@ import {
 // emphasis (* _ ~), code (`), headings (#), HTML and autolinks (< >), entities (&), table cells
 // (|) and the backslash itself. A backslash in front makes each one plain text.
 const MARKUP = /[\\`*_[\]()#!<>|~&]/g;
-// GitHub turns bare URLs, www. addresses, e-mail addresses and @names into links or mentions
-// without any markup. A word joiner (U+2060, invisible) after the scheme, the www or the @ stops
-// that and leaves the text as it reads.
-const BARE_LINKS = /\b(https?|ftp|www)(?=:\/\/|\.)|@/gi;
+// GitHub turns bare URLs, www. addresses, e-mail addresses, @names and issue references (#1,
+// owner/repo#1, GH-1) into links or mentions without any markup, also right after a letter or an
+// underscore (x_https://...). A word joiner (U+2060, invisible) after the scheme, the www, the @,
+// the # or the GH stops that and leaves the text as it reads.
+const BARE_LINKS = /(?:https?|ftp)(?=:\/\/)|www(?=\.)|gh(?=-\d)|#(?=\d)|@/gi;
+// A list marker ('- ', '+ ', '12. ') or the start of a rule ('---') at the start of a line.
+const LIST_OR_RULE = /^(?:[-+](?=\s|$)|-(?=-))/;
+const ORDERED_LIST = /^(\d+)\.(?=\s|$)/;
 const WORD_JOINER = '\u2060';
 const BACKTICK_RUNS = /`+/g;
 
 /**
  * Text from the checked project (names, versions, paths, plist values) as plain text in a
- * paragraph, heading or table cell: no line breaks, markup or bare links.
+ * paragraph, heading or table cell: no line breaks, markup or bare links. Notes and fix steps
+ * start a line, so a leading list marker or `---` is escaped too (it would open a list or a rule),
+ * and leading spaces are dropped (four of them would open a code block).
  */
 const md = (text: string) =>
   text
     .replace(/\s*\n\s*/g, ' ')
+    .trimStart()
     .replace(MARKUP, '\\$&')
+    .replace(LIST_OR_RULE, '\\$&')
+    .replace(ORDERED_LIST, '$1\\.')
     .replace(BARE_LINKS, `$&${WORD_JOINER}`);
 
 /**
