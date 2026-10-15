@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@cbffda47532294690b77084f8317610614e92e93 status=reviewed -->
+<!-- i18n-source: README.md@672d6255d691aab63cdb64c272e01df7422453df status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -54,10 +54,10 @@ cd path/to/YourApp
 **2. Запустите sdkbump:**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
+npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
 ```
 
-sdkbump пока нет в npm (публикация там запланирована), поэтому `npx sdkbump` сейчас не работает. Команда выше запускает релиз 0.1.1 с GitHub; используйте её везде, где в этом README написано `npx sdkbump`.
+sdkbump пока нет в npm (публикация там запланирована), поэтому `npx sdkbump` сейчас не работает. Команда выше запускает релиз 0.1.2 с GitHub; используйте её везде, где в этом README написано `npx sdkbump`.
 
 **3. Прочитайте первую строку под названием вашего проекта.** «Fails to launch when built with the iOS 27 SDK» (не запускается, если собрано с SDK iOS 27) означает, что приложение будет останавливаться при запуске, пока вы не исправите находки уровня **ERROR**; в каждой сказано, какое исправление из списка «How to fix» подходит. Находки уровня **WARNING** не мешают запуску, но перестают работать, когда у приложения появляется сцена. «Launch not determined» (запуск не определён) означает, что sdkbump не смог прочитать Info.plist; в примечаниях в конце отчёта сказано, какой и почему (см. «Ограничения» ниже).
 
@@ -86,10 +86,10 @@ sdkbump пока нет в npm (публикация там запланиров
 
 ## Установка
 
-sdkbump пока нет в npm; публикация там запланирована. До тех пор запускайте релиз 0.1.1 с GitHub, как показано выше, или добавьте его в проект:
+sdkbump пока нет в npm; публикация там запланирована. До тех пор запускайте релиз 0.1.2 с GitHub, как показано выше, или добавьте его в проект:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
+npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
 npx sdkbump
 ```
 

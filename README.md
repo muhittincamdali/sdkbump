@@ -65,11 +65,11 @@ cd path/to/YourApp
 **2. Run sdkbump:**
 
 ```sh
-npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
+npx https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
 ```
 
 sdkbump is not on npm yet (publishing it there is planned), so `npx sdkbump` does not work for
-now. The command above runs the 0.1.1 release from GitHub; use it wherever this README says
+now. The command above runs the 0.1.2 release from GitHub; use it wherever this README says
 `npx sdkbump`.
 
 **3. Read the first line under your project's name.** "Fails to launch when built with the iOS 27
@@ -114,11 +114,11 @@ time are shown as handled, with the limits from its README, and do not fail the 
 
 ## Installation
 
-sdkbump is not on npm yet; publishing it there is planned. Until then, run the 0.1.1 release from
+sdkbump is not on npm yet; publishing it there is planned. Until then, run the 0.1.2 release from
 GitHub as shown above, or add it to a project:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.1/sdkbump-0.1.1.tgz
+npm install --save-dev https://github.com/muhittincamdali/sdkbump/releases/download/v0.1.2/sdkbump-0.1.2.tgz
 npx sdkbump
 ```
 
