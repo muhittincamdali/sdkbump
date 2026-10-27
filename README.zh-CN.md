@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@fa986ced9af418c4eec9ed285aa542550db4ab26 status=reviewed -->
+<!-- i18n-source: README.md@05d216af458d5c03f128e8dd8f9edb3064738a0d status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -195,6 +195,8 @@ API 参考与指南：[muhittincamdali.github.io/sdkbump](https://muhittincamdal
 - [原生模块作者：冷启动时的链接与通知](docs/guides/native-module-authors.md)
 
 ## 相关工具
+
+[glassready](https://github.com/muhittincamdali/glassready) 回答 iOS 27 SDK 的另一个问题：应用会变成什么样子？iOS 27 SDK 会忽略 `UIDesignRequiresCompatibility` 这一退出选项，应用因此换上 Liquid Glass；glassready 列出这在原生 iOS、Flutter 或 React Native/Expo 应用中改变了什么，以及每一处该如何修复。sdkbump 回答的是应用能否启动。第一次用 Xcode 27 构建之前，两个都运行一遍。
 
 还有其他项目也在处理同一项变更；哪一个合适，取决于你的需求：
 

@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@fa986ced9af418c4eec9ed285aa542550db4ab26 status=reviewed -->
+<!-- i18n-source: README.md@05d216af458d5c03f128e8dd8f9edb3064738a0d status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -195,6 +195,8 @@ API リファレンスとガイド: [muhittincamdali.github.io/sdkbump](https://
 - [ネイティブモジュールの作者向け: コールドスタート時のリンクと通知](docs/guides/native-module-authors.md)
 
 ## 関連ツール
+
+[glassready](https://github.com/muhittincamdali/glassready) は、iOS 27 SDK のもう一つの問い、つまりアプリがどう見えるかに答えます。iOS 27 SDK は `UIDesignRequiresCompatibility` によるオプトアウトを無視するため、アプリは Liquid Glass になります。glassready は、それがネイティブ iOS、Flutter、React Native/Expo アプリで何を変えるのかと、各箇所の直し方を一覧にします。sdkbump が答えるのは、アプリが起動するかどうかです。Xcode 27 での最初のビルドの前に、両方を実行してください。
 
 同じ変更に取り組んでいるプロジェクトは、ほかにもあります。どれが合うかは、必要なものによって変わります。
 

@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@fa986ced9af418c4eec9ed285aa542550db4ab26 status=reviewed -->
+<!-- i18n-source: README.md@05d216af458d5c03f128e8dd8f9edb3064738a0d status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -196,6 +196,12 @@ API-Referenz und Anleitungen: [muhittincamdali.github.io/sdkbump](https://muhitt
 - [Autoren nativer Module: Links und Benachrichtigungen beim Kaltstart](docs/guides/native-module-authors.md)
 
 ## Verwandte Tools
+
+[glassready](https://github.com/muhittincamdali/glassready) beantwortet die andere Frage zum iOS 27
+SDK: Wie wird die App aussehen? Das iOS 27 SDK ignoriert das Opt-out
+`UIDesignRequiresCompatibility`, die App bekommt also Liquid Glass; glassready listet auf, was das
+in einer nativen iOS-, Flutter- oder React-Native/Expo-App ändert und wie man jede Stelle behebt.
+sdkbump beantwortet, ob die App startet. Führe beide vor dem ersten Build mit Xcode 27 aus.
 
 Andere Projekte arbeiten an derselben Änderung; welches passt, hängt davon ab, was du brauchst:
 
