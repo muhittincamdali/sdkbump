@@ -442,9 +442,8 @@ describe('Expo without ios/', () => {
     expect(report.findings).toMatchObject([
       { rule: 'SCN001', severity: 'error', file, fix: { id: fix } },
     ]);
-    expect(report.findings[0]?.alternatives.map((item) => item.id)).toEqual([
-      'workaround-react-native-uiscene-bridge',
-    ]);
+    // No workaround package is suggested: Expo SDK 58 and React Native 0.88 adopt scenes.
+    expect(report.findings[0]?.alternatives).toEqual([]);
   });
 
   it('accepts SDK 57.0.23+ with expo-build-properties and the opt-in, and SDK 58', async () => {

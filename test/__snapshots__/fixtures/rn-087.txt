@@ -11,15 +11,13 @@ ERROR    SCN001 No scene configuration
          Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement
          application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, the app
          stops at launch: "UIScene life cycle is required for apps built with this SDK".
-         Fix: [A] Upgrade to React Native 0.88; or [B] Add a SceneDelegate by hand; or [C]
-         Temporary: install react-native-uiscene-bridge
+         Fix: [A] Upgrade to React Native 0.88; or [B] Add a SceneDelegate by hand
 
 ERROR    SCN002 Window created in the app delegate
          ios/RN087App/AppDelegate.swift:24
          AppDelegate creates the window with UIWindow(frame:). With a scene, UIKit does not show a
          window that belongs to no scene, and the app opens to a black screen.
-         Fix: [A] Upgrade to React Native 0.88; or [B] Add a SceneDelegate by hand; or [C]
-         Temporary: install react-native-uiscene-bridge
+         Fix: [A] Upgrade to React Native 0.88; or [B] Add a SceneDelegate by hand
 
 How to fix
 
@@ -47,18 +45,6 @@ How to fix
          3. The React Native team gives deep links through the scene delegate and Dimensions for a
             resizable window as the reasons it does not backport 0.88's change; check both in your
             port.
-         https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md
-
-[C]      Temporary: install react-native-uiscene-bridge
-         1. Adds a scene configuration at run time, moves the app delegate's window into the scene
-            and passes links, user activities, quick actions and foreground and background events
-            back to the app delegate.
-         2. Limit: One release, 0.1.0 of 28 September 2026, from before React Native 0.88 shipped
-            scene support (npm).
-         3. Limit: Tested in the simulator only, not on a device (its README).
-         4. Limit: One window: iPad multiwindow needs real scene support.
-         5. Limit: Universal links, Handoff and quick actions were not tested (its README).
-         6. Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported.
          https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md
 
 2 errors, 0 warnings

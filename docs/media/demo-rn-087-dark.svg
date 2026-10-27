@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="823" height="1366" viewBox="0 0 823 1366" role="img" aria-label="npx @mcamdali/sdkbump fixtures/rn-087: terminal output">
+<svg xmlns="http://www.w3.org/2000/svg" width="823" height="1100" viewBox="0 0 823 1100" role="img" aria-label="npx @mcamdali/sdkbump fixtures/rn-087: terminal output">
 <title>sdkbump · React Native 0.87 app</title>
 <style>
 text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;white-space:pre}
@@ -8,8 +8,8 @@ text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",mo
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.t{animation:none;opacity:1}.caret{animation:none;opacity:1}}
 </style>
-<rect width="823" height="1366" fill="#0D1117"/>
-<rect x="0.5" y="0.5" width="822" height="1365" rx="10" fill="#04111F" stroke="#1C3557"/>
+<rect width="823" height="1100" fill="#0D1117"/>
+<rect x="0.5" y="0.5" width="822" height="1099" rx="10" fill="#04111F" stroke="#1C3557"/>
 <path d="M0.5 34V10.5a10 10 0 0 1 10-10h802a10 10 0 0 1 10 10V34z" fill="#0B1626"/>
 <line x1="0.5" y1="34" x2="822.5" y2="34" stroke="#1C3557"/>
 <circle cx="20" cy="17" r="6" fill="#0A84FF"/><circle cx="40" cy="17" r="6" fill="#64D2FF"/><circle cx="60" cy="17" r="6" fill="#1C3557"/>
@@ -29,58 +29,44 @@ text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",mo
 <text class="t" x="20" y="295" style="animation-delay:2.92s"><tspan fill="#D0E2F7">         Info.plist has no UIApplicationSceneManifest, and AppDelegate does not implement</tspan></text>
 <text class="t" x="20" y="314" style="animation-delay:2.95s"><tspan fill="#D0E2F7">         application(_:configurationForConnecting:options:). Built with the iOS 27 SDK, the app</tspan></text>
 <text class="t" x="20" y="333" style="animation-delay:2.98s"><tspan fill="#D0E2F7">         stops at launch: "UIScene life cycle is required for apps built with this SDK".</tspan></text>
-<text class="t" x="20" y="352" style="animation-delay:3.02s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [A] Upgrade to React Native 0.88; or [B] Add a SceneDelegate by hand; or [C]</tspan></text>
-<text class="t" x="20" y="371" style="animation-delay:3.06s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Temporary: install react-native-uiscene-bridge</tspan></text>
-<text class="t" x="20" y="390" style="animation-delay:3.09s"></text>
-<text class="t" x="20" y="409" style="animation-delay:3.13s"><tspan fill="#FFFFFF" font-weight="700">ERROR    </tspan><tspan fill="#FFFFFF" font-weight="700">SCN002 Window created in the app delegate</tspan></text>
-<text class="t" x="20" y="428" style="animation-delay:3.16s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#64D2FF">ios/RN087App/AppDelegate.swift:24</tspan></text>
-<text class="t" x="20" y="447" style="animation-delay:3.20s"><tspan fill="#D0E2F7">         AppDelegate creates the window with UIWindow(frame:). With a scene, UIKit does not show a</tspan></text>
-<text class="t" x="20" y="466" style="animation-delay:3.23s"><tspan fill="#D0E2F7">         window that belongs to no scene, and the app opens to a black screen.</tspan></text>
-<text class="t" x="20" y="485" style="animation-delay:3.27s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [A] Upgrade to React Native 0.88; or [B] Add a SceneDelegate by hand; or [C]</tspan></text>
-<text class="t" x="20" y="504" style="animation-delay:3.30s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Temporary: install react-native-uiscene-bridge</tspan></text>
+<text class="t" x="20" y="352" style="animation-delay:3.02s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [A] Upgrade to React Native 0.88; or [B] Add a SceneDelegate by hand</tspan></text>
+<text class="t" x="20" y="371" style="animation-delay:3.06s"></text>
+<text class="t" x="20" y="390" style="animation-delay:3.09s"><tspan fill="#FFFFFF" font-weight="700">ERROR    </tspan><tspan fill="#FFFFFF" font-weight="700">SCN002 Window created in the app delegate</tspan></text>
+<text class="t" x="20" y="409" style="animation-delay:3.13s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#64D2FF">ios/RN087App/AppDelegate.swift:24</tspan></text>
+<text class="t" x="20" y="428" style="animation-delay:3.16s"><tspan fill="#D0E2F7">         AppDelegate creates the window with UIWindow(frame:). With a scene, UIKit does not show a</tspan></text>
+<text class="t" x="20" y="447" style="animation-delay:3.20s"><tspan fill="#D0E2F7">         window that belongs to no scene, and the app opens to a black screen.</tspan></text>
+<text class="t" x="20" y="466" style="animation-delay:3.23s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [A] Upgrade to React Native 0.88; or [B] Add a SceneDelegate by hand</tspan></text>
+<text class="t" x="20" y="485" style="animation-delay:3.27s"></text>
+<text class="t" x="20" y="504" style="animation-delay:3.30s"><tspan fill="#FFFFFF" font-weight="700">How to fix</tspan></text>
 <text class="t" x="20" y="523" style="animation-delay:3.33s"></text>
-<text class="t" x="20" y="542" style="animation-delay:3.37s"><tspan fill="#FFFFFF" font-weight="700">How to fix</tspan></text>
-<text class="t" x="20" y="561" style="animation-delay:3.41s"></text>
-<text class="t" x="20" y="580" style="animation-delay:3.44s"><tspan fill="#FFFFFF" font-weight="700">[A]      </tspan><tspan fill="#FFFFFF" font-weight="700">Upgrade to React Native 0.88</tspan></text>
-<text class="t" x="20" y="599" style="animation-delay:3.48s"><tspan fill="#D0E2F7">         1. React Native 0.88 is stable (0.88.0 on npm since 15 October 2026; release post of 19</tspan></text>
-<text class="t" x="20" y="618" style="animation-delay:3.51s"><tspan fill="#D0E2F7">            October 2026) and supports the UIScene life cycle without breaking the AppDelegate path.</tspan></text>
-<text class="t" x="20" y="637" style="animation-delay:3.54s"><tspan fill="#D0E2F7">            0.87.1 and earlier have no scene support, and the React Native team will not backport</tspan></text>
-<text class="t" x="20" y="656" style="animation-delay:3.58s"><tspan fill="#D0E2F7">            it.</tspan></text>
-<text class="t" x="20" y="675" style="animation-delay:3.62s"><tspan fill="#D0E2F7">         2. Move the React Native entry point from AppDelegate to a SceneDelegate</tspan></text>
-<text class="t" x="20" y="694" style="animation-delay:3.65s"><tspan fill="#D0E2F7">            (RCTReactNativeFactory's new</tspan></text>
-<text class="t" x="20" y="713" style="animation-delay:3.69s"><tspan fill="#D0E2F7">            startReactNativeWithModuleName:inWindow:connectionOptions:), forward the scene's URL and</tspan></text>
-<text class="t" x="20" y="732" style="animation-delay:3.72s"><tspan fill="#D0E2F7">            user-activity callbacks to RCTLinkingManager, and add UIApplicationSceneManifest to</tspan></text>
-<text class="t" x="20" y="751" style="animation-delay:3.75s"><tspan fill="#D0E2F7">            Info.plist. The 0.88 template and the upgrade helper show the change in</tspan></text>
-<text class="t" x="20" y="770" style="animation-delay:3.79s"><tspan fill="#D0E2F7">            SceneDelegate.swift and Info.plist.</tspan></text>
-<text class="t" x="20" y="789" style="animation-delay:3.83s"><tspan fill="#D0E2F7">         3. Keep UIApplicationSupportsMultipleScenes false: 0.88 supports one scene, and at launch</tspan></text>
-<text class="t" x="20" y="808" style="animation-delay:3.86s"><tspan fill="#D0E2F7">            it forwards only the first URL context or user activity. The window can be resized;</tspan></text>
-<text class="t" x="20" y="827" style="animation-delay:3.90s"><tspan fill="#D0E2F7">            Dimensions.get() and useWindowDimensions() follow it.</tspan></text>
-<text class="t" x="20" y="846" style="animation-delay:3.93s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md</tspan></text>
-<text class="t" x="20" y="865" style="animation-delay:3.96s"></text>
-<text class="t" x="20" y="884" style="animation-delay:4.00s"><tspan fill="#FFFFFF" font-weight="700">[B]      </tspan><tspan fill="#FFFFFF" font-weight="700">Add a SceneDelegate by hand</tspan></text>
-<text class="t" x="20" y="903" style="animation-delay:4.04s"><tspan fill="#D0E2F7">         1. Port the 0.88 template's SceneDelegate and Info.plist manifest to your version: create</tspan></text>
-<text class="t" x="20" y="922" style="animation-delay:4.07s"><tspan fill="#D0E2F7">            the window from the UIWindowScene and start React Native into it there.</tspan></text>
-<text class="t" x="20" y="941" style="animation-delay:4.11s"><tspan fill="#D0E2F7">         2. Before 0.88, startReactNative takes launch options, not connection options, so convert</tspan></text>
-<text class="t" x="20" y="960" style="animation-delay:4.14s"><tspan fill="#D0E2F7">            the connection options of a link that launches the app.</tspan></text>
-<text class="t" x="20" y="979" style="animation-delay:4.17s"><tspan fill="#D0E2F7">         3. The React Native team gives deep links through the scene delegate and Dimensions for a</tspan></text>
-<text class="t" x="20" y="998" style="animation-delay:4.21s"><tspan fill="#D0E2F7">            resizable window as the reasons it does not backport 0.88's change; check both in your</tspan></text>
-<text class="t" x="20" y="1017" style="animation-delay:4.25s"><tspan fill="#D0E2F7">            port.</tspan></text>
-<text class="t" x="20" y="1036" style="animation-delay:4.28s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md</tspan></text>
-<text class="t" x="20" y="1055" style="animation-delay:4.32s"></text>
-<text class="t" x="20" y="1074" style="animation-delay:4.35s"><tspan fill="#FFFFFF" font-weight="700">[C]      </tspan><tspan fill="#FFFFFF" font-weight="700">Temporary: install react-native-uiscene-bridge</tspan></text>
-<text class="t" x="20" y="1093" style="animation-delay:4.38s"><tspan fill="#D0E2F7">         1. Adds a scene configuration at run time, moves the app delegate's window into the scene</tspan></text>
-<text class="t" x="20" y="1112" style="animation-delay:4.42s"><tspan fill="#D0E2F7">            and passes links, user activities, quick actions and foreground and background events</tspan></text>
-<text class="t" x="20" y="1131" style="animation-delay:4.46s"><tspan fill="#D0E2F7">            back to the app delegate.</tspan></text>
-<text class="t" x="20" y="1150" style="animation-delay:4.49s"><tspan fill="#D0E2F7">         2. Limit: One release, 0.1.0 of 28 September 2026, from before React Native 0.88 shipped</tspan></text>
-<text class="t" x="20" y="1169" style="animation-delay:4.53s"><tspan fill="#D0E2F7">            scene support (npm).</tspan></text>
-<text class="t" x="20" y="1188" style="animation-delay:4.56s"><tspan fill="#D0E2F7">         3. Limit: Tested in the simulator only, not on a device (its README).</tspan></text>
-<text class="t" x="20" y="1207" style="animation-delay:4.60s"><tspan fill="#D0E2F7">         4. Limit: One window: iPad multiwindow needs real scene support.</tspan></text>
-<text class="t" x="20" y="1226" style="animation-delay:4.63s"><tspan fill="#D0E2F7">         5. Limit: Universal links, Handoff and quick actions were not tested (its README).</tspan></text>
-<text class="t" x="20" y="1245" style="animation-delay:4.67s"><tspan fill="#D0E2F7">         6. Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported.</tspan></text>
-<text class="t" x="20" y="1264" style="animation-delay:4.70s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md</tspan></text>
-<text class="t" x="20" y="1283" style="animation-delay:4.74s"></text>
-<text class="t" x="20" y="1302" style="animation-delay:4.77s"><tspan fill="#FFFFFF" font-weight="700">2 errors, 0 warnings</tspan></text>
-<text class="t" x="20" y="1321" style="animation-delay:4.80s"><tspan fill="#D0E2F7">Guide: https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md</tspan></text>
-<text class="t" x="20" y="1340" style="animation-delay:5.04s"><tspan fill="#0A84FF" font-weight="700">$ </tspan></text>
-<rect class="caret" x="35.66" y="1328" width="7.83" height="16" fill="#0A84FF" style="animation-delay:5.04s"/>
+<text class="t" x="20" y="542" style="animation-delay:3.37s"><tspan fill="#FFFFFF" font-weight="700">[A]      </tspan><tspan fill="#FFFFFF" font-weight="700">Upgrade to React Native 0.88</tspan></text>
+<text class="t" x="20" y="561" style="animation-delay:3.41s"><tspan fill="#D0E2F7">         1. React Native 0.88 is stable (0.88.0 on npm since 15 October 2026; release post of 19</tspan></text>
+<text class="t" x="20" y="580" style="animation-delay:3.44s"><tspan fill="#D0E2F7">            October 2026) and supports the UIScene life cycle without breaking the AppDelegate path.</tspan></text>
+<text class="t" x="20" y="599" style="animation-delay:3.48s"><tspan fill="#D0E2F7">            0.87.1 and earlier have no scene support, and the React Native team will not backport</tspan></text>
+<text class="t" x="20" y="618" style="animation-delay:3.51s"><tspan fill="#D0E2F7">            it.</tspan></text>
+<text class="t" x="20" y="637" style="animation-delay:3.54s"><tspan fill="#D0E2F7">         2. Move the React Native entry point from AppDelegate to a SceneDelegate</tspan></text>
+<text class="t" x="20" y="656" style="animation-delay:3.58s"><tspan fill="#D0E2F7">            (RCTReactNativeFactory's new</tspan></text>
+<text class="t" x="20" y="675" style="animation-delay:3.62s"><tspan fill="#D0E2F7">            startReactNativeWithModuleName:inWindow:connectionOptions:), forward the scene's URL and</tspan></text>
+<text class="t" x="20" y="694" style="animation-delay:3.65s"><tspan fill="#D0E2F7">            user-activity callbacks to RCTLinkingManager, and add UIApplicationSceneManifest to</tspan></text>
+<text class="t" x="20" y="713" style="animation-delay:3.69s"><tspan fill="#D0E2F7">            Info.plist. The 0.88 template and the upgrade helper show the change in</tspan></text>
+<text class="t" x="20" y="732" style="animation-delay:3.72s"><tspan fill="#D0E2F7">            SceneDelegate.swift and Info.plist.</tspan></text>
+<text class="t" x="20" y="751" style="animation-delay:3.75s"><tspan fill="#D0E2F7">         3. Keep UIApplicationSupportsMultipleScenes false: 0.88 supports one scene, and at launch</tspan></text>
+<text class="t" x="20" y="770" style="animation-delay:3.79s"><tspan fill="#D0E2F7">            it forwards only the first URL context or user activity. The window can be resized;</tspan></text>
+<text class="t" x="20" y="789" style="animation-delay:3.83s"><tspan fill="#D0E2F7">            Dimensions.get() and useWindowDimensions() follow it.</tspan></text>
+<text class="t" x="20" y="808" style="animation-delay:3.86s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md</tspan></text>
+<text class="t" x="20" y="827" style="animation-delay:3.90s"></text>
+<text class="t" x="20" y="846" style="animation-delay:3.93s"><tspan fill="#FFFFFF" font-weight="700">[B]      </tspan><tspan fill="#FFFFFF" font-weight="700">Add a SceneDelegate by hand</tspan></text>
+<text class="t" x="20" y="865" style="animation-delay:3.96s"><tspan fill="#D0E2F7">         1. Port the 0.88 template's SceneDelegate and Info.plist manifest to your version: create</tspan></text>
+<text class="t" x="20" y="884" style="animation-delay:4.00s"><tspan fill="#D0E2F7">            the window from the UIWindowScene and start React Native into it there.</tspan></text>
+<text class="t" x="20" y="903" style="animation-delay:4.04s"><tspan fill="#D0E2F7">         2. Before 0.88, startReactNative takes launch options, not connection options, so convert</tspan></text>
+<text class="t" x="20" y="922" style="animation-delay:4.07s"><tspan fill="#D0E2F7">            the connection options of a link that launches the app.</tspan></text>
+<text class="t" x="20" y="941" style="animation-delay:4.11s"><tspan fill="#D0E2F7">         3. The React Native team gives deep links through the scene delegate and Dimensions for a</tspan></text>
+<text class="t" x="20" y="960" style="animation-delay:4.14s"><tspan fill="#D0E2F7">            resizable window as the reasons it does not backport 0.88's change; check both in your</tspan></text>
+<text class="t" x="20" y="979" style="animation-delay:4.17s"><tspan fill="#D0E2F7">            port.</tspan></text>
+<text class="t" x="20" y="998" style="animation-delay:4.21s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md</tspan></text>
+<text class="t" x="20" y="1017" style="animation-delay:4.25s"></text>
+<text class="t" x="20" y="1036" style="animation-delay:4.28s"><tspan fill="#FFFFFF" font-weight="700">2 errors, 0 warnings</tspan></text>
+<text class="t" x="20" y="1055" style="animation-delay:4.32s"><tspan fill="#D0E2F7">Guide: https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md</tspan></text>
+<text class="t" x="20" y="1074" style="animation-delay:4.55s"><tspan fill="#0A84FF" font-weight="700">$ </tspan></text>
+<rect class="caret" x="35.66" y="1062" width="7.83" height="16" fill="#0A84FF" style="animation-delay:4.55s"/>
 </svg>

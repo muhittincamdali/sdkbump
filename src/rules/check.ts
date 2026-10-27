@@ -8,7 +8,6 @@ import type { FixAdvice, Finding } from '../model.js';
 import type { RuleData, RuleId, RuleSource, Severity } from './data.js';
 import {
   adoptScenesFix,
-  bridgeAlternative,
   type Context,
   fixById,
   flutterMigration,
@@ -111,7 +110,7 @@ function scn001Expo(context: Context): RawFinding[] {
           path,
           line: null,
           fix: fixById(data, 'expo-57-scene-support'),
-          alternatives: bridgeAlternative(context),
+          alternatives: [],
         }),
       ];
     }
@@ -125,7 +124,7 @@ function scn001Expo(context: Context): RawFinding[] {
         path,
         line: null,
         fix: fixById(data, 'expo-57-scene-support'),
-        alternatives: bridgeAlternative(context),
+        alternatives: [],
       }),
     ];
   }
@@ -135,7 +134,7 @@ function scn001Expo(context: Context): RawFinding[] {
       path: `${project.root}/package.json`,
       line: null,
       fix: fixById(data, 'expo-upgrade'),
-      alternatives: bridgeAlternative(context),
+      alternatives: [],
     }),
   ];
 }

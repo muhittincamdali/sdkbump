@@ -73,31 +73,7 @@
           }
         ]
       },
-      "alternatives": [
-        {
-          "id": "workaround-react-native-uiscene-bridge",
-          "title": "Temporary: install react-native-uiscene-bridge",
-          "steps": [
-            "Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.",
-            "Limit: One release, 0.1.0 of 28 September 2026, from before React Native 0.88 shipped scene support (npm).",
-            "Limit: Tested in the simulator only, not on a device (its README).",
-            "Limit: One window: iPad multiwindow needs real scene support.",
-            "Limit: Universal links, Handoff and quick actions were not tested (its README).",
-            "Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported."
-          ],
-          "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
-          "sources": [
-            {
-              "title": "react-native-uiscene-bridge README",
-              "url": "https://github.com/Atomics-hub/react-native-uiscene-bridge"
-            },
-            {
-              "title": "react-native-uiscene-bridge on npm",
-              "url": "https://www.npmjs.com/package/react-native-uiscene-bridge"
-            }
-          ]
-        }
-      ],
+      "alternatives": [],
       "mitigation": null,
       "sources": [
         {
@@ -143,31 +119,7 @@
           }
         ]
       },
-      "alternatives": [
-        {
-          "id": "workaround-react-native-uiscene-bridge",
-          "title": "Temporary: install react-native-uiscene-bridge",
-          "steps": [
-            "Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.",
-            "Limit: One release, 0.1.0 of 28 September 2026, from before React Native 0.88 shipped scene support (npm).",
-            "Limit: Tested in the simulator only, not on a device (its README).",
-            "Limit: One window: iPad multiwindow needs real scene support.",
-            "Limit: Universal links, Handoff and quick actions were not tested (its README).",
-            "Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported."
-          ],
-          "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
-          "sources": [
-            {
-              "title": "react-native-uiscene-bridge README",
-              "url": "https://github.com/Atomics-hub/react-native-uiscene-bridge"
-            },
-            {
-              "title": "react-native-uiscene-bridge on npm",
-              "url": "https://www.npmjs.com/package/react-native-uiscene-bridge"
-            }
-          ]
-        }
-      ],
+      "alternatives": [],
       "mitigation": null,
       "sources": [
         {
