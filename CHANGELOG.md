@@ -7,6 +7,34 @@ All notable changes to sdkbump are listed here. The format follows
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-10-27
+
+### Changed
+
+- Rule data `ios27@2026.10.27`. "Upgrade to React Native 0.88" said that 0.88 was a release
+  candidate (0.88.0-rc.6 on npm's `next` tag). React Native 0.88.0 is released (npm `latest` since
+  15 October 2026, release post on 19 October 2026), and the fix now gives the migration from that
+  post: the React Native entry point in a `SceneDelegate`, the scene's URL and user-activity
+  callbacks forwarded to `RCTLinkingManager`, `UIApplicationSceneManifest` in Info.plist, one scene
+  (`UIApplicationSupportsMultipleScenes` false) and only the first URL context or user activity
+  at launch. It cites the release post, and react/react-native#58545, which was closed without a
+  backport to 0.87.
+- "Add a SceneDelegate by hand" adds the two reasons the React Native maintainers give for not
+  backporting (deep links through the scene delegate, `Dimensions` for a resizable window).
+- "Upgrade Expo" and "Regenerate ios/" cite the Expo SDK 58 changelog (built for iOS 27, with
+  React Native 0.88) and Expo's scene life cycle guide, and say that on iOS 27 `requireFullScreen`
+  no longer stops the app from being resized.
+- The rn-088-rc fixture is now rn-088, from the 0.88.0 template; its `ios/` folder is unchanged.
+- The React Native and Expo guide and the READMEs describe the state of 27 October 2026.
+
+### Removed
+
+- The "Temporary: install react-native-uiscene-bridge" alternative for React Native and Expo apps
+  without scenes. The package has one release (0.1.0, 28 September 2026, before React Native 0.88)
+  that its README says was tested in the simulator only; React Native 0.88 and Expo SDK 58 now
+  adopt scenes. When react-native-uiscene-bridge or react-native-xcode27 is installed, its findings
+  are still shown as handled, with its limits.
+
 ## [0.1.3] - 2026-10-15
 
 ### Changed
@@ -124,7 +152,8 @@ All notable changes to sdkbump are listed here. The format follows
 - Guides, an API reference site, terminal demos from the CLI, and recordings of the native
   fixtures and a nine-app launch matrix in the iOS 27.0 simulator (Xcode 27.0).
 
-[Unreleased]: https://github.com/muhittincamdali/sdkbump/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/muhittincamdali/sdkbump/compare/v0.1.4...HEAD
+[0.1.4]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.4
 [0.1.3]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.3
 [0.1.2]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.2
 [0.1.1]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.1

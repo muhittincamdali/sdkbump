@@ -1,6 +1,6 @@
 ## sdkbump: expo-57 (Expo)
 
-**No findings for the checks in ios27@⁠2026.10.15.**
+**No findings for the checks in ios27@⁠2026.10.27.**
 
 - Target `expo57`: scene life cycle (`ios/expo57/Info.plist`)
 - `react-native` 0.86.3 (declared)
@@ -9,4 +9,4 @@
 
 0 errors, 0 warnings. Guide: [Expo](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md).
 
-<sub>[sdkbump](https://github.com/muhittincamdali/sdkbump) 0.1.3, rules ios27@2026.10.15 (iOS 27.0 SDK \(Xcode 27.0, 27A266a\)). Static checks; they do not build or run the app.</sub>
+<sub>[sdkbump](https://github.com/muhittincamdali/sdkbump) 0.1.4, rules ios27@2026.10.27 (iOS 27.0 SDK \(Xcode 27.0, 27A266a\)). Static checks; they do not build or run the app.</sub>

@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@a538fe14ba97a7e97263b47668d1d035d097b554 status=reviewed -->
+<!-- i18n-source: README.md@e9dfc191490308ff05fea61f8d0cdd9fb59bc973 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -27,7 +27,7 @@
 
 Avant de livrer une version compilée avec Xcode 27 : sdkbump analyse un projet iOS natif, Flutter ou React Native/Expo pour repérer ce que change le SDK iOS 27, à commencer par le cycle de vie UIScene, et vous indique quelle correction s'applique à chaque constat. Il lit les fichiers de votre projet ; il ne compile, n'exécute ni ne modifie rien.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-rn-087-dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/media/demo-rn-087-light.svg"><img src="docs/media/demo-rn-087-light.svg" alt="sdkbump exécuté sur une app React Native 0.87 : ne se lance pas lorsqu'elle est compilée avec le SDK iOS 27 ; SCN001 aucune configuration de scène et SCN002 fenêtre créée dans l'app delegate, avec trois façons de corriger"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-rn-087-dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/media/demo-rn-087-light.svg"><img src="docs/media/demo-rn-087-light.svg" alt="sdkbump exécuté sur une app React Native 0.87 : ne se lance pas lorsqu'elle est compilée avec le SDK iOS 27 ; SCN001 aucune configuration de scène et SCN002 fenêtre créée dans l'app delegate, avec deux façons de corriger"></picture>
 
 <sub>Enregistré avec la vraie CLI sur le <a href="fixtures/rn-087">fixture rn-087</a>, une app React
 Native 0.87.1 créée avec <code>@react-native-community/cli init</code> (<code>npm run demo</code>).</sub>
@@ -82,7 +82,7 @@ Extrait de la page d'Apple
 | SCN003 | warning | Méthodes de l'app delegate et clés d'options de lancement qu'UIKit n'utilise plus avec les scènes (13 au total), sauf si le scene delegate les gère déjà                                                     | `applicationDidEnterBackground(_:)` n'est pas appelée dans une app SwiftUI |
 | SCN004 | warning | Recherches de fenêtre via `UIApplication.shared.keyWindow`, `.windows` ou le `window` de l'app delegate                                                                                                      | uniquement des avertissements de dépréciation du compilateur               |
 
-Données de règles `ios27@2026.10.15`, vérifiées avec Xcode 27.0 (27A266a). Lorsque React Native ou Expo a `react-native-uiscene-bridge` ou `react-native-xcode27` installé, les constats qu'il gère à l'exécution sont affichés comme gérés, avec les limites indiquées dans son README, et ne font pas échouer l'exécution.
+Données de règles `ios27@2026.10.27`, vérifiées avec Xcode 27.0 (27A266a). Lorsque React Native ou Expo a `react-native-uiscene-bridge` ou `react-native-xcode27` installé, les constats qu'il gère à l'exécution sont affichés comme gérés, avec les limites indiquées dans son README, et ne font pas échouer l'exécution.
 
 ## Installation
 
@@ -200,7 +200,7 @@ Référence de l'API et guides : [muhittincamdali.github.io/sdkbump](https://mu
 
 D'autres projets travaillent sur le même changement ; le bon choix dépend de ce dont vous avez besoin :
 
-- [react-native-uiscene-bridge](https://github.com/Atomics-hub/react-native-uiscene-bridge) et [react-native-xcode27](https://github.com/Atomics-hub/react-native-xcode27) permettent à une app React Native ou Expo de se lancer sans modification du code, à l'exécution. Ils conviennent quand vous ne pouvez pas encore mettre à jour ; sdkbump les reconnaît.
+- [react-native-uiscene-bridge](https://github.com/Atomics-hub/react-native-uiscene-bridge) et [react-native-xcode27](https://github.com/Atomics-hub/react-native-xcode27) permettent à une app React Native ou Expo de se lancer sans modification du code, à l'exécution. Ils ont été publiés avant que React Native 0.88 et Expo SDK 58 n'ajoutent la prise en charge des scènes ; sdkbump ne les suggère plus, mais les reconnaît quand ils sont installés.
 - [auditor-uiscene](https://github.com/Anzell/auditor-uiscene) audite les apps Flutter et leurs plugins avec un script shell.
 - Le migrateur propre à Flutter (`flutter build ios` à partir de la 3.41) migre une app Flutter non modifiée.
 - [flutter_spm_doctor](https://pub.dev/packages/flutter_spm_doctor) vérifie les plugins Flutter.
@@ -225,7 +225,7 @@ path ─► detectProject      native | flutter | react-native | expo; iOS folde
 ```
 
 - Les motifs de détection sont des expressions régulières appliquées à du texte source dont les commentaires et les chaînes sont vidés, et, quand cela compte, ils ne comptent qu'à l'intérieur d'un app delegate ou d'un scene delegate.
-- Les données de règles sont séparées du code et versionnées (`ios27@2026.10.15`) ; un test échoue lorsqu'une règle, une correction ou un contournement n'a pas de source.
+- Les données de règles sont séparées du code et versionnées (`ios27@2026.10.27`) ; un test échoue lorsqu'une règle, une correction ou un contournement n'a pas de source.
 - La CLI (`src/cli/`) se contente d'analyser les arguments, de choisir les couleurs et les largeurs, et de définir le code de sortie.
 
 ## Feuille de route

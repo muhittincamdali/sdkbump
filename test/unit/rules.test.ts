@@ -101,7 +101,7 @@ describe('SCN001 and the verdict', () => {
     expect(report.project.targets[0]?.lifecycle).toBe('scenes');
     expect(report.verdict).toEqual({
       code: 'no-findings',
-      text: 'No findings for the checks in ios27@2026.10.15.',
+      text: 'No findings for the checks in ios27@2026.10.27.',
     });
   });
 
@@ -442,9 +442,8 @@ describe('Expo without ios/', () => {
     expect(report.findings).toMatchObject([
       { rule: 'SCN001', severity: 'error', file, fix: { id: fix } },
     ]);
-    expect(report.findings[0]?.alternatives.map((item) => item.id)).toEqual([
-      'workaround-react-native-uiscene-bridge',
-    ]);
+    // No workaround package is suggested: Expo SDK 58 and React Native 0.88 adopt scenes.
+    expect(report.findings[0]?.alternatives).toEqual([]);
   });
 
   it('accepts SDK 57.0.23+ with expo-build-properties and the opt-in, and SDK 58', async () => {
@@ -559,7 +558,7 @@ describe('report', () => {
     expect(report.tool).toEqual({ name: 'sdkbump', version: manifest.version });
     expect(report.rules).toEqual({
       ruleSet: 'ios27',
-      dataVersion: '2026.10.15',
+      dataVersion: '2026.10.27',
       sdk: 'iOS 27.0 SDK (Xcode 27.0, 27A266a)',
     });
     for (const item of report.findings) {

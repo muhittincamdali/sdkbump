@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@a538fe14ba97a7e97263b47668d1d035d097b554 status=reviewed -->
+<!-- i18n-source: README.md@e9dfc191490308ff05fea61f8d0cdd9fb59bc973 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -27,7 +27,7 @@
 
 Xcode 27 でビルドしたものをリリースする前に: sdkbump は、ネイティブ iOS、Flutter、React Native/Expo のプロジェクトを調べ、iOS 27 SDK による変更点（まず UIScene ライフサイクル）に該当する箇所を見つけて、それぞれにどの修正が当てはまるかを伝えます。プロジェクトのファイルを読むだけで、ビルドも実行も変更も行いません。
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-rn-087-dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/media/demo-rn-087-light.svg"><img src="docs/media/demo-rn-087-light.svg" alt="React Native 0.87 アプリで実行した sdkbump: iOS 27 SDK でビルドすると起動に失敗する。SCN001 はシーン構成なし、SCN002 は app delegate でのウィンドウ作成で、修正方法は 3 通り"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-rn-087-dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/media/demo-rn-087-light.svg"><img src="docs/media/demo-rn-087-light.svg" alt="React Native 0.87 アプリで実行した sdkbump: iOS 27 SDK でビルドすると起動に失敗する。SCN001 はシーン構成なし、SCN002 は app delegate でのウィンドウ作成で、修正方法は 2 通り"></picture>
 
 <sub>実際の CLI から録画したものです。対象は <a href="fixtures/rn-087">rn-087 fixture</a>、つまり <code>@react-native-community/cli init</code> で作成した React Native 0.87.1 のアプリです（<code>npm run demo</code>）。</sub>
 
@@ -80,7 +80,7 @@ Apple の [Transitioning to the UIKit scene-based life cycle](https://developer.
 | SCN003 | warning | シーンがあると UIKit が使わなくなる app delegate のメソッドと起動オプションのキー（13 個）。ただしシーンデリゲートがすでに処理している場合を除く                                                   | SwiftUI アプリで `applicationDidEnterBackground(_:)` が呼ばれない |
 | SCN004 | warning | `UIApplication.shared.keyWindow`、`.windows`、または app delegate の `window` によるウィンドウの取得                                                                                               | コンパイラの非推奨警告のみ                                        |
 
-ルールデータは `ios27@2026.10.15` で、Xcode 27.0（27A266a）に対して確認しています。React Native または Expo に `react-native-uiscene-bridge` や `react-native-xcode27` がインストールされている場合、それらが実行時に処理する指摘は、その README に書かれた制限とともに「処理済み」と表示され、実行の失敗にはなりません。
+ルールデータは `ios27@2026.10.27` で、Xcode 27.0（27A266a）に対して確認しています。React Native または Expo に `react-native-uiscene-bridge` や `react-native-xcode27` がインストールされている場合、それらが実行時に処理する指摘は、その README に書かれた制限とともに「処理済み」と表示され、実行の失敗にはなりません。
 
 ## インストール
 
@@ -198,7 +198,7 @@ API リファレンスとガイド: [muhittincamdali.github.io/sdkbump](https://
 
 同じ変更に取り組んでいるプロジェクトは、ほかにもあります。どれが合うかは、必要なものによって変わります。
 
-- [react-native-uiscene-bridge](https://github.com/Atomics-hub/react-native-uiscene-bridge) と [react-native-xcode27](https://github.com/Atomics-hub/react-native-xcode27) は、コードを変更せずに、実行時に React Native または Expo のアプリを起動できるようにします。まだアップグレードできない場合に向いています。sdkbump はこれらを認識します。
+- [react-native-uiscene-bridge](https://github.com/Atomics-hub/react-native-uiscene-bridge) と [react-native-xcode27](https://github.com/Atomics-hub/react-native-xcode27) は、コードを変更せずに、実行時に React Native または Expo のアプリを起動できるようにします。React Native 0.88 と Expo SDK 58 がシーン対応を追加する前に公開されたもので、sdkbump はもう提案しませんが、インストールされていれば認識します。
 - [auditor-uiscene](https://github.com/Anzell/auditor-uiscene) は、シェルスクリプトで Flutter アプリとそのプラグインを監査します。
 - Flutter 自身のマイグレーター（3.41 以降の `flutter build ios`）は、変更を加えていない Flutter アプリを移行します。
 - [flutter_spm_doctor](https://pub.dev/packages/flutter_spm_doctor) は Flutter プラグインをチェックします。
@@ -223,7 +223,7 @@ path ─► detectProject      native | flutter | react-native | expo; iOS folde
 ```
 
 - 検出パターンは、コメントと文字列を空白にしたソーステキストに対する正規表現です。必要な場面では、app delegate またはシーンデリゲートの内側にあるものだけを数えます。
-- ルールデータはコードから分離されており、バージョン管理されています（`ios27@2026.10.15`）。ルール、修正、回避策のいずれかに出典がないと、テストが失敗します。
+- ルールデータはコードから分離されており、バージョン管理されています（`ios27@2026.10.27`）。ルール、修正、回避策のいずれかに出典がないと、テストが失敗します。
 - CLI（`src/cli/`）は、引数の解析、色と幅の選択、終了コードの設定だけを行います。
 
 ## ロードマップ

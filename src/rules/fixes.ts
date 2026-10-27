@@ -5,13 +5,7 @@ import { type AppModel, flutterAppDelegatePaths } from '../collect/app.js';
 import { readProjectText } from '../core/files.js';
 import { atLeast, majorOf } from '../core/versions.js';
 import type { FixAdvice, Mitigation } from '../model.js';
-import type {
-  FixDefinition,
-  HookDefinition,
-  RuleData,
-  RuleId,
-  WorkaroundDefinition,
-} from './data.js';
+import type { FixDefinition, HookDefinition, RuleData, RuleId } from './data.js';
 
 /** Where guides are linked from reports. */
 export const GUIDE_BASE = 'https://github.com/muhittincamdali/sdkbump/blob/main/';
@@ -42,16 +36,6 @@ const toAdvice = (fix: FixDefinition): FixAdvice => ({
   guide: GUIDE_BASE + fix.guide,
   sources: fix.sources,
 });
-
-function workaroundAdvice(workaround: WorkaroundDefinition): FixAdvice {
-  return {
-    id: `workaround-${workaround.package}`,
-    title: `Temporary: install ${workaround.package}`,
-    steps: [workaround.summary, ...workaround.limits.map((limit) => `Limit: ${limit}`)],
-    guide: `${GUIDE_BASE}docs/guides/react-native-expo.md`,
-    sources: workaround.sources,
-  };
-}
 
 export function installedWorkaround(context: Context, rule: RuleId): Mitigation | null {
   const { project } = context.app;
@@ -111,18 +95,6 @@ export async function flutterMigration(app: AppModel, data: RuleData): Promise<F
   return { eligible: reasons.length === 0, reasons };
 }
 
-export function bridgeAlternative(context: Context): FixAdvice[] {
-  const { project } = context.app;
-  if (project.ecosystem !== 'react-native' && project.ecosystem !== 'expo') return [];
-  if (context.data.workarounds.some((workaround) => project.packages.has(workaround.package))) {
-    return [];
-  }
-  const bridge = context.data.workarounds.find(
-    (workaround) => workaround.package === 'react-native-uiscene-bridge',
-  );
-  return bridge ? [workaroundAdvice(bridge)] : [];
-}
-
 /** The fix for an app without scenes, by ecosystem and version. */
 export function adoptScenesFix(context: Context): { fix: FixAdvice; alternatives: FixAdvice[] } {
   const { data, app } = context;
@@ -141,20 +113,14 @@ export function adoptScenesFix(context: Context): { fix: FixAdvice; alternatives
       const version = project.packages.get('react-native')?.version;
       const upgraded = version && atLeast(version, data.milestones.reactNativeScenes);
       return upgraded
-        ? {
-            fix: fixById(data, 'rn-manual-scene-delegate'),
-            alternatives: bridgeAlternative(context),
-          }
+        ? { fix: fixById(data, 'rn-manual-scene-delegate'), alternatives: [] }
         : {
             fix: fixById(data, 'rn-upgrade-088'),
-            alternatives: [
-              fixById(data, 'rn-manual-scene-delegate'),
-              ...bridgeAlternative(context),
-            ],
+            alternatives: [fixById(data, 'rn-manual-scene-delegate')],
           };
     }
     case 'expo':
-      return { fix: expoFix(context), alternatives: bridgeAlternative(context) };
+      return { fix: expoFix(context), alternatives: [] };
   }
 }
 

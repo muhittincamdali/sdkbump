@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@a538fe14ba97a7e97263b47668d1d035d097b554 status=reviewed -->
+<!-- i18n-source: README.md@e9dfc191490308ff05fea61f8d0cdd9fb59bc973 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -30,7 +30,7 @@ Native/Expo projesini iOS 27 SDK'sının getirdiği değişiklikler (başta UISc
 denetler ve her bulgu için hangi çözümün geçerli olduğunu söyler. Projenizin dosyalarını okur;
 hiçbir şeyi derlemez, çalıştırmaz veya değiştirmez.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-rn-087-dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/media/demo-rn-087-light.svg"><img src="docs/media/demo-rn-087-light.svg" alt="React Native 0.87 uygulamasında çalıştırılan sdkbump: iOS 27 SDK'sıyla derlendiğinde açılmıyor; SCN001 sahne yapılandırması yok ve SCN002 pencere uygulama delegesinde oluşturuluyor, üç çözüm yoluyla"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-rn-087-dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/media/demo-rn-087-light.svg"><img src="docs/media/demo-rn-087-light.svg" alt="React Native 0.87 uygulamasında çalıştırılan sdkbump: iOS 27 SDK'sıyla derlendiğinde açılmıyor; SCN001 sahne yapılandırması yok ve SCN002 pencere uygulama delegesinde oluşturuluyor, iki çözüm yoluyla"></picture>
 
 <sub>Gerçek CLI'dan kaydedildi; <a href="fixtures/rn-087">rn-087 fixture</a>'ında, yani
 <code>@react-native-community/cli init</code> ile oluşturulmuş bir React Native 0.87.1
@@ -115,7 +115,7 @@ sayfasından (çeviri):
 | SCN003 | warning       | UIKit'in sahnelerle artık kullanmadığı uygulama delegesi metotları ve başlatma seçeneği anahtarları (13 tane), sahne delegesi zaten işlemiyorsa                                                        | bir SwiftUI uygulamasında `applicationDidEnterBackground(_:)` çağrılmıyor |
 | SCN004 | warning       | `UIApplication.shared.keyWindow`, `.windows` veya uygulama delegesinin `window` özelliği üzerinden pencere sorguları                                                                                   | yalnızca derleyicinin kullanımdan kaldırma uyarıları                      |
 
-Kural verisi `ios27@2026.10.15`, Xcode 27.0 (27A266a) ile denetlendi. React Native veya Expo
+Kural verisi `ios27@2026.10.27`, Xcode 27.0 (27A266a) ile denetlendi. React Native veya Expo
 projesinde `react-native-uiscene-bridge` ya da `react-native-xcode27` kuruluysa, bunların çalışma
 zamanında ele aldığı bulgular README'lerindeki sınırlarla birlikte "ele alınmış" olarak gösterilir
 ve çalıştırmayı başarısız saymaz.
@@ -268,8 +268,9 @@ olduğuna bağlıdır:
 
 - [react-native-uiscene-bridge](https://github.com/Atomics-hub/react-native-uiscene-bridge) ve
   [react-native-xcode27](https://github.com/Atomics-hub/react-native-xcode27), bir React Native
-  veya Expo uygulamasını kod değişikliği olmadan, çalışma zamanında açılır hale getirir. Henüz
-  yükseltemediğinizde işe yararlar; sdkbump bunları tanır.
+  veya Expo uygulamasını kod değişikliği olmadan, çalışma zamanında açılır hale getirir. React Native
+  0.88 ve Expo SDK 58 sahne desteği getirmeden önce yayımlandılar; sdkbump artık bunları önermez,
+  ama kuruluysa tanır.
 - [auditor-uiscene](https://github.com/Anzell/auditor-uiscene), Flutter uygulamalarını ve
   eklentilerini bir kabuk betiğiyle denetler.
 - Flutter'ın kendi geçiş aracı (3.41'den itibaren `flutter build ios`), değiştirilmemiş bir Flutter
@@ -300,7 +301,7 @@ path ─► detectProject      native | flutter | react-native | expo; iOS folde
 
 - Algılama kalıpları, yorumları ve dizgeleri boşaltılmış kaynak metin üzerindeki düzenli ifadelerdir
   ve gereken yerde yalnızca bir uygulama delegesinin veya sahne delegesinin içinde sayılır.
-- Kural verisi koddan ayrıdır ve sürümlüdür (`ios27@2026.10.15`); bir kuralın, çözümün veya geçici
+- Kural verisi koddan ayrıdır ve sürümlüdür (`ios27@2026.10.27`); bir kuralın, çözümün veya geçici
   çözümün kaynağı yoksa bir test başarısız olur.
 - CLI (`src/cli/`) yalnızca argümanları ayrıştırır, renkleri ve genişlikleri seçer ve çıkış kodunu
   belirler.

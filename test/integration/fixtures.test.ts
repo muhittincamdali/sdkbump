@@ -92,7 +92,7 @@ const EXPECTED: Record<string, Expected> = {
       'SCN002 ios/RN087App/AppDelegate.swift:24 rn-upgrade-088 handled',
     ],
   },
-  'rn-088-rc': { verdict: 'no-findings', exitCode: 0, findings: [] },
+  'rn-088': { verdict: 'no-findings', exitCode: 0, findings: [] },
   'expo-58': { verdict: 'no-findings', exitCode: 0, findings: [] },
 };
 
