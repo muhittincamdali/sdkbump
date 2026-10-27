@@ -28,10 +28,11 @@
 **Or: Temporary: install react-native-uiscene-bridge** ([guide](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md))
 
 1. Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.
-2. Limit: Tested in the simulator only, not on a device \(its README\).
-3. Limit: One window: iPad multiwindow needs real scene support.
-4. Limit: Universal links, Handoff and quick actions were not tested \(its README\).
-5. Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported.
+2. Limit: One release, 0.1.0 of 28 September 2026, from before React Native 0.88 shipped scene support \(npm\).
+3. Limit: Tested in the simulator only, not on a device \(its README\).
+4. Limit: One window: iPad multiwindow needs real scene support.
+5. Limit: Universal links, Handoff and quick actions were not tested \(its README\).
+6. Limit: iOS only: Mac Catalyst is untested; tvOS and visionOS are not supported.
 
 Sources: [Apple: Transitioning to the UIKit scene-based life cycle](https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle), [Apple: application\(\_:configurationForConnecting:options:\)](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/application(_:configurationforconnecting:options:))
 
@@ -65,4 +66,4 @@ Sources: [Apple: application\(\_:continue:restorationHandler:\) \(deprecated in 
 
 2 errors, 2 warnings. Guide: [Expo](https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md).
 
-<sub>[sdkbump](https://github.com/muhittincamdali/sdkbump) 0.1.3, rules ios27@2026.10.15 (iOS 27.0 SDK \(Xcode 27.0, 27A266a\)). Static checks; they do not build or run the app.</sub>
+<sub>[sdkbump](https://github.com/muhittincamdali/sdkbump) 0.1.3, rules ios27@2026.10.27 (iOS 27.0 SDK \(Xcode 27.0, 27A266a\)). Static checks; they do not build or run the app.</sub>

@@ -15,11 +15,12 @@ with [test/\_\_snapshots\_\_/fixtures](../test/__snapshots__/fixtures).
 | [expo-57-scenes](expo-57-scenes)                         | The same app after `expo install expo-build-properties` (57.0.22), `ios.enableSceneSupport` in app.json and `expo prebuild --clean -p ios`: the manifest names `EXExpoAppSceneDelegate` and there is no scene delegate in the app | no findings                                             |
 | [rn-087](rn-087)                                         | `@react-native-community/cli init --version 0.87.1`                                                                                                                                                                               | SCN001, SCN002; fails to launch                         |
 | [rn-087-bridge](rn-087-bridge)                           | The same app with `react-native-uiscene-bridge` added to package.json                                                                                                                                                             | SCN001, SCN002, both handled by the bridge              |
-| [rn-088-rc](rn-088-rc)                                   | The `ios/` folder and package.json of `@react-native-community/template` 0.88.0-rc.6 from npm                                                                                                                                     | no findings                                             |
+| [rn-088](rn-088)                                         | The `ios/` folder and package.json of `@react-native-community/template` 0.88.0 from npm                                                                                                                                          | no findings                                             |
 | [expo-58](expo-58)                                       | The `ios/` folder and package.json of `expo-template-bare-minimum` 58.0.18 from npm                                                                                                                                               | no findings                                             |
 
-All projects were made on 15 October 2026 on a Mac (Apple silicon) with Xcode 27.0. Only
-the files sdkbump reads and the manifests that explain them are kept: no `node_modules`, `Pods`,
+All projects were made on 15 October 2026 on a Mac (Apple silicon) with Xcode 27.0, except rn-088,
+taken from the 0.88.0 template on 27 October 2026 (its `ios/` folder is the same as in 0.88.0-rc.6,
+which this fixture held before; package.json now names 0.88.0). Only the files sdkbump reads and the manifests that explain them are kept: no `node_modules`, `Pods`,
 asset catalogs, Android folders or build output. Flutter's `Generated.xcconfig` and
 `flutter_export_environment.sh` are left out because they hold paths of the machine that ran
 `flutter create`; every `flutter build` writes them again.

@@ -6,7 +6,7 @@
   },
   "rules": {
     "ruleSet": "ios27",
-    "dataVersion": "2026.10.15",
+    "dataVersion": "2026.10.27",
     "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)"
   },
   "project": {
@@ -48,18 +48,19 @@
         "id": "rn-upgrade-088",
         "title": "Upgrade to React Native 0.88",
         "steps": [
-          "React Native 0.88 moves the window and React Native start-up to a SceneDelegate and adds the scene manifest. On 15 October 2026 it is a release candidate (0.88.0-rc.6 on npm's next tag); 0.87.1 and earlier have no scene support.",
-          "Compare ios/ with the 0.88 template (AppDelegate.swift, SceneDelegate.swift, Info.plist) when you upgrade."
+          "React Native 0.88 is stable (0.88.0 on npm since 15 October 2026; release post of 19 October 2026) and supports the UIScene life cycle without breaking the AppDelegate path. 0.87.1 and earlier have no scene support, and the React Native team will not backport it.",
+          "Move the React Native entry point from AppDelegate to a SceneDelegate (RCTReactNativeFactory's new startReactNativeWithModuleName:inWindow:connectionOptions:), forward the scene's URL and user-activity callbacks to RCTLinkingManager, and add UIApplicationSceneManifest to Info.plist. The 0.88 template and the upgrade helper show the change in SceneDelegate.swift and Info.plist.",
+          "Keep UIApplicationSupportsMultipleScenes false: 0.88 supports one scene, and at launch it forwards only the first URL context or user activity. The window can be resized; Dimensions.get() and useWindowDimensions() follow it."
         ],
         "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
         "sources": [
           {
-            "title": "react/react-native#58545: 0.87 and below crash upon launch on iOS 27",
-            "url": "https://github.com/react/react-native/issues/58545"
+            "title": "React Native 0.88 release post (iOS: SceneDelegate support)",
+            "url": "https://reactnative.dev/blog/2026/10/19/react-native-0.88"
           },
           {
-            "title": "reactwg/react-native-releases#1439: pick SceneDelegate support into 0.87",
-            "url": "https://github.com/reactwg/react-native-releases/issues/1439"
+            "title": "react/react-native#58545: closed with the fix in 0.88 and no backport",
+            "url": "https://github.com/react/react-native/issues/58545"
           }
         ]
       },
@@ -69,13 +70,18 @@
           "title": "Add a SceneDelegate by hand",
           "steps": [
             "Port the 0.88 template's SceneDelegate and Info.plist manifest to your version: create the window from the UIWindowScene and start React Native into it there.",
-            "Before 0.88, startReactNative takes launch options, not connection options, so convert the connection options of a link that launches the app."
+            "Before 0.88, startReactNative takes launch options, not connection options, so convert the connection options of a link that launches the app.",
+            "The React Native team gives deep links through the scene delegate and Dimensions for a resizable window as the reasons it does not backport 0.88's change; check both in your port."
           ],
           "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
           "sources": [
             {
-              "title": "react/react-native#58545 (workarounds in the comments)",
+              "title": "react/react-native#58545 (workarounds in the comments, and why 0.88 is not backported)",
               "url": "https://github.com/react/react-native/issues/58545"
+            },
+            {
+              "title": "React Native 0.88 release post (iOS: SceneDelegate support)",
+              "url": "https://reactnative.dev/blog/2026/10/19/react-native-0.88"
             }
           ]
         },
@@ -84,6 +90,7 @@
           "title": "Temporary: install react-native-uiscene-bridge",
           "steps": [
             "Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.",
+            "Limit: One release, 0.1.0 of 28 September 2026, from before React Native 0.88 shipped scene support (npm).",
             "Limit: Tested in the simulator only, not on a device (its README).",
             "Limit: One window: iPad multiwindow needs real scene support.",
             "Limit: Universal links, Handoff and quick actions were not tested (its README).",
@@ -94,6 +101,10 @@
             {
               "title": "react-native-uiscene-bridge README",
               "url": "https://github.com/Atomics-hub/react-native-uiscene-bridge"
+            },
+            {
+              "title": "react-native-uiscene-bridge on npm",
+              "url": "https://www.npmjs.com/package/react-native-uiscene-bridge"
             }
           ]
         }
@@ -123,18 +134,19 @@
         "id": "rn-upgrade-088",
         "title": "Upgrade to React Native 0.88",
         "steps": [
-          "React Native 0.88 moves the window and React Native start-up to a SceneDelegate and adds the scene manifest. On 15 October 2026 it is a release candidate (0.88.0-rc.6 on npm's next tag); 0.87.1 and earlier have no scene support.",
-          "Compare ios/ with the 0.88 template (AppDelegate.swift, SceneDelegate.swift, Info.plist) when you upgrade."
+          "React Native 0.88 is stable (0.88.0 on npm since 15 October 2026; release post of 19 October 2026) and supports the UIScene life cycle without breaking the AppDelegate path. 0.87.1 and earlier have no scene support, and the React Native team will not backport it.",
+          "Move the React Native entry point from AppDelegate to a SceneDelegate (RCTReactNativeFactory's new startReactNativeWithModuleName:inWindow:connectionOptions:), forward the scene's URL and user-activity callbacks to RCTLinkingManager, and add UIApplicationSceneManifest to Info.plist. The 0.88 template and the upgrade helper show the change in SceneDelegate.swift and Info.plist.",
+          "Keep UIApplicationSupportsMultipleScenes false: 0.88 supports one scene, and at launch it forwards only the first URL context or user activity. The window can be resized; Dimensions.get() and useWindowDimensions() follow it."
         ],
         "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
         "sources": [
           {
-            "title": "react/react-native#58545: 0.87 and below crash upon launch on iOS 27",
-            "url": "https://github.com/react/react-native/issues/58545"
+            "title": "React Native 0.88 release post (iOS: SceneDelegate support)",
+            "url": "https://reactnative.dev/blog/2026/10/19/react-native-0.88"
           },
           {
-            "title": "reactwg/react-native-releases#1439: pick SceneDelegate support into 0.87",
-            "url": "https://github.com/reactwg/react-native-releases/issues/1439"
+            "title": "react/react-native#58545: closed with the fix in 0.88 and no backport",
+            "url": "https://github.com/react/react-native/issues/58545"
           }
         ]
       },
@@ -144,13 +156,18 @@
           "title": "Add a SceneDelegate by hand",
           "steps": [
             "Port the 0.88 template's SceneDelegate and Info.plist manifest to your version: create the window from the UIWindowScene and start React Native into it there.",
-            "Before 0.88, startReactNative takes launch options, not connection options, so convert the connection options of a link that launches the app."
+            "Before 0.88, startReactNative takes launch options, not connection options, so convert the connection options of a link that launches the app.",
+            "The React Native team gives deep links through the scene delegate and Dimensions for a resizable window as the reasons it does not backport 0.88's change; check both in your port."
           ],
           "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/react-native-expo.md",
           "sources": [
             {
-              "title": "react/react-native#58545 (workarounds in the comments)",
+              "title": "react/react-native#58545 (workarounds in the comments, and why 0.88 is not backported)",
               "url": "https://github.com/react/react-native/issues/58545"
+            },
+            {
+              "title": "React Native 0.88 release post (iOS: SceneDelegate support)",
+              "url": "https://reactnative.dev/blog/2026/10/19/react-native-0.88"
             }
           ]
         },
@@ -159,6 +176,7 @@
           "title": "Temporary: install react-native-uiscene-bridge",
           "steps": [
             "Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.",
+            "Limit: One release, 0.1.0 of 28 September 2026, from before React Native 0.88 shipped scene support (npm).",
             "Limit: Tested in the simulator only, not on a device (its README).",
             "Limit: One window: iPad multiwindow needs real scene support.",
             "Limit: Universal links, Handoff and quick actions were not tested (its README).",
@@ -169,6 +187,10 @@
             {
               "title": "react-native-uiscene-bridge README",
               "url": "https://github.com/Atomics-hub/react-native-uiscene-bridge"
+            },
+            {
+              "title": "react-native-uiscene-bridge on npm",
+              "url": "https://www.npmjs.com/package/react-native-uiscene-bridge"
             }
           ]
         }

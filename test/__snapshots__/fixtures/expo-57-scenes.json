@@ -6,7 +6,7 @@
   },
   "rules": {
     "ruleSet": "ios27",
-    "dataVersion": "2026.10.15",
+    "dataVersion": "2026.10.27",
     "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)"
   },
   "project": {
@@ -43,7 +43,7 @@
   },
   "verdict": {
     "code": "no-findings",
-    "text": "No findings for the checks in ios27@2026.10.15."
+    "text": "No findings for the checks in ios27@2026.10.27."
   },
   "findings": [],
   "notes": [],

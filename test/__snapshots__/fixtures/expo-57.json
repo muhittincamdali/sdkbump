@@ -6,7 +6,7 @@
   },
   "rules": {
     "ruleSet": "ios27",
-    "dataVersion": "2026.10.15",
+    "dataVersion": "2026.10.27",
     "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)"
   },
   "project": {
@@ -79,6 +79,7 @@
           "title": "Temporary: install react-native-uiscene-bridge",
           "steps": [
             "Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.",
+            "Limit: One release, 0.1.0 of 28 September 2026, from before React Native 0.88 shipped scene support (npm).",
             "Limit: Tested in the simulator only, not on a device (its README).",
             "Limit: One window: iPad multiwindow needs real scene support.",
             "Limit: Universal links, Handoff and quick actions were not tested (its README).",
@@ -89,6 +90,10 @@
             {
               "title": "react-native-uiscene-bridge README",
               "url": "https://github.com/Atomics-hub/react-native-uiscene-bridge"
+            },
+            {
+              "title": "react-native-uiscene-bridge on npm",
+              "url": "https://www.npmjs.com/package/react-native-uiscene-bridge"
             }
           ]
         }
@@ -144,6 +149,7 @@
           "title": "Temporary: install react-native-uiscene-bridge",
           "steps": [
             "Adds a scene configuration at run time, moves the app delegate's window into the scene and passes links, user activities, quick actions and foreground and background events back to the app delegate.",
+            "Limit: One release, 0.1.0 of 28 September 2026, from before React Native 0.88 shipped scene support (npm).",
             "Limit: Tested in the simulator only, not on a device (its README).",
             "Limit: One window: iPad multiwindow needs real scene support.",
             "Limit: Universal links, Handoff and quick actions were not tested (its README).",
@@ -154,6 +160,10 @@
             {
               "title": "react-native-uiscene-bridge README",
               "url": "https://github.com/Atomics-hub/react-native-uiscene-bridge"
+            },
+            {
+              "title": "react-native-uiscene-bridge on npm",
+              "url": "https://www.npmjs.com/package/react-native-uiscene-bridge"
             }
           ]
         }

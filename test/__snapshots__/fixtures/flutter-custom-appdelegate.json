@@ -6,7 +6,7 @@
   },
   "rules": {
     "ruleSet": "ios27",
-    "dataVersion": "2026.10.15",
+    "dataVersion": "2026.10.27",
     "sdk": "iOS 27.0 SDK (Xcode 27.0, 27A266a)"
   },
   "project": {
@@ -90,7 +90,7 @@
         "guide": "https://github.com/muhittincamdali/sdkbump/blob/main/docs/guides/flutter.md",
         "sources": [
           {
-            "title": "Flutter: UIScene adoption (Create a SceneDelegate)",
+            "title": "Flutter: UIScene adoption (Create or update a SceneDelegate)",
             "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate"
           }
         ]

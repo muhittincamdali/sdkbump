@@ -101,7 +101,7 @@ describe('SCN001 and the verdict', () => {
     expect(report.project.targets[0]?.lifecycle).toBe('scenes');
     expect(report.verdict).toEqual({
       code: 'no-findings',
-      text: 'No findings for the checks in ios27@2026.10.15.',
+      text: 'No findings for the checks in ios27@2026.10.27.',
     });
   });
 
@@ -559,7 +559,7 @@ describe('report', () => {
     expect(report.tool).toEqual({ name: 'sdkbump', version: manifest.version });
     expect(report.rules).toEqual({
       ruleSet: 'ios27',
-      dataVersion: '2026.10.15',
+      dataVersion: '2026.10.27',
       sdk: 'iOS 27.0 SDK (Xcode 27.0, 27A266a)',
     });
     for (const item of report.findings) {
