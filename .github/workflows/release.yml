@@ -16,7 +16,8 @@ name: Release
 # The package is scoped, so npm pack writes mcamdali-sdkbump-<version>.tgz; the release keeps the
 # name sdkbump-<version>.tgz that earlier releases and the docs use. It is the same file.
 #
-# Run it by hand with an existing tag to redo the Homebrew step.
+# Run it by hand with an existing tag to redo the Homebrew step, and the npm step when that version
+# is not on npm yet.
 
 on:
   push:
@@ -138,7 +139,7 @@ jobs:
   npm:
     name: Publish to npm
     needs: verify
-    if: github.event_name == 'push' && vars.NPM_TRUSTED_PUBLISHING == 'true'
+    if: vars.NPM_TRUSTED_PUBLISHING == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -162,9 +163,14 @@ jobs:
         env:
           VERSION: ${{ needs.verify.outputs.version }}
         run: |
+          if npm view "@mcamdali/sdkbump@$VERSION" version > /dev/null 2>&1; then
+            echo "::notice::@mcamdali/sdkbump@$VERSION is already on npm."
+            exit 0
+          fi
           tag="latest"
           case "$VERSION" in *-*) tag="next" ;; esac
-          npm publish "release/sdkbump-$VERSION.tgz" --provenance --access public --tag "$tag"
+          # The ./ makes npm read a file: "release/sdkbump-x.tgz" alone is a GitHub owner/repo.
+          npm publish "./release/sdkbump-$VERSION.tgz" --provenance --access public --tag "$tag"
 
   homebrew:
     name: Homebrew formula
