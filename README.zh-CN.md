@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@a538fe14ba97a7e97263b47668d1d035d097b554 status=reviewed -->
+<!-- i18n-source: README.md@e9dfc191490308ff05fea61f8d0cdd9fb59bc973 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -27,7 +27,7 @@
 
 在发布使用 Xcode 27 构建的版本之前：sdkbump 会检查原生 iOS、Flutter 或 React Native/Expo 项目是否受 iOS 27 SDK 变更的影响（首先是 UIScene 生命周期），并针对每一项发现告诉你适用的修复方式。它只读取项目文件，不会构建、运行或修改任何内容。
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-rn-087-dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/media/demo-rn-087-light.svg"><img src="docs/media/demo-rn-087-light.svg" alt="在 React Native 0.87 应用上运行 sdkbump：使用 iOS 27 SDK 构建后无法启动；SCN001 没有场景配置，SCN002 在 app delegate 中创建窗口，并给出三种修复方式"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-rn-087-dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/media/demo-rn-087-light.svg"><img src="docs/media/demo-rn-087-light.svg" alt="在 React Native 0.87 应用上运行 sdkbump：使用 iOS 27 SDK 构建后无法启动；SCN001 没有场景配置，SCN002 在 app delegate 中创建窗口，并给出两种修复方式"></picture>
 
 <sub>录制自真实的 CLI，运行对象是 <a href="fixtures/rn-087">rn-087 fixture</a>，即由 <code>@react-native-community/cli init</code> 创建的 React Native 0.87.1 应用（<code>npm run demo</code>）。</sub>
 
@@ -80,7 +80,7 @@ npm 包名是 `@mcamdali/sdkbump`，它安装的命令是 `sdkbump`。不带 sco
 | SCN003 | warning  | UIKit 在使用 scene 时不再使用的 app delegate 方法和启动选项键（共 13 个），除非 scene delegate 已经处理了它们                                                                        | SwiftUI 应用中 `applicationDidEnterBackground(_:)` 不会被调用 |
 | SCN004 | warning  | 通过 `UIApplication.shared.keyWindow`、`.windows` 或 app delegate 的 `window` 查找窗口                                                                                               | 仅有编译器的弃用警告                                          |
 
-规则数据 `ios27@2026.10.15`，已对照 Xcode 27.0（27A266a）检查。当 React Native 或 Expo 项目安装了 `react-native-uiscene-bridge` 或 `react-native-xcode27` 时，它们在运行时处理的发现会显示为“已处理”，并附上其 README 中说明的限制，不会导致运行失败。
+规则数据 `ios27@2026.10.27`，已对照 Xcode 27.0（27A266a）检查。当 React Native 或 Expo 项目安装了 `react-native-uiscene-bridge` 或 `react-native-xcode27` 时，它们在运行时处理的发现会显示为“已处理”，并附上其 README 中说明的限制，不会导致运行失败。
 
 ## 安装
 
@@ -198,7 +198,7 @@ API 参考与指南：[muhittincamdali.github.io/sdkbump](https://muhittincamdal
 
 还有其他项目也在处理同一项变更；哪一个合适，取决于你的需求：
 
-- [react-native-uiscene-bridge](https://github.com/Atomics-hub/react-native-uiscene-bridge) 和 [react-native-xcode27](https://github.com/Atomics-hub/react-native-xcode27) 可以在运行时让 React Native 或 Expo 应用无需修改代码即可启动。它们适用于暂时无法升级的情况；sdkbump 能够识别它们。
+- [react-native-uiscene-bridge](https://github.com/Atomics-hub/react-native-uiscene-bridge) 和 [react-native-xcode27](https://github.com/Atomics-hub/react-native-xcode27) 可以在运行时让 React Native 或 Expo 应用无需修改代码即可启动。它们发布于 React Native 0.88 和 Expo SDK 58 加入场景支持之前；sdkbump 不再推荐它们，但安装后仍能识别。
 - [auditor-uiscene](https://github.com/Anzell/auditor-uiscene) 用 shell 脚本审计 Flutter 应用及其插件。
 - Flutter 自带的迁移工具（从 3.41 起的 `flutter build ios`）可以迁移未经修改的 Flutter 应用。
 - [flutter_spm_doctor](https://pub.dev/packages/flutter_spm_doctor) 检查 Flutter 插件。
@@ -223,7 +223,7 @@ path ─► detectProject      native | flutter | react-native | expo; iOS folde
 ```
 
 - 检测模式是针对源码文本的正则表达式，其中的注释和字符串已被清空；在需要的地方，只有位于 app delegate 或 scene delegate 内部的匹配才会计入。
-- 规则数据与代码分离并带有版本（`ios27@2026.10.15`）；如果某条规则、修复方式或变通方案没有出处，测试就会失败。
+- 规则数据与代码分离并带有版本（`ios27@2026.10.27`）；如果某条规则、修复方式或变通方案没有出处，测试就会失败。
 - CLI（`src/cli/`）只负责解析参数、选择颜色和宽度，以及设置退出码。
 
 ## 路线图

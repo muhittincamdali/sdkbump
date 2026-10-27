@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@a538fe14ba97a7e97263b47668d1d035d097b554 status=reviewed -->
+<!-- i18n-source: README.md@e9dfc191490308ff05fea61f8d0cdd9fb59bc973 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -27,7 +27,7 @@
 
 Xcode 27로 빌드한 앱을 출시하기 전에: sdkbump는 네이티브 iOS, Flutter, React Native/Expo 프로젝트에서 iOS 27 SDK가 바꾸는 부분(우선 UIScene 생명 주기)을 검사하고, 각 항목에 어떤 해결 방법이 맞는지 알려 줍니다. 프로젝트 파일을 읽기만 하며, 빌드하거나 실행하거나 변경하지 않습니다.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-rn-087-dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/media/demo-rn-087-light.svg"><img src="docs/media/demo-rn-087-light.svg" alt="React Native 0.87 앱에서 실행한 sdkbump: iOS 27 SDK로 빌드하면 실행되지 않음. SCN001은 scene 구성 없음, SCN002는 app delegate에서 window 생성이며, 해결 방법은 세 가지"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-rn-087-dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/media/demo-rn-087-light.svg"><img src="docs/media/demo-rn-087-light.svg" alt="React Native 0.87 앱에서 실행한 sdkbump: iOS 27 SDK로 빌드하면 실행되지 않음. SCN001은 scene 구성 없음, SCN002는 app delegate에서 window 생성이며, 해결 방법은 두 가지"></picture>
 
 <sub>실제 CLI에서 녹화했습니다. 대상은 <a href="fixtures/rn-087">rn-087 fixture</a>, 즉 <code>@react-native-community/cli init</code>으로 만든 React Native 0.87.1 앱입니다(<code>npm run demo</code>).</sub>
 
@@ -80,7 +80,7 @@ Apple의 [Transitioning to the UIKit scene-based life cycle](https://developer.a
 | SCN003 | warning | scene이 있으면 UIKit이 더 이상 사용하지 않는 app delegate 메서드와 launch option 키(13개). 단, scene delegate가 이미 처리하는 경우는 제외                                    | SwiftUI 앱에서 `applicationDidEnterBackground(_:)`가 호출되지 않음 |
 | SCN004 | warning | `UIApplication.shared.keyWindow`, `.windows` 또는 app delegate의 `window`를 통한 window 조회                                                                                 | 컴파일러의 deprecation 경고만 표시됨                               |
 
-규칙 데이터는 `ios27@2026.10.15`이며 Xcode 27.0(27A266a)을 기준으로 확인했습니다. React Native 또는 Expo에 `react-native-uiscene-bridge`나 `react-native-xcode27`이 설치되어 있으면, 이들이 실행 시점에 처리하는 항목은 해당 README에 적힌 한계와 함께 "처리됨"으로 표시되며 실행 실패로 처리하지 않습니다.
+규칙 데이터는 `ios27@2026.10.27`이며 Xcode 27.0(27A266a)을 기준으로 확인했습니다. React Native 또는 Expo에 `react-native-uiscene-bridge`나 `react-native-xcode27`이 설치되어 있으면, 이들이 실행 시점에 처리하는 항목은 해당 README에 적힌 한계와 함께 "처리됨"으로 표시되며 실행 실패로 처리하지 않습니다.
 
 ## 설치
 
@@ -198,7 +198,7 @@ API 레퍼런스와 가이드: [muhittincamdali.github.io/sdkbump](https://muhit
 
 같은 변경을 다루는 다른 프로젝트도 있습니다. 어느 것이 맞는지는 필요한 것에 따라 다릅니다.
 
-- [react-native-uiscene-bridge](https://github.com/Atomics-hub/react-native-uiscene-bridge)와 [react-native-xcode27](https://github.com/Atomics-hub/react-native-xcode27)은 코드를 바꾸지 않고도 실행 시점에 React Native 또는 Expo 앱이 실행되도록 합니다. 아직 업그레이드할 수 없을 때 적합하며, sdkbump는 이들을 인식합니다.
+- [react-native-uiscene-bridge](https://github.com/Atomics-hub/react-native-uiscene-bridge)와 [react-native-xcode27](https://github.com/Atomics-hub/react-native-xcode27)은 코드를 바꾸지 않고도 실행 시점에 React Native 또는 Expo 앱이 실행되도록 합니다. React Native 0.88과 Expo SDK 58이 scene 지원을 추가하기 전에 공개된 패키지로, sdkbump는 더 이상 이들을 제안하지 않지만 설치되어 있으면 인식합니다.
 - [auditor-uiscene](https://github.com/Anzell/auditor-uiscene)은 셸 스크립트로 Flutter 앱과 플러그인을 점검합니다.
 - Flutter의 자체 마이그레이터(3.41부터의 `flutter build ios`)는 수정하지 않은 Flutter 앱을 마이그레이션합니다.
 - [flutter_spm_doctor](https://pub.dev/packages/flutter_spm_doctor)는 Flutter 플러그인을 검사합니다.
@@ -223,7 +223,7 @@ path ─► detectProject      native | flutter | react-native | expo; iOS folde
 ```
 
 - 감지 패턴은 주석과 문자열을 비워 둔 소스 텍스트에 대한 정규식이며, 필요한 곳에서는 app delegate나 scene delegate 안에 있는 것만 셉니다.
-- 규칙 데이터는 코드와 분리되어 있고 버전이 매겨져 있습니다(`ios27@2026.10.15`). 규칙, 해결 방법, 우회 방법에 출처가 없으면 테스트가 실패합니다.
+- 규칙 데이터는 코드와 분리되어 있고 버전이 매겨져 있습니다(`ios27@2026.10.27`). 규칙, 해결 방법, 우회 방법에 출처가 없으면 테스트가 실패합니다.
 - CLI(`src/cli/`)는 인수를 해석하고, 색과 너비를 고르고, 종료 코드를 정하는 일만 합니다.
 
 ## 로드맵

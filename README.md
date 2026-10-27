@@ -27,7 +27,7 @@ Native/Expo project for what the iOS 27 SDK changes, starting with the UIScene l
 tells you which fix applies to each finding. It reads your project's files; it does not build,
 run or change anything.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-rn-087-dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/media/demo-rn-087-light.svg"><img src="docs/media/demo-rn-087-light.svg" alt="sdkbump run on a React Native 0.87 app: fails to launch when built with the iOS 27 SDK; SCN001 no scene configuration and SCN002 window created in the app delegate, with three ways to fix it"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-rn-087-dark.svg"><source media="(prefers-color-scheme: light)" srcset="docs/media/demo-rn-087-light.svg"><img src="docs/media/demo-rn-087-light.svg" alt="sdkbump run on a React Native 0.87 app: fails to launch when built with the iOS 27 SDK; SCN001 no scene configuration and SCN002 window created in the app delegate, with two ways to fix it"></picture>
 
 <sub>Recorded from the real CLI on the <a href="fixtures/rn-087">rn-087 fixture</a>, a React
 Native 0.87.1 app from <code>@react-native-community/cli init</code> (<code>npm run demo</code>).</sub>
@@ -107,7 +107,7 @@ From Apple's
 | SCN003 | warning  | App delegate methods and launch option keys UIKit no longer uses with scenes (13 of them), unless the scene delegate already handles them                                                   | `applicationDidEnterBackground(_:)` not called in a SwiftUI app |
 | SCN004 | warning  | Window lookups through `UIApplication.shared.keyWindow`, `.windows` or the app delegate's `window`                                                                                          | compiler deprecation warnings only                              |
 
-Rule data `ios27@2026.10.15`, checked against Xcode 27.0 (27A266a). When React Native or Expo has
+Rule data `ios27@2026.10.27`, checked against Xcode 27.0 (27A266a). When React Native or Expo has
 `react-native-uiscene-bridge` or `react-native-xcode27` installed, the findings it handles at run
 time are shown as handled, with the limits from its README, and do not fail the run.
 
@@ -256,8 +256,9 @@ Other projects work on the same change; which one fits depends on what you need:
 
 - [react-native-uiscene-bridge](https://github.com/Atomics-hub/react-native-uiscene-bridge) and
   [react-native-xcode27](https://github.com/Atomics-hub/react-native-xcode27) make a React Native
-  or Expo app launch without code changes, at run time. They fit when you cannot upgrade yet;
-  sdkbump recognises them.
+  or Expo app launch without code changes, at run time. They were published before React Native
+  0.88 and Expo SDK 58 added scene support; sdkbump no longer suggests them, but recognises them
+  when they are installed.
 - [auditor-uiscene](https://github.com/Anzell/auditor-uiscene) audits Flutter apps and their
   plugins with a shell script.
 - Flutter's own migrator (`flutter build ios` from 3.41) migrates an unmodified Flutter app.
@@ -286,7 +287,7 @@ path ─► detectProject      native | flutter | react-native | expo; iOS folde
 
 - Detection patterns are regular expressions over source text whose comments and strings are
   blanked, and only count inside an app delegate or scene delegate where that matters.
-- The rule data is separate from the code and versioned (`ios27@2026.10.15`); a test fails when a
+- The rule data is separate from the code and versioned (`ios27@2026.10.27`); a test fails when a
   rule, fix or workaround has no source.
 - The CLI (`src/cli/`) only parses arguments, picks colours and widths, and sets the exit code.
 
