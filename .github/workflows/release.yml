@@ -169,8 +169,11 @@ jobs:
           fi
           tag="latest"
           case "$VERSION" in *-*) tag="next" ;; esac
+          # The trusted publisher may only stage; a maintainer approves the version with 2FA on npmjs.com.
+          npm install --global npm@11.20.0
           # The ./ makes npm read a file: "release/sdkbump-x.tgz" alone is a GitHub owner/repo.
-          npm publish "./release/sdkbump-$VERSION.tgz" --provenance --access public --tag "$tag"
+          npm stage publish "./release/sdkbump-$VERSION.tgz" --provenance --access public --tag "$tag"
+          echo "::notice::@mcamdali/sdkbump@$VERSION is staged. Approve it at https://www.npmjs.com/package/@mcamdali/sdkbump to publish."
 
   homebrew:
     name: Homebrew formula
