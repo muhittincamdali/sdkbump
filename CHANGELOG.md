@@ -7,6 +7,8 @@ All notable changes to sdkbump are listed here. The format follows
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-10-27
+
 ### Changed
 
 - Rule data `ios27@2026.10.27`. "Upgrade to React Native 0.88" said that 0.88 was a release
@@ -150,7 +152,8 @@ All notable changes to sdkbump are listed here. The format follows
 - Guides, an API reference site, terminal demos from the CLI, and recordings of the native
   fixtures and a nine-app launch matrix in the iOS 27.0 simulator (Xcode 27.0).
 
-[Unreleased]: https://github.com/muhittincamdali/sdkbump/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/muhittincamdali/sdkbump/compare/v0.1.4...HEAD
+[0.1.4]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.4
 [0.1.3]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.3
 [0.1.2]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.2
 [0.1.1]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.1
