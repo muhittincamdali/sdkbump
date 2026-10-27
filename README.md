@@ -252,6 +252,12 @@ API reference and guides: [muhittincamdali.github.io/sdkbump](https://muhittinca
 
 ## Related tools
 
+[glassready](https://github.com/muhittincamdali/glassready) answers the other iOS 27 SDK question:
+how will the app look? The iOS 27 SDK ignores the `UIDesignRequiresCompatibility` opt-out, so the
+app gets Liquid Glass; glassready lists what that changes in a native iOS, Flutter or React
+Native/Expo app and how to fix each place. sdkbump answers whether the app will launch. Run both
+before the first Xcode 27 build.
+
 Other projects work on the same change; which one fits depends on what you need:
 
 - [react-native-uiscene-bridge](https://github.com/Atomics-hub/react-native-uiscene-bridge) and

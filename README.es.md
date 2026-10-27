@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@fa986ced9af418c4eec9ed285aa542550db4ab26 status=reviewed -->
+<!-- i18n-source: README.md@05d216af458d5c03f128e8dd8f9edb3064738a0d status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -197,6 +197,12 @@ Referencia de la API y guías: [muhittincamdali.github.io/sdkbump](https://muhit
 - [Autores de módulos nativos: enlaces y notificaciones en el arranque en frío](docs/guides/native-module-authors.md)
 
 ## Herramientas relacionadas
+
+[glassready](https://github.com/muhittincamdali/glassready) responde la otra pregunta del SDK de iOS
+27: ¿cómo se verá la app? El SDK de iOS 27 ignora la exclusión `UIDesignRequiresCompatibility`, así
+que la app recibe Liquid Glass; glassready enumera lo que eso cambia en una app nativa de iOS,
+Flutter o React Native/Expo y cómo corregir cada lugar. sdkbump responde si la app arrancará.
+Ejecuta ambas antes de la primera compilación con Xcode 27.
 
 Otros proyectos trabajan en el mismo cambio; cuál te conviene depende de lo que necesites:
 

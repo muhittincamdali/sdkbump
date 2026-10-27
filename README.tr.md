@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@fa986ced9af418c4eec9ed285aa542550db4ab26 status=reviewed -->
+<!-- i18n-source: README.md@05d216af458d5c03f128e8dd8f9edb3064738a0d status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/sdkbump/main/.github/brand/banner-light.svg" alt="sdkbump: Checks native iOS, Flutter and React Native apps for the iOS 27 SDK changes and names the fix for each."></picture></p>
@@ -262,6 +262,12 @@ API başvurusu ve rehberler: [muhittincamdali.github.io/sdkbump](https://muhitti
 - [Yerel modül yazarları: soğuk başlangıçta bağlantılar ve bildirimler](docs/guides/native-module-authors.md)
 
 ## İlgili araçlar
+
+[glassready](https://github.com/muhittincamdali/glassready) iOS 27 SDK'nın öbür sorusunu yanıtlar:
+uygulama nasıl görünecek? iOS 27 SDK, `UIDesignRequiresCompatibility` ile yapılan devre dışı
+bırakmayı yok sayar ve uygulama Liquid Glass alır; glassready bunun yerel iOS, Flutter veya React
+Native/Expo uygulamasında neyi değiştirdiğini ve her yerin nasıl düzeltileceğini listeler. sdkbump
+uygulamanın açılıp açılmayacağını yanıtlar. İlk Xcode 27 derlemesinden önce ikisini de çalıştırın.
 
 Başka projeler de aynı değişiklik üzerinde çalışıyor; hangisinin uygun olduğu neye ihtiyacınız
 olduğuna bağlıdır:
