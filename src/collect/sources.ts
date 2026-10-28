@@ -1,8 +1,9 @@
 // Swift and Objective-C sources of an app: comments and string literals blanked out (so a pattern
 // never matches inside them), the classes, structs and extensions they declare, and which of
 // those are app delegates, scene delegates or a SwiftUI App.
-import { readdir, readFile } from 'node:fs/promises';
-import { extname, join } from 'node:path';
+import { readdir, realpath } from 'node:fs/promises';
+import { extname, join, relative, sep } from 'node:path';
+import { isInside, readProjectFile } from '../core/files.js';
 import { lineIndex } from '../core/lines.js';
 import { blankCommentsAndStrings } from './blank.js';
 import { derivedFrom, objcRegions, swiftRegions } from './regions.js';
@@ -137,11 +138,48 @@ export function indexFiles(files: SourceFile[]): SourceIndex {
   };
 }
 
-/** Reads and indexes every source file under the given folders. */
-export async function indexSources(folders: readonly string[]): Promise<SourceIndex> {
-  const paths = [...new Set((await Promise.all(folders.map(listSourceFiles))).flat())].sort();
-  const files = await Promise.all(
-    paths.map(async (path) => sourceFile(path, await readFile(path, 'utf8'))),
+/**
+ * The folders whose real path is inside the real `projectRoot`. A folder from the project may be a
+ * link (ios/ -> /somewhere/else) or a `..` path; its files are not the project's and are not read.
+ * Each folder left out gets a note.
+ */
+async function foldersInside(
+  folders: readonly string[],
+  projectRoot: string,
+  notes: string[],
+): Promise<string[]> {
+  const realRoot = await realpath(projectRoot).catch(() => projectRoot);
+  const inside: string[] = [];
+  for (const folder of folders) {
+    const real = await realpath(folder).catch(() => null);
+    // A missing folder has no files to read.
+    if (real === null) continue;
+    if (isInside(real, realRoot)) {
+      inside.push(folder);
+      continue;
+    }
+    const shown = relative(projectRoot, folder).split(sep).join('/');
+    notes.push(`${shown} is outside the project; its source files were not read.`);
+  }
+  return inside;
+}
+
+/**
+ * Reads and indexes every source file under the given folders that is inside `projectRoot`. A
+ * folder outside it is skipped with a line in `notes`.
+ */
+export async function indexSources(
+  folders: readonly string[],
+  projectRoot: string,
+  notes: string[] = [],
+): Promise<SourceIndex> {
+  const inside = await foldersInside(folders, projectRoot, notes);
+  const paths = [...new Set((await Promise.all(inside.map(listSourceFiles))).flat())].sort();
+  const reads = await Promise.all(
+    paths.map(async (path) => {
+      const read = await readProjectFile(path, projectRoot);
+      return read.found ? sourceFile(path, read.bytes.toString('utf8')) : null;
+    }),
   );
-  return indexFiles(files);
+  return indexFiles(reads.filter((file) => file !== null));
 }

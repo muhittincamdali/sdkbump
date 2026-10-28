@@ -1,3 +1,4 @@
+import { symlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
@@ -164,8 +165,45 @@ describe('listSourceFiles and indexSources', () => {
       join('App', 'AppDelegate.swift'),
       join('App', 'Legacy', 'Bridge.m'),
     ]);
-    const index = await indexSources([root, root]);
+    const index = await indexSources([root, root], root);
     expect(index.files).toHaveLength(2);
     expect([...index.appDelegates]).toEqual(['AppDelegate']);
+  });
+
+  it('does not read a source folder linked to a folder outside the project', async () => {
+    const outside = tree({
+      'Secret.swift': 'class SecretDelegate: UIResponder, UIApplicationDelegate {}',
+    });
+    const root = tree({
+      'App/AppDelegate.swift': 'class AppDelegate: UIResponder, UIApplicationDelegate {}',
+    });
+    symlinkSync(outside, join(root, 'ios'));
+    const notes: string[] = [];
+    const index = await indexSources([join(root, 'ios'), join(root, 'App')], root, notes);
+    expect(index.files.map((file) => file.path.slice(root.length + 1))).toEqual([
+      join('App', 'AppDelegate.swift'),
+    ]);
+    expect([...index.appDelegates]).toEqual(['AppDelegate']);
+    expect(notes).toEqual(['ios is outside the project; its source files were not read.']);
+  });
+
+  it('does not read a source folder given as a .. path out of the project', async () => {
+    const parent = tree({ 'other/Secret.swift': 'class Secret {}', 'app/Main.swift': '' });
+    const root = join(parent, 'app');
+    const notes: string[] = [];
+    const index = await indexSources([join(root, '..', 'other')], root, notes);
+    expect(index.files).toEqual([]);
+    expect(notes).toEqual(['../other is outside the project; its source files were not read.']);
+  });
+
+  it('reads a source folder linked to a folder inside the project', async () => {
+    const root = tree({ 'native/ios/App.swift': 'class App {}' });
+    symlinkSync(join(root, 'native', 'ios'), join(root, 'ios'));
+    const notes: string[] = [];
+    const index = await indexSources([join(root, 'ios')], root, notes);
+    expect(index.files.map((file) => file.path.slice(root.length + 1))).toEqual([
+      join('ios', 'App.swift'),
+    ]);
+    expect(notes).toEqual([]);
   });
 });
