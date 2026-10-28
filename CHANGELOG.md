@@ -7,6 +7,26 @@ All notable changes to sdkbump are listed here. The format follows
 
 ## [Unreleased]
 
+## [0.1.5] - 2026-10-28
+
+### Security
+
+- A binary Info.plist can no longer make sdkbump run out of memory. The reader had no cache and
+  no limits, and objects are shared by reference: a 1.7 KB file naming one array 200 times at four
+  levels expands into 1.6 billion values, and 10,000 references to one 1 MB string decoded it
+  10,000 times. Strings, data and numbers are now read once per object offset; one plist may
+  produce at most 100,000 values and nest 64 levels, and its strings and data together may decode
+  at most as many bytes as the file has. A plist past a limit is not read and the report says so.
+- Source files are read only inside the project folder. An `ios/` folder linked to a folder
+  outside the project had its Swift and Objective-C files read, indexed and named in the report.
+  Such a folder is now skipped with a note ("ios is outside the project; its source files were
+  not read."); a folder linked to another folder inside the project is still read.
+  `indexSources` takes the project root (and optionally an array for the notes).
+- A `node_modules/<name>/package.json` is read only when its real path is a package.json in a
+  `node_modules/<name>` folder, as pnpm, Yarn and workspaces link them. A link to any other file
+  put that file's `version` field into the report as the installed version; the lockfile or the
+  declared range now gives the version instead.
+
 ## [0.1.4] - 2026-10-27
 
 ### Changed
@@ -152,7 +172,8 @@ All notable changes to sdkbump are listed here. The format follows
 - Guides, an API reference site, terminal demos from the CLI, and recordings of the native
   fixtures and a nine-app launch matrix in the iOS 27.0 simulator (Xcode 27.0).
 
-[Unreleased]: https://github.com/muhittincamdali/sdkbump/compare/v0.1.4...HEAD
+[Unreleased]: https://github.com/muhittincamdali/sdkbump/compare/v0.1.5...HEAD
+[0.1.5]: https://github.com/muhittincamdali/sdkbump/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.4
 [0.1.3]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.3
 [0.1.2]: https://github.com/muhittincamdali/sdkbump/releases/tag/v0.1.2
