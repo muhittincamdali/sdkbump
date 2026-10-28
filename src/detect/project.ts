@@ -1,7 +1,7 @@
 // Recognises what kind of project a folder holds (native iOS, Flutter, React Native or Expo),
 // where its iOS app project is, and the versions that decide which fix applies.
-import { readdir, stat } from 'node:fs/promises';
-import { basename, dirname, join, resolve } from 'node:path';
+import { readdir, realpath, stat } from 'node:fs/promises';
+import { basename, dirname, join, resolve, sep } from 'node:path';
 import { readProjectText } from '../core/files.js';
 import { lowestAllowed } from '../core/versions.js';
 
@@ -90,6 +90,20 @@ async function readJson(path: string, root: string | null): Promise<unknown> {
   }
 }
 
+/**
+ * node_modules/<name>/package.json. pnpm, Yarn and workspaces link installed packages from outside
+ * the app folder, so the file may be anywhere; it is read only when its real path is a
+ * package.json in a node_modules/<name> folder. A link to any other file would put a field of that
+ * file, which the user did not ask to check, into the report.
+ */
+async function installedManifest(root: string, name: string): Promise<unknown> {
+  const real = await realpath(join(root, 'node_modules', name, 'package.json')).catch(() => null);
+  if (real === null) return undefined;
+  const tail = ['node_modules', ...name.split('/'), 'package.json'];
+  if (real.split(sep).slice(-tail.length).join('/') !== tail.join('/')) return undefined;
+  return readJson(real, null);
+}
+
 const record = (value: unknown): Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
     ? (value as Record<string, unknown>)
@@ -133,10 +147,7 @@ async function packageVersions(
   for (const name of WATCHED_PACKAGES) {
     const range = declared[name];
     if (typeof range !== 'string') continue;
-    // pnpm and workspaces link installed packages from outside the app folder.
-    const installed = record(
-      await readJson(join(root, 'node_modules', name, 'package.json'), null),
-    );
+    const installed = record(await installedManifest(root, name));
     const locked = record(lock[`node_modules/${name}`]);
     if (typeof installed.version === 'string') {
       result.set(name, {
