@@ -1,8 +1,24 @@
 // Binary property lists (bplist00), the format found in built apps:
 // https://opensource.apple.com/source/CF/CF-1153.18/CFBinaryPList.c
-import { BINARY_MAGIC, type PlistDict, PlistError, type PlistValue } from './plist-value.js';
+import {
+  BINARY_MAGIC,
+  isDict,
+  type PlistDict,
+  PlistError,
+  type PlistValue,
+} from './plist-value.js';
 
 const APPLE_EPOCH_MS = Date.UTC(2001, 0, 1);
+
+/**
+ * How many values one plist may produce. Objects are shared by reference, so a file of a few
+ * hundred bytes can name the same array thousands of times at every level: without a budget, a
+ * 1.7 KB Info.plist expands into billions of values. Real Info.plist files produce a few hundred.
+ */
+export const MAX_BINARY_PLIST_VALUES = 100_000;
+
+/** How deep arrays and dictionaries may nest; real Info.plist files nest a few levels. */
+export const MAX_BINARY_PLIST_DEPTH = 64;
 
 export function parseBinaryPlist(bytes: Uint8Array): PlistValue {
   if (bytes.length < BINARY_MAGIC.length + 32) throw new PlistError('Binary plist is too short.');
@@ -27,7 +43,23 @@ export function parseBinaryPlist(bytes: Uint8Array): PlistValue {
     return value;
   };
   const offsetOf = (ref: number) => readUint(tableOffset + ref * offsetSize, offsetSize);
+  // Keyed by object offset, not by reference: the offset table may give many references the same
+  // offset, and each must not decode the object again.
   const visiting = new Set<number>();
+  // Strings, data and numbers are read once per offset and shared, so a large string that many
+  // references name costs its bytes once; arrays and dictionaries count against the value budget.
+  const leaves = new Map<number, PlistValue>();
+  let produced = 0;
+  // Offsets may also point into the middle of another object's bytes, so distinct objects can
+  // overlap. Every string and data object counts its bytes here; all of them together cannot be
+  // more than the file holds.
+  let decodedBytes = 0;
+  const decode = (count: number) => {
+    decodedBytes += count;
+    if (decodedBytes > bytes.length) {
+      throw new PlistError('Binary plist decodes to more bytes than the file holds.');
+    }
+  };
 
   const lengthAt = (at: number, info: number): [number, number] => {
     if (info !== 0xf) return [info, at + 1];
@@ -39,12 +71,23 @@ export function parseBinaryPlist(bytes: Uint8Array): PlistValue {
 
   const read = (ref: number): PlistValue => {
     if (ref >= objectCount) throw new PlistError('Binary plist object reference is out of range.');
-    if (visiting.has(ref)) throw new PlistError('Binary plist contains a reference cycle.');
-    visiting.add(ref);
+    if (visiting.size >= MAX_BINARY_PLIST_DEPTH) {
+      throw new PlistError(`Binary plist nests more than ${MAX_BINARY_PLIST_DEPTH} levels.`);
+    }
+    if (++produced > MAX_BINARY_PLIST_VALUES) {
+      throw new PlistError(`Binary plist has more than ${MAX_BINARY_PLIST_VALUES} values.`);
+    }
+    const offset = offsetOf(ref);
+    const leaf = leaves.get(offset);
+    if (leaf !== undefined) return leaf;
+    if (visiting.has(offset)) throw new PlistError('Binary plist contains a reference cycle.');
+    visiting.add(offset);
     try {
-      return readObject(offsetOf(ref));
+      const value = readObject(offset);
+      if (!Array.isArray(value) && !isDict(value)) leaves.set(offset, value);
+      return value;
     } finally {
-      visiting.delete(ref);
+      visiting.delete(offset);
     }
   };
 
@@ -73,14 +116,22 @@ export function parseBinaryPlist(bytes: Uint8Array): PlistValue {
         return new Date(APPLE_EPOCH_MS + view.getFloat64(at + 1) * 1000);
       case 0x4: {
         const [length, start] = lengthAt(at, info);
-        return Uint8Array.from(bytes.subarray(start, start + length));
+        const data = bytes.subarray(start, start + length);
+        decode(data.length);
+        return Uint8Array.from(data);
       }
       case 0x5: {
         const [length, start] = lengthAt(at, info);
-        return new TextDecoder('latin1').decode(bytes.subarray(start, start + length));
+        const ascii = bytes.subarray(start, start + length);
+        decode(ascii.length);
+        return new TextDecoder('latin1').decode(ascii);
       }
       case 0x6: {
         const [length, start] = lengthAt(at, info);
+        if (start + length * 2 > bytes.length) {
+          throw new PlistError('Binary plist reads past its end.');
+        }
+        decode(length * 2);
         let text = '';
         for (let index = 0; index < length; index++) {
           text += String.fromCharCode(readUint(start + index * 2, 2));
