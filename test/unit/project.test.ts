@@ -190,17 +190,40 @@ describe('detectProject with project files it does not read', () => {
 
   it('reads an installed package that node_modules links from outside the app folder', async () => {
     // pnpm and workspaces keep the package elsewhere and link it into the app's node_modules.
-    const store = tree({ 'react-native/package.json': '{ "version": "0.87.1" }' });
+    const store = tree({
+      '.pnpm/react-native@0.87.1/node_modules/react-native/package.json': '{ "version": "0.87.1" }',
+    });
     const root = tree({
       'package.json': JSON.stringify({ dependencies: { 'react-native': '^0.87.0' } }),
       'ios/RNApp.xcodeproj/project.pbxproj': pbxproj,
     });
     mkdirSync(join(root, 'node_modules'));
-    symlinkSync(join(store, 'react-native'), join(root, 'node_modules', 'react-native'));
+    symlinkSync(
+      join(store, '.pnpm/react-native@0.87.1/node_modules/react-native'),
+      join(root, 'node_modules', 'react-native'),
+    );
     const project = await detectProject(root);
     expect(project.packages.get('react-native')).toMatchObject({
       version: '0.87.1',
       source: 'installed',
+    });
+  });
+
+  it('does not read an installed package.json linked to another file outside the project', async () => {
+    const outside = tree({ 'secrets.json': '{ "version": "4.0.0-SECRETTOKEN123" }' });
+    const root = tree({
+      'package.json': JSON.stringify({ dependencies: { 'react-native': '^0.87.0' } }),
+      'ios/RNApp.xcodeproj/project.pbxproj': pbxproj,
+      'node_modules/react-native/README.md': '',
+    });
+    symlinkSync(
+      join(outside, 'secrets.json'),
+      join(root, 'node_modules/react-native/package.json'),
+    );
+    const project = await detectProject(root);
+    expect(project.packages.get('react-native')).toMatchObject({
+      version: '0.87.0',
+      source: 'declared',
     });
   });
 

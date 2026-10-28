@@ -1,6 +1,14 @@
 import { readFileSync } from 'node:fs';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { MAX_BINARY_PLIST_DEPTH, MAX_BINARY_PLIST_VALUES } from '../../src/collect/plist-binary.js';
 import { isDict, type PlistDict, PlistError, parsePlist } from '../../src/collect/plist.js';
+import {
+  type BinaryObject,
+  binaryPlist,
+  overlappingStringsPlist,
+  sharedOffsetPlist,
+  sharedReferencePlist,
+} from '../helpers/bplist.js';
 
 const data = (name: string) => readFileSync(new URL(`../data/${name}`, import.meta.url));
 
@@ -95,6 +103,55 @@ describe('parsePlist (binary)', () => {
     const view = new DataView(bytes.buffer);
     view.setBigUint64(bytes.length - 8, BigInt(bytes.length));
     expect(() => parsePlist(bytes)).toThrow(PlistError);
+  });
+});
+
+describe('parsePlist (binary, hostile)', () => {
+  it('reads shared references within the value budget', () => {
+    const { value } = parsePlist(sharedReferencePlist(2, 100));
+    if (!isDict(value)) throw new Error('not a dict');
+    const outer = value.k as boolean[][];
+    expect(outer).toHaveLength(100);
+    expect(outer.every((inner) => inner.length === 100 && inner.every(Boolean))).toBe(true);
+  });
+
+  it('stops a shared-reference amplification at the value budget', () => {
+    // Under 2 KB, and 200^4 = 1.6 billion values without a budget.
+    const bytes = sharedReferencePlist(4, 200);
+    expect(bytes.length).toBeLessThan(2000);
+    expect(() => parsePlist(bytes)).toThrow(
+      new PlistError(`Binary plist has more than ${MAX_BINARY_PLIST_VALUES} values.`),
+    );
+  });
+
+  it('decodes a large string once when many references share its offset', () => {
+    // 10,000 references, each its own entry in the offset table, all at one 1 MB string: decoded
+    // once per reference, that is 10 GB.
+    const references = 10_000;
+    const bytes = sharedOffsetPlist(references, 1_000_000);
+    const decode = vi.spyOn(TextDecoder.prototype, 'decode');
+    try {
+      const { value } = parsePlist(bytes);
+      expect(Array.isArray(value) && value.length).toBe(references);
+      const decoded = decode.mock.calls.reduce((sum, [input]) => sum + (input?.byteLength ?? 0), 0);
+      expect(decoded / bytes.length).toBeLessThanOrEqual(1);
+    } finally {
+      decode.mockRestore();
+    }
+  });
+
+  it('stops overlapping strings at the decoded-bytes budget', () => {
+    expect(() => parsePlist(overlappingStringsPlist(20_000))).toThrow(
+      new PlistError('Binary plist decodes to more bytes than the file holds.'),
+    );
+  });
+
+  it('rejects nesting deeper than the limit', () => {
+    const depth = MAX_BINARY_PLIST_DEPTH + 1;
+    const objects: BinaryObject[] = [{ dict: [[1, 2]] }, { ascii: 'k' }];
+    for (let level = 0; level < depth; level++) objects.push({ array: [3 + level] });
+    objects.push({ true: true });
+    expect(() => parsePlist(binaryPlist(objects))).toThrow(/nests more than/);
   });
 });
 

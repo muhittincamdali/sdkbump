@@ -128,7 +128,7 @@ export async function collectApp(project: Project): Promise<AppModel> {
   if (project.iosDir && project.xcodeProjects.length > 0 && targets.length === 0) {
     notes.push('No iOS app target was found in the Xcode project.');
   }
-  const sources = await indexSources(project.iosDir ? [project.iosDir] : []);
+  const sources = await indexSources(project.iosDir ? [project.iosDir] : [], project.root, notes);
   return { project, targets, sources, notes };
 }
 
