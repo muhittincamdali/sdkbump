@@ -57,15 +57,15 @@
     "smoke": "node scripts/smoke-pack.ts"
   },
   "dependencies": {
-    "commander": "15.0.0",
+    "commander": "15.1.0",
     "zod": "4.6.7"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.15",
-    "@types/node": "24.19.2",
-    "@vitest/coverage-v8": "5.0.4",
+    "@biomejs/biome": "2.6.6",
+    "@types/node": "26.6.6",
+    "@vitest/coverage-v8": "5.1.0",
     "prettier": "3.9.10",
     "typescript": "7.0.2",
-    "vitest": "5.0.4"
+    "vitest": "5.1.0"
   }
 }
